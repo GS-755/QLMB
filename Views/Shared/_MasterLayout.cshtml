@@ -1,0 +1,138 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewBag.Title - QLMB</title>
+    <!--CSS(s)-->
+    <link href="~/Content/Site.css" rel="stylesheet" />
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <!--Navbar start-->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light p-0 m-0 text-uppercase" style="font-size: 17.5px;">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <img 
+                     src="~/Resources/Picture/Logo/Logo_LightMode.png"
+                     alt="Gà Tây Ninh"
+                     class="nav-item"
+                     height="60"
+                     />
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        @Html.ActionLink("Trang chủ", "Index", "Home", null, new { @class = "nav-link active" })
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Sự kiện</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Ưu đãi</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Báo giá</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Giới thiệu</a>
+                    </li>
+                </ul>
+                @if (Session["AccountName"] == null)
+                {
+                    @Html.ActionLink("Đăng nhập", "LoginPage", "Login", null, new { @class = "nav-link mt-2 mb-2" })
+                }
+                else
+                {
+                    <ul class="navbar-nav">
+                        <li class="nav-item dropdown">
+                            <a 
+                               class="nav-link dropdown-toggle" 
+                               href="#" id="navbarDropdown" 
+                               role="button" data-bs-toggle="dropdown" 
+                               aria-expanded="false">
+                                Xin chào, @Session["AccountName"].ToString()
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="#">Thông tin</a></li>
+                                <li><a class="dropdown-item" href="#">Quản lý thuê</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    @Html.ActionLink("Đăng xuất", "Logout", "Login", null, new { @class="dropdown-item" })
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                }
+            </div>
+        </div>
+    </nav>
+    <!--Navbar end-->
+
+    @RenderBody()
+
+    <!--Footer start-->
+    <hr />
+    <footer class="flex-shrink-0 text-white" style="background-color: #11101d;">
+        <div class="container-fluid pt-3">
+            <div class="row gy-4 gx-6">
+                <div class="col-lg-2 col-md-6">
+                    <img src="~/Resources/Picture/Logo/Logo_DarkMode.png"
+                         class="nav-item"
+                         height="60"
+                         alt="Gà Tây Ninh" />
+                    <i class="fs-5 text-center">"Điểm 10 cho chất lượng"</i>
+                </div>
+                <div class="col-lg-4">
+                    <p class="fa fs-5 text-center text-uppercase fw-bold">&emsp; Trung tâm thương mại Gà Tây Ninh</p>
+
+                    <!-- Icon Nhà -->
+                    <p class="small">
+                        <i class="fa fa-home">&emsp; Địa chỉ: 42/17 Hồ Thị Kỷ, Phường 1, Quận 10, TP. Hồ Chí Minh</i>
+                    </p>
+
+                    <!-- Icon Điện thoại-->
+                    <p class="small">
+                        <i class="fa fa-phone">&emsp; Tổng đài liên hệ: <a href="tel:0832476086" style="text-decoration: none; color: #fff;">083.247.6086</a></i>
+                    </p>
+
+                    <!-- Icon Email -->
+                    <p class="small">
+                        <!-- Icon Email -->
+                        <i class="fa fa-envelope">&emsp; Email: 21DH114236@st.huflit.edu.vn</i>
+                    </p>
+                    <p class="small fw-bold">Original copyright &copy; @DateTime.Now.Year - Nguyen Phat Hung</p>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <p class="fs-5 text-uppercase fw-bold text-center">Với sự trợ giúp của</p>
+                    <div class="mt-2">
+                        <p class="fa small">&emsp; Trí Nguyễn (Bahjeet Al Asad): Cố vấn, Fix bug</p>
+                        <p class="fa small">&emsp; Lê Trần Thanh Thanh: Frontend Support</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.617983215675!2d106.6748784751791!3d10.763896489384146!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752f1e12112743%3A0x50b042f99190edbd!2zNDIgxJAuIEjhu5MgVGjhu4sgS-G7tywgUGjGsOG7nW5nIDEsIFF14bqtbiAxMCwgVGjDoG5oIHBo4buRIEjhu5MgQ2jDrSBNaW5oLCBWaeG7h3QgTmFt!5e0!3m2!1svi!2s!4v1694519911416!5m2!1svi!2s"
+                            width="350"
+                            height="200"
+                            style="border:0;"
+                            allowfullscreen=""
+                            loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+        <div class="row-cols-auto text-center">
+            <p class="pt-2 m-0">Copyright &copy;@DateTime.Now.Year Gà Tây Ninh Inc. All rights reserved</p>
+            <p class="fst-italic m-0 pb-2">Sản phẩm thuộc bản quyền của NHÓM 1.</p>
+        </div>
+    </footer>
+    <!--Footer end-->
+    <!--Script(s)-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+</body>
+</html>

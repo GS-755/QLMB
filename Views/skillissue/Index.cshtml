@@ -1,0 +1,40 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>SkIlL iSsUe :))</title>
+    <link href="~/favicon.ico" rel="icon" />
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <section class="section flex-column mt-5">
+        <div class="container-fluid">
+            <div class="col">
+                <div class="row">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-8 text-center">
+                        <div>
+                            <h1 class="text-center text-danger" style="font-size: 75px" ;">404 <br />SkIlL iSsUe :))</h1>
+                        </div>
+                        <div>
+                            <img src="~/Resources/Picture/SkillIssue/error-404.jpg" class="img-wrapper" style="width: 250px; height: auto;" />
+                        </div>
+                        <div class="mt-2 mb-2">
+                            <p class="fs-4 mt-3">Vui lòng quay lại Trang chủ để sử dụng dịch vụ của chúng tôi</p>
+                        </div>
+                        <div class="mt-1">
+                            @Html.ActionLink("Trang chủ", "Index", "Home", null, new { @class = "btn btn-success" })
+                        </div>
+                    </div>
+                    <div class="col-md-2"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+</body>
+</html>

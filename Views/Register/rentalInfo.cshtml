@@ -1,0 +1,150 @@
+﻿@model QLMB.Models.ThongTinND
+
+@{
+    ViewBag.Title = "Xác minh công dân";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+
+<div class="container">
+    <div class="col">
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="col-md-4">
+                @using (Html.BeginForm("RentalInfo", "Register", FormMethod.Post, new
+                {
+                    enctype = "multipart/form-data"
+                }))
+                {
+                    @Html.AntiForgeryToken()
+
+                <div class="form-horizontal m-3">
+                    <h4 class="text-center">TẠO TÀI KHOẢN</h4>
+                    <hr />
+
+                    @*Họ và tên*@
+                    <div class="form-group mt-4">
+                        <label for="CMND">Họ và Tên</label>
+                        <div class="row mt-1">
+                            @Html.EditorFor(model => model.HoTen, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessage("HoTen", new { @class = "text-danger mt-1" })
+                        </div>
+                    </div>
+
+
+                    @*Giới tính*@
+                    <div class="form-group row mt-4 ">
+
+
+                        <div class="col-md-4">
+                            <label for="GioiTinh">Giới tính:</label>
+                        </div>
+
+
+                        <div class="col-md-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="GioiTinh" value="NAM" checked>
+                                <label class="form-check-label" for="GioiTinh">Nam</label>
+
+                            </div>
+                        </div>
+
+                        <div class="col-md-5">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="GioiTinh" value="NỮ">
+                                <label class="form-check-label" for="GioiTinh">Nữ</label>
+                            </div>
+                        </div>
+
+
+                        @Html.ValidationMessage("GioiTinh", new { @class = "text-danger mt-1" })
+
+                    </div>
+
+
+                    @*Ngày sinh*@
+                    <div class="form-group mt-4">
+                        <label for="NgaySinh">Ngày sinh</label>
+                        <div class="row mt-1">
+                            @Html.TextBoxFor(model => model.NgaySinh, new { @type = "date", @class = "form-control datepicker", })
+                            @Html.ValidationMessage("NgaySinhND", new { @class = "text-danger mt-1" })
+                        </div>
+                    </div>
+
+
+
+                    @*Chứng minh nhân dân | Căn cước công dân*@
+                    <div class="form-group mt-4">
+                        <label for="CMND">Số CCCD(CMND)</label>
+                        <div class="row mt-1">
+                            @Html.EditorFor(model => model.CMND, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessage("CMND", new { @class = "text-danger mt-1" })
+                        </div>
+                    </div>
+
+
+                    @*Ngày cấp*@
+                    <div class="form-group mt-4">
+                        <label for="NgayCap">Ngày cấp</label>
+
+                        <div class="row mt-1">
+                            @Html.TextBoxFor(model => model.NgayCap, new { @type = "date", @class = "form-control datepicker", })
+                            @Html.ValidationMessage("NgayCapCMND", new { @class = "text-danger mt-1" })
+                        </div>
+                    </div>
+
+
+                    @*Địa chỉ*@
+                    <div class="form-group mt-4">
+                        <label for="DiaChi">Địa chỉ</label>
+                        <div class="row mt-1">
+                            @Html.EditorFor(model => model.DiaChi, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessage("DiaChi", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    @*Tên đăng nhập*@
+                    <div class="form-group mt-4">
+                        <label for="TenDangNhap">Tên đăng nhập</label>
+                        <div class="row mt-1">
+                            @Html.EditorFor(model => model.TenDangNhap, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessage("TenDangNhap", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    @*Mật khẩu*@
+                    <div class="form-group mt-4">
+                        <label for="MatKhau">Mật khẩu</label>
+                        <div class="row mt-1">
+                            @Html.PasswordFor(model => model.MatKhau, new { @class = "form-control" })
+                            @Html.ValidationMessage("MatKhau", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+
+                    @*Nhập lại mật khẩu*@
+                    <div class="form-group mt-4">
+                        <label for="NhapLaiMatKhau">Nhập lại mật khẩu</label>
+                        <div class="row mt-1">
+                            @Html.PasswordFor(model => model.NhapLaiMatKhau, new { @class = "form-control" })
+                            @Html.ValidationMessage("MatKhauLai", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+
+                    @Html.ValidationMessage("TrungTaiKhoan", new { @class = "text-danger" })
+                    @Html.ValidationMessage("TrungCMND", new { @class = "text-danger" })
+
+                    <div class="text-center mt-3">
+                        <div class="row mt-1">
+                            <input type="submit" value="Đăng ký" class="btn btn-success" />
+                            @Html.ActionLink("Bạn đã có tài khoản ? Đăng nhập", "LoginPage", "Login", null, new { @style = "text-decoration: none" })
+                        </div>
+
+                    </div>
+                </div>
+                }
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+    </div>
+</div>

@@ -1,20 +1,19 @@
-﻿/* Set padding to keep content from hitting the edges */
-.body-content {
-    margin-top: 15px;
-    padding-left: 15px;
-    padding-right: 15px;
-}
+﻿/* Debug section */
+.section { border: 1px solid #ff0000; }
+.container-fluid { border: 1px solid #ff6a00; }
+.container { border: 1px solid #ff6a22; }
+.row { border: 1px solid #ffd800; }
+.col { border: 1px solid #4cff00; }
+[class*="col-"] { border: 1px solid #00ffff; }
 
-/* Override the default bootstrap behavior where horizontal description lists 
-   will truncate terms that are too long to fit in the left column 
-*/
-.dl-horizontal dt {
-    white-space: normal;
+/* 0. Common CSS(s) */
+* { 
+    box-sizing: border-box;
 }
+.section {
+    padding-top: 100px;
+    padding-bottom: 100px;
+    position: relative;
+}
+/* Color pallete */
 
-/* Set width on the form input elements since they're 100% wide by default */
-input,
-select,
-textarea {
-    max-width: 280px;
-}

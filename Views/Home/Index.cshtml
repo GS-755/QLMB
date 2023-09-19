@@ -1,33 +1,151 @@
-﻿@{
-    ViewBag.Title = "Home Page";
+﻿@model  IEnumerable<QLMB.Models.SuKienUuDai>
+
+@{
+    ViewBag.Title = "Trang chủ";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+    int sukien = 0;
+    int uudai = 0;
 }
 
-<main>
-    <section class="row" aria-labelledby="aspnetTitle">
-        <h1 id="title">ASP.NET</h1>
-        <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-        <p><a href="https://asp.net" class="btn btn-primary btn-md">Learn more &raquo;</a></p>
-    </section>
+<!-- Link Boostrap-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+<!-- Link CSS -->
+<link rel="stylesheet" href="~/Resources/CSS/MainMenu_User.css" />
+<link rel="stylesheet" href="~/Resources/CSS/MultipleItem_Carousel.css" />
 
-    <div class="row">
-        <section class="col-md-4" aria-labelledby="gettingStartedTitle">
-            <h2 id="gettingStartedTitle">Getting started</h2>
-            <p>
-                ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-                enables a clean separation of concerns and gives you full control over markup
-                for enjoyable, agile development.
-            </p>
-            <p><a class="btn btn-outline-dark" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-        </section>
-        <section class="col-md-4" aria-labelledby="librariesTitle">
-            <h2 id="librariesTitle">Get more libraries</h2>
-            <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-            <p><a class="btn btn-outline-dark" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-        </section>
-        <section class="col-md-4" aria-labelledby="hostingTitle">
-            <h2 id="hostingTitle">Web Hosting</h2>
-            <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-            <p><a class="btn btn-outline-dark" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-        </section>
+<div>
+    @*Banner*@
+    <div id="Banner" class="carousel slide carousel-fade text-lg-center" data-bs-ride="carousel">
+        @*Indicator*@
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#Banner" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#Banner" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        </div>
+        @*Source Hình*@
+        <div id="Banner" class="carousel-inner">
+            <div class="carousel-item active" data-bs-interval="3000">
+                <img src="~/Resources/Picture/Banner/Banner1.png" class="d-block w-100 h-450" alt="...">
+            </div>
+            <div id="Banner" class="carousel-item" data-bs-interval="3000">
+                <img src="~/Resources/Picture/Banner/Banner2.png" class="d-block w-100" alt="...">
+            </div>
+        </div>
+        @*Nút qua trái*@
+        <button class="carousel-control-prev" type="button" data-bs-target="#Banner" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        @*Nút qua phải*@
+        <button class="carousel-control-next" type="button" data-bs-target="#Banner" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
     </div>
-</main>
+</div>
+
+<link rel="stylesheet" href="~/Resources/CSS/MultipleItem_Carousel.css" />
+<div class="container-fluid Item">
+    <h2 class="mt-4">SỰ KIỆN</h2>
+
+    <div id="SuKien" class="carousel" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            @foreach (var pro in Model.Where(s => s.MaDM.ToString().Trim() == "SK"))
+            {
+                if (sukien == 0)
+                {
+                    <div class="carousel-item active">
+                        <div class="card" style="width: 25rem; height: 570px;">
+                            <div class="img-wrapper">
+                                <img class="card-img-top" src="@Url.Content(pro.HinhBia)">
+                            </div>
+
+                            <div class="card-body">
+                                <h5 class="card-title">@Html.DisplayFor(model => pro.TieuDe)</h5>
+                                <p class="card-text">@Html.DisplayFor(model => pro.MoTa)</p>
+                            </div>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="carousel-item">
+                        <div class="card" style="width: 25rem; height: 570px;">
+                            <div class="img-wrapper">
+                                <img class="card-img-top" src="@Url.Content(pro.HinhBia)">
+                            </div>
+
+                            <div class="card-body">
+                                <h5 class="card-title">@Html.DisplayFor(model => pro.TieuDe)</h5>
+                                <p class="card-text">@Html.DisplayFor(model => pro.MoTa)</p>
+                            </div>
+                        </div>
+                    </div>
+                }
+                sukien++;
+            }
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#SuKien" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#SuKien" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+    
+    <h2 class="mt-4">ƯU  ĐÃI</h2>
+    <div id="carouselExampleControls" class="carousel" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            @foreach (var pro in Model.Where(s => s.MaDM.ToString().Trim() == "UD"))
+            {
+                if (uudai == 0)
+                {
+                    <div class="carousel-item active">
+                        <div class="card" style="width: 25rem; height: 570px;">
+                            <div class="img-wrapper">
+                                <img class="card-img-top" src="@Url.Content(pro.HinhBia)">
+                            </div>
+
+                            <div class="card-body">
+                                <h5 class="card-title">@Html.DisplayFor(model => pro.TieuDe)</h5>
+                                <p class="card-text">@Html.DisplayFor(model => pro.MoTa)</p>
+                            </div>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="carousel-item">
+                        <div class="card" style="width: 25rem; height:570px;">
+                            <div class="img-wrapper">
+                                <img class="card-img-top" src="@Url.Content(pro.HinhBia)">
+                            </div>
+
+                            <div class="card-body">
+                                <h5 class="card-title">@Html.DisplayFor(model => pro.TieuDe)</h5>
+                                <p class="card-text">@Html.DisplayFor(model => pro.MoTa)</p>
+                            </div>
+                        </div>
+                    </div>
+                }
+                uudai++;
+            }
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+
+    <script src="~/Scripts/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+    <script src="~/Resources/JavaScript/multipleItemCarousel.js"></script>
+</div>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="61c9ba54bb00475f9d526fa4023dcffe" Name="Diagram1">
+        <EntityTypeShape EntityType="DoanHK5Model.ChucVu" Width="1.5" PointX="3.75" PointY="7.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DoanHK5Model.DanhMuc" Width="1.5" PointX="6" PointY="18.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DoanHK5Model.DonXinThue" Width="1.5" PointX="5.25" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DoanHK5Model.HopDong" Width="1.5" PointX="0.75" PointY="6.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DoanHK5Model.HuyHopDong" Width="1.5" PointX="3" PointY="10.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DoanHK5Model.Luong" Width="1.5" PointX="8.25" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DoanHK5Model.MatBang" Width="1.5" PointX="3" PointY="18.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DoanHK5Model.NguoiThue" Width="1.5" PointX="6" PointY="21" IsExpanded="true" />
+        <EntityTypeShape EntityType="DoanHK5Model.NhanVien" Width="1.5" PointX="6" PointY="8.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DoanHK5Model.SuKienUuDai" Width="1.5" PointX="8.25" PointY="13" IsExpanded="true" />
+        <EntityTypeShape EntityType="DoanHK5Model.ThongTinND" Width="1.5" PointX="3.75" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DoanHK5Model.ThuChi" Width="1.5" PointX="10.5" PointY="9.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DoanHK5Model.TienThue" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DoanHK5Model.TinhTrang" Width="1.5" PointX="0.75" PointY="10.375" IsExpanded="true" />
+        <AssociationConnector Association="DoanHK5Model.FK__NhanVien__MaChuc__49C3F6B7" ManuallyRouted="false" />
+        <AssociationConnector Association="DoanHK5Model.FK__SuKienUuDa__MaDM__1EA48E88" ManuallyRouted="false" />
+        <AssociationConnector Association="DoanHK5Model.FK__DonXinThu__TenDa__4E88ABD4" ManuallyRouted="false" />
+        <AssociationConnector Association="DoanHK5Model.FK__DonXinThue__MaHD__52593CB8" ManuallyRouted="false" />
+        <AssociationConnector Association="DoanHK5Model.FK__DonXinThue__MaMB__4F7CD00D" ManuallyRouted="false" />
+        <AssociationConnector Association="DoanHK5Model.FK__DonXinThue__MaNV__5070F446" ManuallyRouted="false" />
+        <AssociationConnector Association="DoanHK5Model.FK__DonXinThue__MATT__5165187F" ManuallyRouted="false" />
+        <AssociationConnector Association="DoanHK5Model.FK__HuyHopDong__MaHD__5535A963" ManuallyRouted="false" />
+        <AssociationConnector Association="DoanHK5Model.FK__TienThue__MaHD__440B1D61" ManuallyRouted="false" />
+        <AssociationConnector Association="DoanHK5Model.FK__HuyHopDong__MaNV__5629CD9C" ManuallyRouted="false" />
+        <AssociationConnector Association="DoanHK5Model.FK__HuyHopDong__MATT__571DF1D5" ManuallyRouted="false" />
+        <AssociationConnector Association="DoanHK5Model.FK__Luong__MaNV__5FB337D6" ManuallyRouted="false" />
+        <AssociationConnector Association="DoanHK5Model.FK__ThuChi__MaLuong__628FA481" ManuallyRouted="false" />
+        <AssociationConnector Association="DoanHK5Model.FK__MatBang__MATT__3D5E1FD2" ManuallyRouted="false" />
+        <AssociationConnector Association="DoanHK5Model.FK__NguoiThue__CMND__46E78A0C" ManuallyRouted="false" />
+        <AssociationConnector Association="DoanHK5Model.FK__SuKienUuD__TenDa__1F98B2C1" ManuallyRouted="false" />
+        <AssociationConnector Association="DoanHK5Model.FK__NhanVien__CMND__4BAC3F29" ManuallyRouted="false" />
+        <AssociationConnector Association="DoanHK5Model.FK__NhanVien__MATT__4AB81AF0" ManuallyRouted="false" />
+        <AssociationConnector Association="DoanHK5Model.FK__SuKienUuDa__MaNV__208CD6FA" ManuallyRouted="false" />
+        <AssociationConnector Association="DoanHK5Model.FK__ThuChi__MaNV__6383C8BA" ManuallyRouted="false" />
+        <AssociationConnector Association="DoanHK5Model.FK__SuKienUuDa__MATT__2180FB33" ManuallyRouted="false" />
+        <AssociationConnector Association="DoanHK5Model.FK__ThuChi__MATT__6477ECF3" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

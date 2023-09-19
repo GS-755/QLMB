@@ -1,0 +1,94 @@
+﻿@model QLMB.Models.SuKienUuDai
+
+@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Views/Shared/Manager.cshtml";
+}
+
+
+<link rel='stylesheet' type='text/css' media='screen' href='~/Resources/CSS/FormDetail.css'>
+
+<div class="body">
+    <div>
+        <h2>Chi tiết đơn xin</h2>
+        <h3>Loại: @Model.DanhMuc.TenDM</h3>
+    </div>
+
+    <p style="font-weight:bold;font-size:25px" class="mt-2 mb-2">@Html.DisplayFor(model => model.TieuDe)</p>
+
+    <div style="display:flex">
+
+        <div class="Picture">
+            <img src="@Url.Content(Model.HinhBia)" width="358px" height="358px" />
+        </div>
+        <div class="Sold">
+            <table>
+                <tr>
+                    <td>Ngày làm đơn</td>
+                    <td>@Html.DisplayFor(model => model.NgayLamDon)</td>
+                </tr>
+                <tr>
+                    <td>Người làm đơn</td>
+                    <td>@Html.DisplayFor(model => model.NguoiThue.ThongTinND.HoTen)</td>
+                </tr>
+                <tr>
+                    <td>Ngày bắt đầu</td>
+                    <td>@Convert.ToDateTime(Model.NgayBatDau).ToString("dd/MM/yyyy")</td>
+                </tr>
+                <tr>
+                    <td>Ngày kết thúc</td>
+                    <td>@Convert.ToDateTime(Model.NgayKetThuc).ToString("dd/MM/yyyy")</td>
+                </tr>
+                <tr>
+                    <td>Tình trạng</td>
+                    <td>@Html.DisplayFor(model => model.TinhTrang.TenTT)</td>
+                </tr>
+                @if (Model.MATT != 1)
+                {
+                    <tr>
+                        <td>Người duyệt đơn</td>
+                        <td>@Html.DisplayFor(model => model.NhanVien.ThongTinND.HoTen)</td>
+                    </tr>
+                    <tr>
+                        <td>Ngày duyệt</td>
+                        <td>@Convert.ToDateTime(Model.NgayDuyet).ToString("dd/MM/yyyy")</td>
+                    </tr>
+                }
+            </table>
+
+
+
+        </div>
+        <div class="Form">
+            <input class="btn btn-success" type="submit" value="Đồng ý">
+            <input class="btn btn-danger" type="submit" value="Từ chối">
+        </div>
+    </div>
+
+    @if (Session["Page"] == "SK")
+    {
+        <div style="display:flex">
+            <div class="Description">
+                <p style="font-weight:bold; text-align:center">Mô tả</p>
+                <p>@Html.DisplayFor(model => model.MoTa)</p>
+            </div>
+        </div>
+    }
+
+
+
+    <p>
+        @if (Session["Page"] == "SK")
+        {
+            @Html.ActionLink("Quay lại danh sách", "EventMain")
+        }
+        else
+        {
+            <div class="mt-1">
+            @Html.ActionLink("Quay lại danh sách", "SaleMain")
+            </div>
+
+        }
+    </p>
+
+</div>

@@ -1,0 +1,43 @@
+﻿.body {
+    width: 1200px;
+    margin: 0 auto;
+}
+
+.Picture, .Sold, .Info, .Description, .ProductInfo,.Form {
+    margin-left: 20px;
+    margin-top: 20px;
+}
+
+
+
+.Sold {
+    width: 392px;
+}
+
+
+
+.Description {
+    width: 80%;
+}
+
+.Form {
+    width:auto;
+    float:right
+}
+
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid black;
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}

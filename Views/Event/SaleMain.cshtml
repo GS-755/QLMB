@@ -1,0 +1,84 @@
+﻿@model IEnumerable<QLMB.Models.SuKienUuDai>
+
+@{
+    ViewBag.Title = "Quản lý ưu đãi";
+    Layout = "~/Views/Shared/Manager.cshtml";
+    <link rel="stylesheet" href="~/Resources/CSS/tableInfo.css" />
+}
+
+<h2>Quản lý ưu đãi</h2>
+
+
+
+
+@using (Html.BeginForm("SaleMain", "Event", FormMethod.Get))
+{
+
+    <div class="row mb-5">
+        <div class="input-group">
+            <div class="form-outline" style="margin-right: 5px">
+                <input type="text" class="form-control border border-secondary" placeholder="Tìm kiếm" name="NameSearch" />
+
+            </div>
+            <div>
+                <button class="btn btn-primary" type="submit">
+                    <i class='bx bx-search'></i>
+                </button>
+
+            </div>
+
+        </div>
+    </div>
+
+    <div>
+
+        <div id="table-scroll" class="table-scroll">
+            <table id="main-table" class="main-table">
+                <thead>
+                    <tr>
+                        <th scope="col">Ngày làm đơn</th>
+                        <th scope="col">Người làm đơn</th>
+                        <th scope="col">Hình bìa</th>
+                        <th scope="col">Tên ưu đãi</th>
+                        <th scope="col">Ngày bắt đầu</th>
+                        <th scope="col">Ngày kết thúc</th>
+                        <th scope="col">Tình trạng duyệt</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null)
+                    {
+                        foreach (var item in Model)
+                        {
+                            <tr>
+                                <td align="center" style="width:100px">
+                                    @Html.DisplayFor(modelItem => item.NgayLamDon)
+                                </td>
+
+
+                                <td style="width:150px">@Html.DisplayFor(modelItem => item.NguoiThue.ThongTinND.HoTen)</td>
+                                <td align="center" style="vertical-align:middle; width: 100px"><img src="@Url.Content(item.HinhBia)" class="img" /></td>
+                                <td style="width: 200px">@Html.DisplayFor(modelItem => item.TieuDe)</td>
+                                <td align="center" style="width:100px">@Convert.ToDateTime(item.NgayBatDau).ToString("dd/MM/yyyy") </td>
+
+                                <td align="center" style="width:100px">@Convert.ToDateTime(item.NgayKetThuc).ToString("dd/MM/yyyy")</td>
+
+                                <td align="center" style="width:100px">@Html.DisplayFor(modelItem => item.TinhTrang.TenTT)</td>
+
+
+                                <td style="width:100px">
+                                    @*@Html.ActionLink("Chỉnh sửa", "ProductEdit", new { id = item.IDProduct }) |*@
+                                    @Html.ActionLink("Chi tiết", "Detail", new { NgayLamDon = item.NgayLamDon, NguoiLamDon = item.NguoiThue.ThongTinND.HoTen, tieuDe = item.TieuDe })
+                                </td>
+                            </tr>
+                        }
+                    }
+
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+
+}

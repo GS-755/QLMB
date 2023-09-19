@@ -1,0 +1,75 @@
+﻿@model IEnumerable<QLMB.Models.NhanVien>
+
+@{
+    ViewBag.Title = "HumanResourceMain";
+    Layout = "~/Views/Shared/Manager.cshtml";
+    <link rel="stylesheet" href="~/Resources/CSS/tableInfo.css" />
+}
+
+<h2>Quản lý nhân sự</h2>
+
+@using (Html.BeginForm("HumanResourceMain", "HumanResource", FormMethod.Get))
+{
+
+    <div class="row mb-2">
+        <div class="input-group">
+            <div class="form-outline" style="margin-right: 5px">
+                <input type="text" class="form-control border border-secondary" placeholder="Tìm kiếm" name="NameSearch" />
+            </div>
+            <div>
+                <button class="btn btn-primary" type="submit">
+                    <i class='bx bx-search'></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div>
+        @Html.ActionLink("Thêm nhân viên", "employeeInfo", "Register", null, new { @class = "btn btn-success mt-3 mb-3" })
+        <div id="table-scroll" class="table-scroll">
+            <table id="main-table" class="main-table">
+                <thead>
+                    <tr>
+                        <th scope="col">Mã nhân viên</th>
+                        <th scope="col">Chức vụ</th>
+                        <th scope="col">CMND</th>
+                        <th scope="col">Họ tên</th>
+                        <th scope="col">Tình trạng</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null)
+                    {
+                        foreach (var item in Model)
+                        {
+                            <tr>
+                                <td style="width:90px">
+                                    @Html.DisplayFor(modelItem => item.MaNV)
+                                </td>
+
+
+                                <td style="width:90px">@Html.DisplayFor(modelItem => item.ChucVu.TenCV)</td>
+                                <td style="width:20px">@Html.DisplayFor(modelItem => item.CMND)</td>
+                                <td style="width:100px">@Html.DisplayFor(modelItem => item.ThongTinND.HoTen)</td>
+                                <td style="width:80px">@Html.DisplayFor(modelItem => item.TinhTrang.TenTT)</td>
+
+
+                                <td style="width:100px">
+                                    @*@Html.ActionLink("Chỉnh sửa", "ProductEdit", new { id = item.IDProduct }) |*@
+                                    @Html.ActionLink("Chi tiết", "Detail", new { CMND = item.CMND }, new { @class = "btn btn-outline-primary" })
+                                </td>
+                            </tr>
+                        }
+                    }
+
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+
+}
+
+
+@*Hiện chữ thông báo*@
+@Html.Raw(TempData["msg"])

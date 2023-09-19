@@ -1,30 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using QLMB.Models;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
+
 
 namespace QLMB.Controllers
 {
     public class HomeController : Controller
     {
+        database db = new database();
+
         public ActionResult Index()
         {
-            return View();
+            var suKienList = db.SuKienUuDais.OrderByDescending(s => s.NgayBatDau);
+            
+            return View(suKienList);
         }
-
-        public ActionResult About()
+        public ActionResult ClearSession()
         {
-            ViewBag.Message = "Your application description page.";
+            Session.Abandon();
 
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
+            return RedirectToAction("Index");
         }
     }
 }

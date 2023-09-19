@@ -1,0 +1,3 @@
+﻿@model QLMB.Models.ChucVu
+
+    @Html.DropDownListFor(model => model.MaChucVu, new SelectList(Model.ListChucVu.OrderBy(model => model.TenCV), "MaChucVu", "TenCV"), "--Chọn chức vụ--", new { @class = "btn border dropdown-toggle text-start" })

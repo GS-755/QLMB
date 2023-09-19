@@ -1,0 +1,59 @@
+﻿@model QLMB.Models.ThongTinND
+
+@{
+    ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+ 
+
+<h2 class="text-center">ĐĂNG KÝ NGƯỜI THUÊ</h2>
+<div class="container">
+    <div class="col">
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="col-md-4">
+                @using (Html.BeginForm("rentalRegister", "Register"))
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-horizontal m-5">
+                        <hr />
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="form-group">
+                            <label for="MatKhau" class="mb-2">Số CCCD(CMND)</label>
+                            <div class="row">
+                                <input type="text" value="@Model.CMND" name="CMND" class="form-control" disabled />
+                                @Html.ValidationMessageFor(model => model.CMND,"", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="TenDangNhap" class="mb-2">Tên đăng nhập</label>
+                            <div class="row">
+                                @Html.EditorFor(model => model.TenDangNhap, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.TenDangNhap, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="MatKhau" class="mb-2">Mật khẩu</label>
+                            <div class="row">
+                                @Html.PasswordFor(model => model.MatKhau, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.MatKhau, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group mt-3">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="submit" name="action" value="Đăng ký" class="btn btn-success" />
+                                <input type="submit" name="action" value="Quay lại" class="btn btn-success" />
+                                @*@Html.ActionLink("Quay lại", "rentalInfo", "Register", new { @class = "btn btn-warning text-white mx-3" })*@
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+    </div>
+</div>
