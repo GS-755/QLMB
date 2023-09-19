@@ -8,5 +8,6 @@ namespace QLMB.Controllers
         public ActionResult Index() => View();
 
         //Tris so SkIlLeD iSsUes
+        //Con cac
     }
 }
