@@ -6,5 +6,7 @@ namespace QLMB.Controllers
     {
         // GET: skillissue
         public ActionResult Index() => View();
+
+        //Tris so SkIlLeD iSsUes
     }
 }
