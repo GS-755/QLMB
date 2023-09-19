@@ -1,59 +1,74 @@
 ﻿using QLMB.Models;
-using System;
-using System.Collections.Generic;
-using System.Data.Entity.Core.Objects;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace QLMB.Controllers.Manager
 {
     public class HumanResourceController : Controller
     {
-        database db = new database();
-        public ActionResult Index()
+        private database db = new database();
+
+        public ActionResult HumanResourceMain(string NameSearch)
         {
             try
             {
-                if (Session["RoleID"].ToString() == "NS")
-                    return RedirectToAction("HumanResourceMain", "HumanResource");
-                else if (Session["RoleID"].ToString() == "SKUD")
-                    return RedirectToAction("EventMain", "Event");
-            } catch(Exception ex) 
-            {
-                ViewBag.Exception("Lỗi điều hướng Session. [SkIlL iSsUe] :))");
+                //Nếu RoleID != null --> Đã đăng nhập
+                if (Session["RoleID"] != null)
+                {
+                    //Đúng Role --> Vào
+                    if (Session["RoleID"].ToString() == "NS")
+                    {
+                        ////Dùng để xử lý về lại trang trước đó trong Detail
+                        //Session["Page"] = "NS";
 
-                return View("LoginPage", "Login");
+                        var data = db.NhanViens.ToList();
+
+                        //Xử lý tìm kiếm
+                        if (NameSearch != null)
+                        {
+                            data = data.Where(s => s.MaNV.ToString().Contains(NameSearch) ||
+                                                   s.ChucVu.TenCV.ToUpper().Contains(NameSearch) ||
+                                                   s.CMND.Trim().Contains(NameSearch) ||
+                                                   s.ThongTinND.HoTen.ToUpper().Contains(NameSearch.ToUpper()) ||
+                                                   s.TinhTrang.TenTT.ToUpper().Contains(NameSearch.ToUpper())).ToList();
+                        }
+                        return View(data);
+                    }
+                }
+                //Không thoả --> Về trang xử lý chuyển trang
+                return RedirectToAction("PageRedirect", "PageChange");
             }
 
-            return RedirectToAction("LoginPage", "Login");
-        }
-        // GET: HumanResource
-        public ActionResult HumanResourceMain(string NameSearch)
-        {
-            Session["Page"] = "NS";
-            var data = db.NhanViens.ToList();
-            if (NameSearch != null)
+            //Lỗi xử lý --> Skill Issue :))
+            catch
             {
-                data = data.Where(s => s.MaNV.ToString().Contains(NameSearch) ||
-                                       s.ChucVu.TenCV.ToUpper().Contains(NameSearch) ||
-                                       s.CMND.Trim().Contains(NameSearch) ||
-                                       s.ThongTinND.HoTen.ToUpper().Contains(NameSearch.ToUpper()) ||
-                                       s.TinhTrang.TenTT.ToUpper().Contains(NameSearch.ToUpper())).ToList();
+                return RedirectToAction("Index", "SkillIssue");
             }
-            return View(data);
         }
 
         public ActionResult Detail(string CMND)
         {
-            if (Session["Page"] == null)
+            try
             {
-                return RedirectToAction("HumanResourceMain");
+                //Nếu RoleID != null --> Đã đăng nhập
+                if (Session["RoleID"] != null)
+                {
+                    //Đúng Role --> Vào
+                    if (Session["RoleID"].ToString() == "NS")
+                    {
+                        return View(db.NhanViens.Where(s => s.CMND == CMND).FirstOrDefault());
+                    }
+                }
+                //Không thoả --> Về trang xử lý chuyển trang
+                return RedirectToAction("PageRedirect", "PageChange");
             }
-            else
+
+            //Lỗi xử lý --> Skill Issue :))
+            catch
             {
-                return View(db.NhanViens.Where(s => s.CMND == CMND).FirstOrDefault());
+                return RedirectToAction("Index", "SkillIssue");
             }
+            
         }
     }
 }

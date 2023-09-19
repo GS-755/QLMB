@@ -8,27 +8,26 @@
     <link href="~/Content/Site.css" rel="stylesheet" />
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    <!--JS(s)-->
+    <script src="~/Scripts/popper.min.js"></script>
 </head>
 <body>
     <!--Navbar start-->
     <nav class="navbar navbar-expand-lg navbar-light bg-light p-0 m-0 text-uppercase" style="font-size: 17.5px;">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="@Url.Action("Index", "Home")">
                 <img 
                      src="~/Resources/Picture/Logo/Logo_LightMode.png"
                      alt="Gà Tây Ninh"
                      class="nav-item"
                      height="60"
-                     />
+                />
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        @Html.ActionLink("Trang chủ", "Index", "Home", null, new { @class = "nav-link active" })
-                    </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Sự kiện</a>
                     </li>
@@ -52,12 +51,12 @@
                         <li class="nav-item dropdown">
                             <a 
                                class="nav-link dropdown-toggle" 
-                               href="#" id="navbarDropdown" 
+                               href="#" id="navbarDropDown" 
                                role="button" data-bs-toggle="dropdown" 
                                aria-expanded="false">
                                 Xin chào, @Session["AccountName"].ToString()
                             </a>
-                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropDown">
                                 <li><a class="dropdown-item" href="#">Thông tin</a></li>
                                 <li><a class="dropdown-item" href="#">Quản lý thuê</a></li>
                                 <li><hr class="dropdown-divider"></li>
@@ -72,9 +71,7 @@
         </div>
     </nav>
     <!--Navbar end-->
-
     @RenderBody()
-
     <!--Footer start-->
     <hr />
     <footer class="flex-shrink-0 text-white" style="background-color: #11101d;">
@@ -85,11 +82,10 @@
                          class="nav-item"
                          height="60"
                          alt="Gà Tây Ninh" />
-                    <i class="fs-5 text-center">"Điểm 10 cho chất lượng"</i>
+                    <i class="fs-5 text-center">"Vua cho thuê mặt bằng"</i>
                 </div>
                 <div class="col-lg-4">
                     <p class="fa fs-5 text-center text-uppercase fw-bold">&emsp; Trung tâm thương mại Gà Tây Ninh</p>
-
                     <!-- Icon Nhà -->
                     <p class="small">
                         <i class="fa fa-home">&emsp; Địa chỉ: 42/17 Hồ Thị Kỷ, Phường 1, Quận 10, TP. Hồ Chí Minh</i>
@@ -132,7 +128,10 @@
         </div>
     </footer>
     <!--Footer end-->
+
     <!--Script(s)-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="~/Scripts/bootstrap.bundle.min.js"></script>
+    <script src="~/Scripts/angular.min.js"></script>
 </body>
 </html>

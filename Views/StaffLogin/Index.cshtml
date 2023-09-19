@@ -1,0 +1,36 @@
+﻿@model QLMB.Models.NhanVien
+@{
+    ViewBag.Title = "Đăng nhập Nhân viên";
+    Layout = "~/Views/Shared/Manager.cshtml";
+}
+
+<section class="section">
+    <h2 class="text-center mt-3 mb-3">Đăng nhập Nhân viên</h2>
+    <div class="container-fluid">
+        <div class="col">
+            <div class="row">
+                <div class="col-md-4"></div>
+                <div class="col-md-4">
+                    @using (Html.BeginForm("Login", "StaffLogin"))
+                    {
+                        @Html.AntiForgeryToken()
+                        <div class="row mb-3">
+                            <label for="TenDangNhap">Tên đăng nhập</label>
+                            <input type="text" name="MaNV" class="form-control" />
+                        </div>
+                        <div class="row mb-3">
+                            <label for="TenDangNhap">Mật khẩu</label>
+                            @Html.PasswordFor(k => k.MatKhau, new { @class="form-control" })
+                        </div>
+                        <div class="row mb-3">
+                            <input type="submit" class="btn btn-success" value="Đăng nhập" />
+                        </div>
+                        <p class="text-danger text-center">@ViewBag.StaffLoginStatus</p>
+                    }
+                </div>
+                <div class="col-md-4"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
