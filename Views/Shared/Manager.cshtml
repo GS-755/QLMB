@@ -16,22 +16,31 @@
             <div class="logo">
                 @*<i class='bx bxl-c-plus-plus'></i>
                     <span class="logo_name">CodingLab</span>*@
-
                 <img src="~/Resources/Picture/Logo/Logo_DarkMode.png" id="logoImg" />
             </div>
 
             <i class='bx bx-menu-alt-right' id="btn"></i>
         </div>
         <ul class="nav-links">
-            <li>
-                <a href="#">
-                    <i class='bx bx-grid-alt'></i>
-                    <span class="link_name">Thanh điều khiển</span>
-                </a>
-                <ul class="sub-menu blank">
-                    <li><a class="link_name" href="#">Category</a></li>
-                </ul>
-            </li>
+            @try
+            {
+                if (Session["AccountName"] != null)
+                {
+                    <li>
+                        <a href="#">
+                            <i class='bx bx-grid-alt'></i>
+                            <span class="link_name">Thanh điều khiển</span>
+                        </a>
+                        <ul class="sub-menu blank">
+                            <li><a class="link_name" href="#">Category</a></li>
+                        </ul>
+                    </li>
+                }
+            }
+            catch
+            {
+
+            }
             @try
             {
                 if (Session["RoleID"].ToString() == "SKUD")
@@ -108,7 +117,7 @@
             }
             catch
             {
-                
+
             }
 
         </ul>

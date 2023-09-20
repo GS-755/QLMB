@@ -62,7 +62,6 @@ namespace QLMB.Controllers.Manager
 
                     return (true, check.MaChucVu.ToString());
                 }
-
                 else
                 {
                     ModelState.AddModelError("Error", "* Tài khoản hoặc mật khẩu không đúng");
