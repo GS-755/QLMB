@@ -134,7 +134,7 @@
     <Compile Include="Controllers\LoginRegister\RegisterController.cs" />
     <Compile Include="Controllers\Manager\EventController.cs" />
     <Compile Include="Controllers\Manager\HumanResourceController.cs" />
-    <Compile Include="Controllers\skillissueController.cs" />
+    <Compile Include="Controllers\SkillIssueController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -242,6 +242,7 @@
     <Content Include="Resources\Picture\Logo\Logo_LightMode.png" />
     <Content Include="Resources\Picture\SkillIssue\error-404.jpg" />
     <Content Include="Resources\Query\Mohamed_Query.sql" />
+    <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
@@ -273,6 +274,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\popper.min.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -303,7 +305,7 @@
     <Content Include="Views\Register\SelectRole.cshtml" />
     <Content Include="Views\Shared\Manager.cshtml" />
     <Content Include="Views\Shared\_MasterLayout.cshtml" />
-    <Content Include="Views\skillissue\Index.cshtml" />
+    <Content Include="Views\SkillIssue\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

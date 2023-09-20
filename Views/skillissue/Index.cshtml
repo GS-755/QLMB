@@ -5,20 +5,24 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>SkIlL iSsUe :))</title>
+    <title>SkIlL iSsUe :)) - QLMB</title>
     <link href="~/favicon.ico" rel="icon" />
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <section class="section flex-column mt-5">
+    <section class="flex-column mt-5 mb-3">
         <div class="container-fluid">
             <div class="col">
                 <div class="row">
                     <div class="col-md-2"></div>
                     <div class="col-md-8 text-center">
                         <div>
-                            <h1 class="text-center text-danger" style="font-size: 75px" ;">404 <br />SkIlL iSsUe :))</h1>
+                            <h1 class="text-center text-danger" style="font-size: 45px";">
+                                <span class="text-danger" style="font-size: 65px;">404</span>
+                                <br /> 
+                                SkIlL iSsUe :))
+                            </h1>
                         </div>
                         <div>
                             <img src="~/Resources/Picture/SkillIssue/error-404.jpg" class="img-wrapper" style="width: 250px; height: auto;" />
@@ -28,6 +32,7 @@
                         </div>
                         <div class="mt-1">
                             @Html.ActionLink("Trang chủ", "Index", "Home", null, new { @class = "btn btn-success" })
+                            @Html.ActionLink("Chơi game", "Game", "SkillIssue", null, new { @class = "mx-3 btn btn-danger" })
                         </div>
                     </div>
                     <div class="col-md-2"></div>

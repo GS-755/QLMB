@@ -1,9 +1,6 @@
 ﻿using QLMB.Models;
 using System;
-using System.Collections.Generic;
-using System.Data.Entity.Core.Objects;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace QLMB.Controllers.Manager
@@ -15,18 +12,15 @@ namespace QLMB.Controllers.Manager
         {
             try
             {
-                if (Session["RoleID"].ToString() == "NS")
-                    return RedirectToAction("HumanResourceMain", "HumanResource");
-                else if (Session["RoleID"].ToString() == "SKUD")
-                    return RedirectToAction("EventMain", "Event");
-            } catch(Exception ex) 
+                return Session["RoleID"].ToString() == "NS"
+                        ? RedirectToAction("HumanResourceMain", "HumanResource")
+                        : Session["RoleID"].ToString() == "SKUD"
+                            ? RedirectToAction("EventMain", "Event")
+                            : RedirectToAction("LoginPage", "Login");
+            } catch 
             {
-                ViewBag.Exception("Lỗi điều hướng Session. [SkIlL iSsUe] :))");
-
-                return View("LoginPage", "Login");
+                return RedirectToAction("Index", "SkillIssue");
             }
-
-            return RedirectToAction("LoginPage", "Login");
         }
         // GET: HumanResource
         public ActionResult HumanResourceMain(string NameSearch)

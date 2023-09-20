@@ -1,25 +1,17 @@
 ﻿<!DOCTYPE html>
-
-<html>
+<html lang="vi">
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
-
     <!--CSS File-->
     <link rel="stylesheet" href="~/Resources/CSS/Manager.css" />
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     <!--Icon-->
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-
 </head>
 <body>
-
-
-
     <div class="sidebar">
-
-
         <div class="logo-content">
             <div class="logo">
                 @*<i class='bx bxl-c-plus-plus'></i>
@@ -30,9 +22,6 @@
 
             <i class='bx bx-menu-alt-right' id="btn"></i>
         </div>
-
-
-
         <ul class="nav-links">
             <li>
                 <a href="#">
@@ -50,7 +39,6 @@
                     @*Sự kiện*@
                     <li>
                         <div class="iocn-link">
-
                             @*Icon*@
                             <div class="link">
                                 <i class='bx bxs-calendar-event'></i>
@@ -61,7 +49,6 @@
                         </div>
                         @*Các mục con*@
                         <ul class="sub-menu">
-
                             <li>
                                 <div class="link">
                                     <span>@Html.ActionLink("Sự kiện", "EventMain", "Event", new { @class = "link_name" })</span>
@@ -72,12 +59,8 @@
                             <li><a href="#">Đã duyệt</a></li>
                         </ul>
                     </li>
-
-
-
                     @*Ưu đãi*@
                     <li>
-
                         @*Icon*@
                         <div class="iocn-link">
                             <div class="link">
@@ -86,7 +69,6 @@
                             </div>
                             <i class='bx bxs-chevron-down arrow'></i>
                         </div>
-
                         @*Các mục con*@
                         <ul class="sub-menu">
                             <li>
@@ -99,82 +81,64 @@
                         </ul>
                     </li>
                 }
-
                 @*Nhân sự*@
                 if (Session["RoleID"].ToString() == "NS")
                 {
-
                     @*Sự kiện*@
                     <li>
                         <div class="iocn-link">
-
                             @*Icon*@
                             <div class="link">
                                 <i class='bx bxs-calendar-event'></i>
                                 <span>@Html.ActionLink("Nhân sự", "HumanResourceMain", "HumanResource", null, new { @class = "link_name" })</span>
                             </div>
-
                             <i class='bx bxs-chevron-down arrow'></i>
                         </div>
                         @*Các mục con*@
                         <ul class="sub-menu">
-
                             <li>
                                 <div class="link">
                                     <span>@Html.ActionLink("Nhân sự", "HumanResourceMain", "HumanResource", null, new { @class = "link_name" })</span>
                                 </div>
                             </li>
-                            <li><a href="@Url.Action("employeeInfo", "Register", new { @class = "link_name" })">Thêm nhân viên</a></li>
-
+                            <li>
+                                <a href="@Url.Action("employeeInfo", "Register", new { @class = "link_name" })">Thêm nhân viên</a>
+                            </li>
                         </ul>
                     </li>
                 }
             }
-            catch (Exception e)
+            catch
             {
-
                 @Url.Action("Bạn phải đăng nhập", "LoginPage", "Login")
-             }
-
-
-
+            }
 
         </ul>
-
         <!--Thông tin người dùng-->
         <div class="profile-content">
             <div class="profile">
                 <div class="profile-details">
                     @*<img src="image/profile.jpg" alt="profileImg">*@
                     <i class='bx bx-user' id="userImg"></i>
-
-
                     <div class="name-job">
                         <div class="name">@Session["AccountName"]</div>
                         <div class="job">@Session["Role"]</div>
                     </div>
                 </div>
-
                 @*Ký hiệu đăng xuất*@
                 <a href="@Url.Action("Logout", "Login")">
                     <i class='bx bx-log-out' style='color:#ffffff' id="log_out"></i>
-
                 </a>
-
             </div>
         </div>
     </div>
-
     <div class="home-content">
         @RenderBody()
     </div>
 
-
     <script src="~/Resources/JavaScript/managerNavBar.js"></script>
 </body>
 </html>
-
-
 @*<li>
         <div class="iocn-link">
             <a href="#">
