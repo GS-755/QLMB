@@ -44,7 +44,6 @@
                                 <i class='bx bxs-calendar-event'></i>
                                 <span>@Html.ActionLink("Sự kiện", "EventMain", "Event", new { @class = "link_name" })</span>
                             </div>
-
                             <i class='bx bxs-chevron-down arrow'></i>
                         </div>
                         @*Các mục con*@
@@ -54,7 +53,6 @@
                                     <span>@Html.ActionLink("Sự kiện", "EventMain", "Event", new { @class = "link_name" })</span>
                                 </div>
                             </li>
-
                             <li><a href="#">Chưa duyệt</a></li>
                             <li><a href="#">Đã duyệt</a></li>
                         </ul>
@@ -110,25 +108,52 @@
             }
             catch
             {
-                @Url.Action("Bạn phải đăng nhập", "LoginPage", "Login")
+                
             }
 
         </ul>
         <!--Thông tin người dùng-->
         <div class="profile-content">
             <div class="profile">
-                <div class="profile-details">
-                    @*<img src="image/profile.jpg" alt="profileImg">*@
-                    <i class='bx bx-user' id="userImg"></i>
-                    <div class="name-job">
-                        <div class="name">@Session["AccountName"]</div>
-                        <div class="job">@Session["Role"]</div>
-                    </div>
-                </div>
                 @*Ký hiệu đăng xuất*@
-                <a href="@Url.Action("Logout", "Login")">
-                    <i class='bx bx-log-out' style='color:#ffffff' id="log_out"></i>
-                </a>
+                @if (Session["AccountName"] == null)
+                {
+                    <div class="profile-details">
+                        @*<img src="image/profile.jpg" alt="profileImg">*@
+                        <i class='bx bx-user' id="userImg"></i>
+                        <div class="name-job">
+                            <div class="name">
+                                @Html.ActionLink(
+                                    "Đăng nhập", 
+                                    "Index", 
+                                    "StaffLogin", 
+                                    null, 
+                                    new Dictionary<string, object> { 
+                                        { "class", "text-white" }, 
+                                        { "style", "text-decoration: none;" 
+                                    } 
+                                })
+                            </div>
+                        </div>
+                    </div>
+                    <a href="@Url.Action("Index", "StaffLogin")">
+                        <i class='bx bx-user' style='color:#ffffff' id="log_out"></i>
+                    </a>
+                }
+                else
+                {
+                    <div class="profile-details">
+                        @*<img src="image/profile.jpg" alt="profileImg">*@
+                        <i class='bx bx-user' id="userImg"></i>
+                        <div class="name-job">
+                            <div class="name">@Session["AccountName"]</div>
+                            <div class="job">@Session["Role"]</div>
+                        </div>
+                    </div>
+                    <a href="@Url.Action("Logout", "StaffLogin")">
+                        <i class='bx bx-log-out' style='color:#ffffff' id="log_out"></i>
+                    </a>
+                }
             </div>
         </div>
     </div>

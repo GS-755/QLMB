@@ -3,7 +3,7 @@ using System;
 using System.Linq;
 using System.Web.Mvc;
 
-namespace QLMB.Controllers.NewFolder1
+namespace QLMB.Controllers.Customer
 {
     public class RegisterController : Controller
     {

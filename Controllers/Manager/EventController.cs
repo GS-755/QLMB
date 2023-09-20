@@ -10,7 +10,8 @@ namespace QLMB.Controllers.Manager
 {
     public class EventController : Controller
     {
-        database db = new database();
+        private database db = new database();
+
         // GET: Event
         public ActionResult EventMain(string NameSearch)
         {

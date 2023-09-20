@@ -2,8 +2,9 @@
 using System;
 using System.Linq;
 using System.Web.Mvc;
+using System.Data.Entity;
 
-namespace QLMB.Controllers.LoginRegister
+namespace QLMB.Controllers.Customer
 {
     public class ForgetPasswordController : Controller
     {
@@ -155,7 +156,6 @@ namespace QLMB.Controllers.LoginRegister
                 error++;
             }
 
-
             //Nhập lại mật khẩu
             if (nguoiThue.NhapLaiMatKhau == null)
             {
@@ -167,7 +167,6 @@ namespace QLMB.Controllers.LoginRegister
                 ModelState.AddModelError("reReserPassword", "* Mật khẩu không khớp - Xin hãy điền lại");
                 error++;
             }
-
 
             if (error == 0)
             {
@@ -187,7 +186,7 @@ namespace QLMB.Controllers.LoginRegister
             nguoiThue.TenDangNhap = Session["TenDangNhap"].ToString();
             nguoiThue.MatKhau = authTmp;
 
-            db.Entry(nguoiThue).State = System.Data.Entity.EntityState.Modified;
+            db.Entry(nguoiThue).State = EntityState.Modified;
             db.SaveChanges();
         }
     }

@@ -18,39 +18,42 @@
                     @*Tính năng bảo mật - Tránh đăng nhập chéo trang*@
                     @Html.AntiForgeryToken()
 
-                    <div class="col m-4">
+            <div class="col m-4">
 
-                        @*Tên đăng nhập*@
-                        <div class="row">
-                            <label for="TenDangNhap" class="mb-2">Tên đăng nhập:</label>
-                            <input type="text" name="TenDangNhap" class="form-control" placeholder="vd: abc123" />
-                            @Html.ValidationMessage("inputUsername", new { @class = "text-danger mt-1" })
-                        </div>
-
-
-                        @*Mật khẩu*@
-                        <div class="row mt-3">
-                            <label for="MatKhau" class="mb-2">Mật khẩu:</label>
-                            <input type="password" name="MatKhau" class="form-control" />
-                            @Html.ValidationMessage("inputPassword", new { @class = "text-danger mt-1" })
-                        </div>
+                @*Tên đăng nhập*@
+                <div class="row">
+                    <label for="TenDangNhap" class="mb-2">Tên đăng nhập:</label>
+                    <input type="text" name="TenDangNhap" class="form-control" placeholder="vd: abc123" />
+                    @Html.ValidationMessage("inputUsername", new { @class = "text-danger mt-1" })
+                </div>
 
 
-                        @*Thông báo lỗi đăng nhập*@
-                        @Html.ValidationMessage("Error", new { @class = "text-danger mt-1" })
+                @*Mật khẩu*@
+                <div class="row mt-3">
+                    <label for="MatKhau" class="mb-2">Mật khẩu:</label>
+                    <input type="password" name="MatKhau" class="form-control" />
+                    @Html.ValidationMessage("inputPassword", new { @class = "text-danger mt-1" })
+                </div>
 
 
-                        <div class="text-center mt-3">
-                            @*Nút đăng nhập*@
-                            <input type="submit" value="Đăng nhập" class="btn btn-success" />
+                @*Thông báo lỗi đăng nhập*@
+                @Html.ValidationMessage("Error", new { @class = "text-danger mt-1" })
 
-                            @*Nút đăng ký*@
-                            @Html.ActionLink("Đăng ký", "rentalInfo", "Register", null, new { @class = "btn btn-primary mx-3" })
-                        </div>
-                        <div class="text-center mt-2">
-                            @Html.ActionLink("Quên tài khoản hay mật khẩu ?", "ForgetPasswordPage", "ForgetPassword", null, new { @style = "text-decoration: none;" })
-                        </div>
-                    </div>
+
+                <div class="text-center mt-3">
+                    @*Nút đăng nhập*@
+                    <input type="submit" value="Đăng nhập" class="btn btn-success" />
+
+                    @*Nút đăng ký*@
+                    @Html.ActionLink("Đăng ký", "rentalInfo", "Register", null, new { @class = "btn btn-primary mx-3" })
+                </div>
+                <div class="text-center mt-2">
+                    @Html.ActionLink("Quên tài khoản hay mật khẩu ?", "ForgetPasswordPage", "ForgetPassword", null, new { @style = "text-decoration: none;" })
+                </div>
+                <div class="text-center mt-2">
+                    @Html.ActionLink("Đăng nhập Nhân viên", "Index", "StaffLogin", null, new { @style = "text-decoration: none;" })
+                </div>
+            </div>
                 }
 
             </div>
