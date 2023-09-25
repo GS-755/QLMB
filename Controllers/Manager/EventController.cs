@@ -1,66 +1,107 @@
 ﻿using QLMB.Models;
 using System;
-using System.Collections.Generic;
 using System.Data.Entity.Core.Objects;
 using System.Linq;
-using System.Runtime.InteropServices.ComTypes;
-using System.Web;
 using System.Web.Mvc;
+using System.Collections.Generic;
 using System.Web.UI.WebControls;
-using System.Web.WebPages;
 
 namespace QLMB.Controllers.Manager
 {
     public class EventController : Controller
     {
-        database db = new database();
+        private database db = new database();
+
         // GET: Event
         public ActionResult EventMain(string NameSearch)
         {
-            Session["Page"] = "SK";
-            var data = db.SuKienUuDais.Where(s => s.MaDM.Trim() == "SK").ToList();
-            if (NameSearch != null)
+            try
             {
-                data = data.Where(s => s.NgayLamDon.ToString().Contains(NameSearch) ||
-                                       s.NgayBatDau.ToString().Contains(NameSearch) ||
-                                       s.NgayKetThuc.ToString().Contains(NameSearch) ||
-                                       s.NguoiThue.ThongTinND.HoTen.ToUpper().Contains(NameSearch.ToUpper()) ||
-                                       s.TieuDe.ToUpper().Contains(NameSearch.ToUpper())||
-                                       s.TinhTrang.TenTT.ToUpper().Contains(NameSearch.ToUpper())).ToList();
+                if (Session["RoleID"].ToString() == "SKUD")
+                {
+                    Session["Page"] = "SK";
+                    List<SuKienUuDai> data = db.SuKienUuDais.Where(s => s.MaDM.Trim() == "SK").ToList();
+                    if (NameSearch != null)
+                    {
+                        data = data.Where(s => s.NgayLamDon.ToString().Contains(NameSearch) ||
+                                               s.NgayBatDau.ToString().Contains(NameSearch) ||
+                                               s.NgayKetThuc.ToString().Contains(NameSearch) ||
+                                               s.NguoiThue.ThongTinND.HoTen.ToUpper().Contains(NameSearch.ToUpper()) ||
+                                               s.TieuDe.ToUpper().Contains(NameSearch.ToUpper()) ||
+                                               s.TinhTrang.TenTT.ToUpper().Contains(NameSearch.ToUpper())).ToList();
+                    }
+
+                    return View(data);
+                }
+
+                return RedirectToAction("LoginPage", "Login");
             }
-            return View(data);
+            catch 
+            {
+                return RedirectToAction("Index", "SkillIssue");
+            }
+            
+
         }
 
         public ActionResult SaleMain(string NameSearch)
         {
-            Session["Page"] = "UD";
-            var data = db.SuKienUuDais.Where(s => s.MaDM.Trim() == "UD").ToList();
-            if (NameSearch != null)
+            try
             {
-                data = data.Where(s => s.NgayLamDon.ToString().Contains(NameSearch) ||
-                                       s.NgayBatDau.ToString().Contains(NameSearch) ||
-                                       s.NgayKetThuc.ToString().Contains(NameSearch) ||
-                                       s.NguoiThue.ThongTinND.HoTen.ToUpper().Contains(NameSearch.ToUpper()) ||
-                                       s.TieuDe.ToUpper().Contains(NameSearch.ToUpper()) ||
-                                       s.TinhTrang.TenTT.ToUpper().Contains(NameSearch.ToUpper())).ToList();
+                if (Session["RoleID"].ToString() == "SKUD")
+                {
+                    Session["Page"] = "UD";
+                    List<SuKienUuDai> data = db.SuKienUuDais.
+                                       Where(s => s.MaDM.Trim() == "UD").ToList();
+                    if (NameSearch != null)
+                    {
+                        data = data.Where(s => s.NgayLamDon.ToString().Contains(NameSearch) ||
+                                               s.NgayBatDau.ToString().Contains(NameSearch) ||
+                                               s.NgayKetThuc.ToString().Contains(NameSearch) ||
+                                               s.NguoiThue.ThongTinND.HoTen.ToUpper().Contains(NameSearch.ToUpper()) ||
+                                               s.TieuDe.ToUpper().Contains(NameSearch.ToUpper()) ||
+                                               s.TinhTrang.TenTT.ToUpper().Contains(NameSearch.ToUpper())).ToList();
+                    }
+
+                    return View(data);
+                }
+
+                return RedirectToAction("LoginPage", "Login");
             }
-            return View(data);
+            catch
+            {
+                return RedirectToAction("Index", "SkillIssue");
+            }
+            
+           
         }
 
         public ActionResult Detail(DateTime NgayLamDon, string NguoiLamDon, string tieuDe)
         {
-            if(Session["Page"] == null)
+            try
             {
-                return RedirectToAction("EventMain");
+                if (Session["RoleID"].ToString() == "SKUD")
+                {
+                    if (Session["Page"] == null)
+                        return RedirectToAction("EventMain");
+
+
+                    //EntityFunctions.TruncateTime([DateTime]) để lấy DateTime vì LingQ không hỗ trợ
+                    SuKienUuDai skud = db.SuKienUuDais.Where(
+                            s => EntityFunctions.TruncateTime(s.NgayLamDon) == EntityFunctions.TruncateTime(NgayLamDon)
+                              && s.NguoiThue.ThongTinND.HoTen == NguoiLamDon
+                              && s.TieuDe == tieuDe
+                    ).FirstOrDefault();
+
+                    return View(skud);
+                }
+
+                return RedirectToAction("LoginPage", "Login");
             }
-            else
+            catch 
             {
-                //EntityFunctions.TruncateTime([DateTime]) để lấy DateTime vì LingQ không hỗ trợ 
-                return View(db.SuKienUuDais.Where(s => EntityFunctions.TruncateTime(s.NgayLamDon) == EntityFunctions.TruncateTime(NgayLamDon) && 
-                                                  s.NguoiThue.ThongTinND.HoTen == NguoiLamDon && 
-                                                  s.TieuDe == tieuDe).FirstOrDefault());
+                return RedirectToAction("Index", "SkillIssue");
             }
-           
         }
     }
 }

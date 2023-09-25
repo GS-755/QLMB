@@ -1,5 +1,4 @@
 ﻿@model IEnumerable<QLMB.Models.NhanVien>
-
 @{
     ViewBag.Title = "HumanResourceMain";
     Layout = "~/Views/Shared/Manager.cshtml";
@@ -7,10 +6,8 @@
 }
 
 <h2>Quản lý nhân sự</h2>
-
 @using (Html.BeginForm("HumanResourceMain", "HumanResource", FormMethod.Get))
 {
-
     <div class="row mb-2">
         <div class="input-group">
             <div class="form-outline" style="margin-right: 5px">
@@ -46,14 +43,10 @@
                                 <td style="width:90px">
                                     @Html.DisplayFor(modelItem => item.MaNV)
                                 </td>
-
-
                                 <td style="width:90px">@Html.DisplayFor(modelItem => item.ChucVu.TenCV)</td>
                                 <td style="width:20px">@Html.DisplayFor(modelItem => item.CMND)</td>
                                 <td style="width:100px">@Html.DisplayFor(modelItem => item.ThongTinND.HoTen)</td>
                                 <td style="width:80px">@Html.DisplayFor(modelItem => item.TinhTrang.TenTT)</td>
-
-
                                 <td style="width:100px">
                                     @*@Html.ActionLink("Chỉnh sửa", "ProductEdit", new { id = item.IDProduct }) |*@
                                     @Html.ActionLink("Chi tiết", "Detail", new { CMND = item.CMND }, new { @class = "btn btn-outline-primary" })
@@ -61,15 +54,11 @@
                             </tr>
                         }
                     }
-
                 </tbody>
-
             </table>
         </div>
     </div>
-
 }
-
 
 @*Hiện chữ thông báo*@
 @Html.Raw(TempData["msg"])

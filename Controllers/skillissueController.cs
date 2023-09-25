@@ -2,9 +2,9 @@
 
 namespace QLMB.Controllers
 {
-    public class skillissueController : Controller
+    public class SkillIssueController : Controller
     {
-        // GET: skillissue
+        // GET: SkillIssue
         public ActionResult Index() => View();
     }
 }
