@@ -13,6 +13,15 @@ namespace QLMB.Controllers.Customer
         {
             return View();
         }
+
+        //Đăng xuất
+        public ActionResult Logout()
+        {
+            Session.Abandon();
+
+            return RedirectToAction("Index", "Home");
+        }
+
         //POST đăng nhập
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -21,24 +30,14 @@ namespace QLMB.Controllers.Customer
             try
             {
                 //Nếu tên đăng nhập > 8 ký tự ==> Người thuê
-                if(rentalCheckLogin(TenDangNhap, MatKhau))
+                if (rentalCheckLogin(TenDangNhap, MatKhau) == true)
                     return RedirectToAction("Index", "Home");
-                //Còn lại ==> Nhân viên
-                else if (ManagerCheckLogin(TenDangNhap, MatKhau).Item1)
-                {
-                    if (ManagerCheckLogin(TenDangNhap, MatKhau).Item2.Trim() == "SKUD")
-                    {
-                        return RedirectToAction("EventMain", "Event");
-                    }
-                    if (ManagerCheckLogin(TenDangNhap, MatKhau).Item2.Trim() == "NS")
-                    {
-                        return RedirectToAction("HumanResourceMain", "HumanResource");
-                    }
-                    else
-                    {
-                        return RedirectToAction("Index", "Home");
-                    }
 
+                //Còn lại ==> Nhân viên
+                else if (ManagerCheckLogin(TenDangNhap, MatKhau).Item1 == true)
+                {
+                    //Vào trang xử lý chuyển hướng
+                    return RedirectToAction("Manager", "Redirect");
                 }
                 else
                 {
@@ -52,11 +51,13 @@ namespace QLMB.Controllers.Customer
                 return View("LoginPage");
             }
         }
+
         //Kiểm tra thông tin đăng nhập
+        //Người thuê
         private bool rentalCheckLogin(string TenDangNhap, string MatKhau)
         {
             int error = 0;
-            if(TenDangNhap == "")
+            if (TenDangNhap == "")
             {
                 ModelState.AddModelError("inputUsername", "* Xin hãy điền tên đăng nhập");
                 error++;
@@ -66,7 +67,7 @@ namespace QLMB.Controllers.Customer
                 ModelState.AddModelError("inputPassword", "* Xin hãy điền mật khẩu");
                 error++;
             }
-            if(error == 0)
+            if (error == 0)
             {
                 string authTmp = SHA256.ToSHA256(MatKhau);
                 var check = db.NguoiThues.Where(a => a.TenDangNhap == TenDangNhap.Trim() && a.MatKhau == authTmp).FirstOrDefault();
@@ -91,6 +92,8 @@ namespace QLMB.Controllers.Customer
                 return false;
             }
         }
+
+        //Nhân viên
         private (bool, string) ManagerCheckLogin(string MaNV, string MatKhau)
         {
             int error = 0;
@@ -117,7 +120,19 @@ namespace QLMB.Controllers.Customer
                 {
                     var data = db.ThongTinNDs.Where(a => a.CMND == check.CMND).FirstOrDefault();
                     string[] name = check.ThongTinND.HoTen.Split(' ');
-                    Session["AccountName"] = name[name.Length - 2] + " " + name[name.Length - 1];
+
+                    //Xử lý độ dài tên: Độ dài lớn hơn 1 mới bị cắt 2 tên cuối
+                    if (name.Length > 1)
+                    {
+                        Session["AccountName"] = name[name.Length - 2] + " " + name[name.Length - 1];
+                    }
+
+                    //Không thì lấy luôn
+                    else
+                    {
+                        Session["AccountName"] = name[0];
+                    }
+
                     Session["Role"] = check.ChucVu.TenCV.ToString();
                     Session["RoleID"] = check.ChucVu.MaChucVu.Trim();
 
@@ -136,13 +151,6 @@ namespace QLMB.Controllers.Customer
             {
                 return (false, "");
             }
-        }
-        //Đăng xuất
-        public ActionResult Logout()
-        {
-            Session.Abandon();
-
-            return RedirectToAction("Index", "Home");
         }
     }
 }

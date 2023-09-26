@@ -1,171 +1,179 @@
 ﻿<!DOCTYPE html>
 <html lang="vi">
 <head>
+
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title - QLMB</title>
-    <!--CSS File-->
+
+    @* CSS File *@
     <link rel="stylesheet" href="~/Resources/CSS/Manager.css" />
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-    <!--Icon-->
+
+    @* Icon *@
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
+
+
 <body>
+
+    @* Thanh điều hướng *@
     <div class="sidebar">
+
+        @* Logo *@
         <div class="logo-content">
             <div class="logo">
-                @*<i class='bx bxl-c-plus-plus'></i>
-                    <span class="logo_name">CodingLab</span>*@
-                <img src="~/Resources/Picture/Logo/Logo_DarkMode.png" id="logoImg" />
-            </div>
 
+                <!-- Hình logo -->
+                <img src="~/Resources/Picture/Logo/Logo_DarkMode.png" id="logoImg" />
+
+            </div>
             <i class='bx bx-menu-alt-right' id="btn"></i>
         </div>
+
+        @* Chức năng (Chuyển trang) *@
         <ul class="nav-links">
-            @try
-            {
-                if (Session["AccountName"] != null)
-                {
-                    <li>
-                        <a href="#">
-                            <i class='bx bx-grid-alt'></i>
-                            <span class="link_name">Thanh điều khiển</span>
-                        </a>
-                        <ul class="sub-menu blank">
-                            <li><a class="link_name" href="#">Category</a></li>
-                        </ul>
-                    </li>
-                }
-            }
-            catch
+
+            @* Trang điều khiển *@
+            <li>
+                <!-- Link -->
+                <a href="#">
+
+                    <!-- Icon -->
+                    <i class='bx bx-grid-alt'></i>
+
+                    <!-- Tên -->
+                    <span class="link_name">Thanh điều khiển</span>
+                </a>
+
+                <!-- Lúc thu lại -->
+                <ul class="sub-menu blank">
+                    <li><a class="link_name" href="#">Thanh điều khiển</a></li>
+                </ul>
+            </li>
+
+
+
+            @* Role Sự kiện - Ưu đãi *@
+            @if (Session["RoleID"].ToString() == "SKUD")
             {
 
-            }
-            @try
-            {
-                if (Session["RoleID"].ToString() == "SKUD")
-                {
-                    @*Sự kiện*@
-                    <li>
-                        <div class="iocn-link">
-                            @*Icon*@
+                @* Trang Sự kiện *@
+                <li>
+                    <div class="iocn-link">
+                        <div class="link">
+
+                            <!-- Icon -->
+                            <i class='bx bxs-calendar-event'></i>
+
+                            <!-- Link -->
+                            <span>@Html.ActionLink("Sự kiện", "EventMain", "Event", new { @class = "link_name" })</span>
+                        </div>
+                        <i class='bx bxs-chevron-down arrow'></i>
+                    </div>
+
+                    <!-- Các mục con -->
+                    <ul class="sub-menu">
+                        <li>
                             <div class="link">
-                                <i class='bx bxs-calendar-event'></i>
                                 <span>@Html.ActionLink("Sự kiện", "EventMain", "Event", new { @class = "link_name" })</span>
                             </div>
-                            <i class='bx bxs-chevron-down arrow'></i>
+                        </li>
+                        <li><a href="#">Chưa duyệt</a></li>
+                        <li><a href="#">Đã duyệt</a></li>
+                    </ul>
+                </li>
+
+
+                @*Trang Ưu đãi*@
+                <li>
+                    <div class="iocn-link">
+                        <div class="link">
+
+                            <!-- Icon -->
+                            <i class='bx bx-paper-plane'></i>
+
+                            <!-- Link -->
+                            <span>@Html.ActionLink("Ưu đãi", "SaleMain", "Event", new { @class = "link_name" })</span>
                         </div>
-                        @*Các mục con*@
-                        <ul class="sub-menu">
-                            <li>
-                                <div class="link">
-                                    <span>@Html.ActionLink("Sự kiện", "EventMain", "Event", new { @class = "link_name" })</span>
-                                </div>
-                            </li>
-                            <li><a href="#">Chưa duyệt</a></li>
-                            <li><a href="#">Đã duyệt</a></li>
-                        </ul>
-                    </li>
-                    @*Ưu đãi*@
-                    <li>
-                        @*Icon*@
-                        <div class="iocn-link">
+                        <i class='bx bxs-chevron-down arrow'></i>
+                    </div>
+
+                    <!-- Các mục con -->
+                    <ul class="sub-menu">
+                        <li>
                             <div class="link">
-                                <i class='bx bx-paper-plane'></i>
                                 <span>@Html.ActionLink("Ưu đãi", "SaleMain", "Event", new { @class = "link_name" })</span>
                             </div>
-                            <i class='bx bxs-chevron-down arrow'></i>
+                        </li>
+                        <li><a href="#">Chưa duyệt</a></li>
+                        <li><a href="#">Đã duyệt</a></li>
+                    </ul>
+                </li>
+            }
+
+
+
+            @* Role Nhân sự *@
+            @if (Session["RoleID"].ToString() == "NS")
+            {
+                @* Trang nhân sự *@
+                <li>
+                    <div class="iocn-link">
+                        <div class="link">
+
+                            <!-- Icon -->
+                            <i class='bx bxs-calendar-event'></i>
+
+                            <!-- Link -->
+                            <span>@Html.ActionLink("Nhân sự", "HumanResourceMain", "HumanResource", null, new { @class = "link_name" })</span>
                         </div>
-                        @*Các mục con*@
-                        <ul class="sub-menu">
-                            <li>
-                                <div class="link">
-                                    <span>@Html.ActionLink("Ưu đãi", "SaleMain", "Event", new { @class = "link_name" })</span>
-                                </div>
-                            </li>
-                            <li><a href="#">Chưa duyệt</a></li>
-                            <li><a href="#">Đã duyệt</a></li>
-                        </ul>
-                    </li>
-                }
-                @*Nhân sự*@
-                if (Session["RoleID"].ToString() == "NS")
-                {
-                    @*Sự kiện*@
-                    <li>
-                        <div class="iocn-link">
-                            @*Icon*@
+                        <i class='bx bxs-chevron-down arrow'></i>
+                    </div>
+
+                    @*Các mục con*@
+                    <ul class="sub-menu">
+                        <li>
                             <div class="link">
-                                <i class='bx bxs-calendar-event'></i>
                                 <span>@Html.ActionLink("Nhân sự", "HumanResourceMain", "HumanResource", null, new { @class = "link_name" })</span>
                             </div>
-                            <i class='bx bxs-chevron-down arrow'></i>
-                        </div>
-                        @*Các mục con*@
-                        <ul class="sub-menu">
-                            <li>
-                                <div class="link">
-                                    <span>@Html.ActionLink("Nhân sự", "HumanResourceMain", "HumanResource", null, new { @class = "link_name" })</span>
-                                </div>
-                            </li>
-                            <li>
-                                <a href="@Url.Action("employeeInfo", "Register", new { @class = "link_name" })">Thêm nhân viên</a>
-                            </li>
-                        </ul>
-                    </li>
-                }
+                        </li>
+                        <li>
+                            <a href="@Url.Action("employeeInfo", "Register", new { @class = "link_name" })">Thêm nhân viên</a>
+                        </li>
+                    </ul>
+                </li>
             }
-            catch
-            {
-
-            }
-
         </ul>
+
         <!--Thông tin người dùng-->
         <div class="profile-content">
             <div class="profile">
-                @*Ký hiệu đăng xuất*@
-                @if (Session["AccountName"] == null)
-                {
-                    <div class="profile-details">
-                        @*<img src="image/profile.jpg" alt="profileImg">*@
-                        <i class='bx bx-user' id="userImg"></i>
-                        <div class="name-job">
-                            <div class="name">
-                                @Html.ActionLink(
-                                    "Đăng nhập", 
-                                    "Index", 
-                                    "StaffLogin", 
-                                    null, 
-                                    new Dictionary<string, object> { 
-                                        { "class", "text-white" }, 
-                                        { "style", "text-decoration: none;" 
-                                    } 
-                                })
-                            </div>
-                        </div>
+
+                <div class="profile-details">
+
+                    <!-- Hình người dùng-->
+                    <i class='bx bx-user' id="userImg"></i>
+
+                    <!-- Thông tin -->
+                    <div class="name-job">
+                        <!-- Họ tên -->
+                        <div class="name">@Session["AccountName"]</div>
+
+                        <!-- Chức vụ -->
+                        <div class="job">@Session["Role"]</div>
                     </div>
-                    <a href="@Url.Action("Index", "StaffLogin")">
-                        <i class='bx bx-user' style='color:#ffffff' id="log_out"></i>
-                    </a>
-                }
-                else
-                {
-                    <div class="profile-details">
-                        @*<img src="image/profile.jpg" alt="profileImg">*@
-                        <i class='bx bx-user' id="userImg"></i>
-                        <div class="name-job">
-                            <div class="name">@Session["AccountName"]</div>
-                            <div class="job">@Session["Role"]</div>
-                        </div>
-                    </div>
-                    <a href="@Url.Action("Logout", "StaffLogin")">
-                        <i class='bx bx-log-out' style='color:#ffffff' id="log_out"></i>
-                    </a>
-                }
+                </div>
+
+                <!-- Đăng xuất -->
+                <a href="@Url.Action("Logout", "StaffLogin")">
+                    <i class='bx bx-log-out' style='color:#ffffff' id="log_out"></i>
+                </a>
             </div>
         </div>
     </div>
+
+    @* Nội dung trang *@
     <div class="home-content">
         @RenderBody()
     </div>
@@ -173,6 +181,12 @@
     <script src="~/Resources/JavaScript/managerNavBar.js"></script>
 </body>
 </html>
+
+<!-- Tham khảo -->
+@*<i class='bx bxl-c-plus-plus'></i>
+    <span class="logo_name">CodingLab</span>*@
+
+
 @*<li>
         <div class="iocn-link">
             <a href="#">
@@ -218,4 +232,37 @@
         <ul class="sub-menu blank">
             <li><a class="link_name" href="#">Setting</a></li>
         </ul>
-    </li>*@
+    </li>
+
+
+*@
+
+@*Ký hiệu đăng xuất
+    <!--@if (Session["AccountName"] == null)
+    {
+        <div class="profile-details">-->
+            @*<img src="image/profile.jpg" alt="profileImg">
+            <!--<i class='bx bx-user' id="userImg"></i>
+            <div class="name-job">
+                <div class="name">
+                    @Html.ActionLink(
+                        "Đăng nhập",
+                        "Index",
+                        "StaffLogin",
+                        null,
+                        new Dictionary<string, object> {
+                            { "class", "text-white" },
+                            { "style", "text-decoration: none;"
+                        }
+                    })
+                </div>
+            </div>
+        </div>
+        <a href="@Url.Action("Index", "StaffLogin")">
+            <i class='bx bx-user' style='color:#ffffff' id="log_out"></i>
+        </a>
+    }
+    else
+    {-->
+*@
+@*<img src="image/profile.jpg" alt="profileImg">*@
