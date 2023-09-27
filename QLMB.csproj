@@ -135,6 +135,7 @@
     <Compile Include="Controllers\Manager\EventController.cs" />
     <Compile Include="Controllers\Manager\HumanResourceController.cs" />
     <Compile Include="Controllers\Manager\StaffLoginController.cs" />
+    <Compile Include="Controllers\RedirectController.cs" />
     <Compile Include="Controllers\SkillIssueController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -311,6 +312,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Redirect\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />
