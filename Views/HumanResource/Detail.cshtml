@@ -1,65 +1,95 @@
 ﻿@model QLMB.Models.NhanVien
 
 @{
-    ViewBag.Title = "Detail";
+    ViewBag.Title = "Trang chi tiết";
     Layout = "~/Views/Shared/Manager.cshtml";
 }
 
 <link rel='stylesheet' type='text/css' media='screen' href='~/Resources/CSS/FormDetail.css'>
-<div class="mt-1 mb-2">
-    @Html.ActionLink("Quay lại danh sách", "HumanResourceMain", null, new { @class = "btn btn-primary text-white" })
-</div>
-<div class="body">
-    <div>
-        <h2>Thông tin cá nhân</h2>
-        <p>Chức vụ: @Model.ChucVu.TenCV</p>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+
+    <div class="mt-1 mb-2">
+        @Html.ActionLink("Quay lại danh sách", "HumanResourceMain", null, new { @class = "btn btn-primary text-white" })
     </div>
-
-    <div style="display:flex">
-
-        <div class="Picture">
-            <i class='bx bx-user' style="font-size:200px"></i>
+    <div class="body">
+        <div>
+            <h2>Thông tin cá nhân</h2>
+            <p>Chức vụ: @Html.DisplayFor(model => model.ChucVu.TenCV)</p>
         </div>
 
+        <div style="display:flex">
 
-        <div class="Sold">
-            <table>
-                <tr>
-                    <td>Mã nhân viên</td>
-                    <td>@Html.DisplayFor(model => model.MaNV)</td>
-                </tr>
-                <tr>
-                    <td>Họ tên</td>
-                    <td>@Html.DisplayFor(model => model.ThongTinND.HoTen)</td>
-                </tr>
-                <tr>
-                    <td>Giới tính</td>
-                    <td>@Html.DisplayFor(model => model.ThongTinND.GioiTinh)</td>
-                </tr>
-                <tr>
-                    <td>Ngày sinh</td>
-                    <td>@Convert.ToDateTime(Model.ThongTinND.NgaySinh).ToString("dd/MM/yyyy")</td>
-                </tr>
-                <tr>
-                    <td>CMND/CCCD</td>
-                    <td>@Html.DisplayFor(model => model.CMND)</td>
-                </tr>
-                <tr>
-                    <td>Ngày cấp</td>
-                    <td>@Convert.ToDateTime(Model.ThongTinND.NgayCap).ToString("dd/MM/yyyy")</td>
-                </tr>
-                <tr>
-                    <td>Địa chỉ</td>
-                    <td>@Html.DisplayFor(model => model.ThongTinND.DiaChi)</td>
-                </tr>
-                <tr>
-                    <td>Tình trạng</td>
-                    <td>@Html.DisplayFor(model => model.TinhTrang.TenTT)</td>
-                </tr>
-            </table>
-        </div>
-        <div class="Form">
-            <input class="btn btn-danger" type="submit" value="Sa thải">
+            <div class="Picture">
+                <i class='bx bx-user' style="font-size:200px"></i>
+            </div>
+
+
+            <div class="Sold">
+                <table>
+                    <tr>
+                        <td>Mã nhân viên</td>
+                        <td>@Html.DisplayFor(model => model.MaNV)</td>
+                    </tr>
+                    <tr>
+                        <td>Họ tên</td>
+                        <td>@Html.DisplayFor(model => model.ThongTinND.HoTen)</td>
+                    </tr>
+                    <tr>
+                        <td>Giới tính</td>
+                        <td>@Html.DisplayFor(model => model.ThongTinND.GioiTinh)</td>
+                    </tr>
+                    <tr>
+                        <td>Ngày sinh</td>
+                        <td>@Convert.ToDateTime(Model.ThongTinND.NgaySinh).ToString("dd/MM/yyyy")</td>
+                    </tr>
+                    <tr>
+                        <td>CMND/CCCD</td>
+                        <td>@Html.DisplayFor(model => model.CMND)</td>
+                    </tr>
+                    <tr>
+                        <td>Ngày cấp</td>
+                        <td>@Convert.ToDateTime(Model.ThongTinND.NgayCap).ToString("dd/MM/yyyy")</td>
+                    </tr>
+                    <tr>
+                        <td>Địa chỉ</td>
+                        <td>@Html.DisplayFor(model => model.ThongTinND.DiaChi)</td>
+                    </tr>
+                    <tr>
+                        <td>Tình trạng</td>
+                        <td>@Html.DisplayFor(model => model.TinhTrang.TenTT)</td>
+                        @Html.DisplayNameFor(model => model.MATT)
+                    </tr>
+                </table>
+            </div>
+            <div class="Form">
+                @if (Model.MATT == 5)
+                {
+                    <button type="submit" class="btn btn-warning" name="btn" value="Hired" style="margin-left: 30px">Tuyển lại</button>
+
+                }
+                else
+                {
+                    <button type="submit" class="btn btn-primary" name="btn" value="ResetPassword">Cài lại mật khẩu</button>
+                    <button type="submit" class="btn btn-danger" name="btn" value="Fired" style="margin-left: 30px">Sa thải</button>
+                }
+            </div>
         </div>
     </div>
-</div>
+}
+
+@* 
+Mã tình trạng
+    1: Đang chờ duyệt
+    2: Được duyệt
+    3: Bị từ chối
+    4: Đang làm   *
+    5: Nghỉ việc  *
+    6: Được tuyển *
+
+    *: Mã được sử dụng
+*@

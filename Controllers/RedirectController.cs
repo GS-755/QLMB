@@ -16,7 +16,7 @@ namespace QLMB.Controllers
                 switch (Session["RoleID"].ToString())
                 {
                     case "NS":
-                        return RedirectToAction("HumanResourceMain", "HumanResource");
+                        return RedirectToAction("Main", "HumanResource");
                     case "SKUD":
                         return RedirectToAction("EventMain", "Event");
                     default:
@@ -24,7 +24,7 @@ namespace QLMB.Controllers
 
                 }
             }
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index","Home");
         }
     }
 }
