@@ -1,7 +1,8 @@
 # Visual Studio 2015/2017 cache/options directory
 .vs/
 bin/
-obj/Debug
+obj/Debug/
+obj/Debug/*.*
 bin/QLMB.pdb
 bin/QLMB.dll
 obj/Debug/QLMB.csproj.AssemblyReference.cache
