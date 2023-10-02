@@ -1,6 +1,7 @@
 ﻿using QLMB.Models;
 using System.Linq;
 using System.Web.Mvc;
+using System.Data.Entity;
 
 namespace QLMB.Controllers.Manager
 {
@@ -79,21 +80,22 @@ namespace QLMB.Controllers.Manager
             NhanVien update = db.NhanViens.Where(S => S.CMND == info.CMND).First();
             switch (btn)
             {
-                case "Working":
-                    update.MATT = 4;
-                    break;
-
                 case "Fired":
                     update.MATT = 5;
                     break;
 
                 case "Hired":
                     update.MATT = 6;
+                    update.MatKhau = SHA256.ToSHA256("123456");
+                    break;
+
+                case "ResetPassword":
+                    update.MatKhau = SHA256.ToSHA256("123456");
                     break;
             }
             
 
-            db.Entry(update).State = System.Data.Entity.EntityState.Modified;
+            db.Entry(update).State = EntityState.Modified;
 
             db.SaveChanges();
 
