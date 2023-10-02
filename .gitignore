@@ -4,3 +4,4 @@ bin/
 obj/Debug
 bin/QLMB.pdb
 bin/QLMB.dll
+obj/Debug/QLMB.csproj.AssemblyReference.cache
