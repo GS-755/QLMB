@@ -136,7 +136,7 @@
     <Compile Include="Controllers\Manager\EventController.cs" />
     <Compile Include="Controllers\Manager\HumanResourceController.cs" />
     <Compile Include="Controllers\Manager\StaffLoginController.cs" />
-    <Compile Include="Controllers\RedirectController.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\SkillIssueController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -301,7 +301,6 @@
     <Content Include="Views\Home\ClearSession.cshtml" />
     <Content Include="Views\HumanResource\Detail.cshtml" />
     <Content Include="Views\HumanResource\Main.cshtml" />
-    <Content Include="Views\HumanResource\Index.cshtml" />
     <Content Include="Views\Login\LoginPage.cshtml" />
     <Content Include="Views\Register\employeeInfo.cshtml" />
     <Content Include="Views\Register\rentalAccount.cshtml" />
@@ -310,12 +309,11 @@
     <Content Include="Views\Shared\Manager.cshtml" />
     <Content Include="Views\Shared\_MasterLayout.cshtml" />
     <Content Include="Views\SkillIssue\Index.cshtml" />
-    <Content Include="Views\StaffLogin\Index.cshtml" />
-    <Content Include="Views\HumanResource\DetailInfo.cshtml" />
+    <Content Include="Views\StaffLogin\Login.cshtml" />
+    <Content Include="Views\Account\FirstLogin.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Redirect\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />

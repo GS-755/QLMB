@@ -32,151 +32,139 @@
         </div>
 
         @* Chức năng (Chuyển trang) *@
-        <ul class="nav-links">
 
-            @* Trang điều khiển *@
-            <li>
-                <!-- Link -->
-                <a href="#">
+        <!-- Tránh hiện cài password lần đầu -->
+        @if (Session["MANV"] == null && Session["RoleID"] != null)
+        {
+            <ul class="nav-links">
 
-                    <!-- Icon -->
-                    <i class='bx bx-grid-alt'></i>
-
-                    <!-- Tên -->
-                    <span class="link_name">Thanh điều khiển</span>
-                </a>
-
-                <!-- Lúc thu lại -->
-                <ul class="sub-menu blank">
-                    <li><a class="link_name" href="#">Thanh điều khiển</a></li>
-                </ul>
-            </li>
-
-
-
-            @* Role Sự kiện - Ưu đãi *@
-            @if (Session["RoleID"].ToString() == "SKUD")
-            {
-
-                @* Trang Sự kiện *@
+                @* Trang điều khiển *@
                 <li>
-                    <div class="iocn-link">
-                        <div class="link">
+                    <!-- Link -->
+                    <a href="#">
 
-                            <!-- Icon -->
-                            <i class='bx bxs-calendar-event'></i>
+                        <!-- Icon -->
+                        <i class='bx bx-grid-alt'></i>
 
-                            <!-- Link -->
-                            <span>@Html.ActionLink("Sự kiện", "EventMain", "Event", new { @class = "link_name" })</span>
-                        </div>
-                        <i class='bx bxs-chevron-down arrow'></i>
-                    </div>
+                        <!-- Tên -->
+                        <span class="link_name">Thanh điều khiển</span>
+                    </a>
 
-                    <!-- Các mục con -->
-                    <ul class="sub-menu">
-                        <li>
+                    <!-- Lúc thu lại -->
+                    <ul class="sub-menu blank">
+                        <li><a class="link_name" href="#">Thanh điều khiển</a></li>
+                    </ul>
+                </li>
+
+
+                @* Role Sự kiện - Ưu đãi *@
+                @if (Session["RoleID"].ToString() == "SKUD")
+                {
+                    @* Trang Sự kiện *@
+                    <li>
+                        <div class="iocn-link">
                             <div class="link">
-                                <span>@Html.ActionLink("Sự kiện", "EventMain", "Event", new { @class = "link_name" })</span>
+                                <a href="@Url.Action("EventMain","Event")">
+                                    <!-- Icon -->
+                                    <i class='bx bxs-calendar-event'></i>
+                                    <!-- Tên -->
+                                    <span class="link_name">Sự kiện</span>
+                                </a>
                             </div>
-                        </li>
-                        <li><a href="#">Chưa duyệt</a></li>
-                        <li><a href="#">Đã duyệt</a></li>
-                    </ul>
-                </li>
-
-
-                @*Trang Ưu đãi*@
-                <li>
-                    <div class="iocn-link">
-                        <div class="link">
-
-                            <!-- Icon -->
-                            <i class='bx bx-paper-plane'></i>
-
-                            <!-- Link -->
-                            <span>@Html.ActionLink("Ưu đãi", "SaleMain", "Event", new { @class = "link_name" })</span>
+                            <i class='bx bxs-chevron-down arrow'></i>
                         </div>
-                        <i class='bx bxs-chevron-down arrow'></i>
-                    </div>
 
-                    <!-- Các mục con -->
-                    <ul class="sub-menu">
-                        <li>
+
+                        <!-- Các mục con -->
+                        <ul class="sub-menu">
+                            <li><a class="link_name" href="@Url.Action("EventMain","Event")">Sự kiện</a></li>
+                            <li><a href="#">Chưa duyệt</a></li>
+                            <li><a href="#">Đã duyệt</a></li>
+                        </ul>
+                    </li>
+
+
+                    @*Trang Ưu đãi*@
+                    <li>
+                        <div class="iocn-link">
                             <div class="link">
-                                <span>@Html.ActionLink("Ưu đãi", "SaleMain", "Event", new { @class = "link_name" })</span>
+                                <a href="@Url.Action("SaleMain","Event")">
+                                    <!-- Icon -->
+                                    <i class='bx bx-paper-plane'></i>
+                                    <!-- Tên -->
+                                    <span class="link_name">Ưu đãi</span>
+                                </a>
                             </div>
-                        </li>
-                        <li><a href="#">Chưa duyệt</a></li>
-                        <li><a href="#">Đã duyệt</a></li>
-                    </ul>
-                </li>
-            }
-
-
-
-            @* Role Nhân sự *@
-            @if (Session["RoleID"].ToString() == "NS")
-            {
-                @* Trang nhân sự *@
-                <li>
-                    <div class="iocn-link">
-                        <div class="link">
-                            <a href="@Url.Action("Main","HumanResource")">
-
-                                <!-- Icon -->
-                                <i class='bx bxs-calendar-event'></i>
-
-                                <!-- Tên -->
-                                <span class="link_name">Nhân sự</span>
-                            </a>   
+                            <i class='bx bxs-chevron-down arrow'></i>
                         </div>
 
-                        <i class='bx bxs-chevron-down arrow'></i>
-                    </div>
+                        <!-- Các mục con -->
+                        <ul class="sub-menu">
+                            <li><a class="link_name" href="@Url.Action("SaleMain","Event")">Ưu đãi</a></li>
+                            <li><a href="#">Chưa duyệt</a></li>
+                            <li><a href="#">Đã duyệt</a></li>
+                        </ul>
+                    </li>
+                }
 
-                    @*Các mục con*@
-                    <ul class="sub-menu">
-                        <li>
-                            <a class="link_name" href="@Url.Action("Main","HumanResource")">Nhân sự</a>
-                        </li>
-                        
-                        <li>
-                            <a href="@Url.Action("Main","HumanResource")">Trang chủ</a>
-                        </li>
-                        
-                        <li>
-                        <a href="@Url.Action("employeeInfo", "Register")">Thêm nhân viên</a>
-                        </li>
-                    </ul>
-                </li>
-            }
-        </ul>
+
+
+                @* Role Nhân sự *@
+                @if (Session["RoleID"].ToString() == "NS")
+                {
+                    @* Trang nhân sự *@
+                    <li>
+                        <div class="iocn-link">
+                            <div class="link">
+                                <a href="@Url.Action("Main","HumanResource")">
+                                    <!-- Icon -->
+                                    <i class='bx bxs-calendar-event'></i>
+                                    <!-- Tên -->
+                                    <span class="link_name">Nhân sự</span>
+                                </a>
+                            </div>
+                            <i class='bx bxs-chevron-down arrow'></i>
+                        </div>
+
+                        @*Các mục con*@
+                        <ul class="sub-menu">
+                            <li><a class="link_name" href="@Url.Action("Main","HumanResource")">Nhân sự</a></li>
+                            <li><a href="@Url.Action("Main","HumanResource")">Trang chủ</a></li>
+                            <li><a href="@Url.Action("employeeInfo", "Register")">Thêm nhân viên</a></li>
+                        </ul>
+                    </li>
+                }
+            </ul>
+        }
 
         <!--Thông tin người dùng-->
-        <div class="profile-content">
-            <div class="profile">
+        @if (@Session["Role"] != null)
+        {
+            <div class="profile-content">
+                <div class="profile">
 
-                <div class="profile-details">
+                    <div class="profile-details">
 
-                    <!-- Hình người dùng-->
-                    <i class='bx bx-user' id="userImg"></i>
+                        <!-- Hình người dùng-->
+                        <i class='bx bx-user' id="userImg"></i>
 
-                    <!-- Thông tin -->
-                    <div class="name-job">
-                        <!-- Họ tên -->
-                        <div class="name">@Session["AccountName"]</div>
+                        <!-- Thông tin -->
+                        <div class="name-job">
+                            <!-- Họ tên -->
+                            <div class="name">@Session["AccountName"]</div>
 
-                        <!-- Chức vụ -->
-                        <div class="job">@Session["Role"]</div>
+                            <!-- Chức vụ -->
+                            <div class="job">@Session["Role"]</div>
+                        </div>
                     </div>
-                </div>
 
-                <!-- Đăng xuất -->
-                <a href="@Url.Action("Logout", "StaffLogin")">
-                    <i class='bx bx-log-out' style='color:#ffffff' id="log_out"></i>
-                </a>
+                    <!-- Đăng xuất -->
+                    <a href="@Url.Action("Logout", "StaffLogin")">
+                        <i class='bx bx-log-out' style='color:#ffffff' id="log_out"></i>
+                    </a>
+                </div>
             </div>
-        </div>
+         }
     </div>
 
     @* Nội dung trang *@

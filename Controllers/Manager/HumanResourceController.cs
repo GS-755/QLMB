@@ -38,7 +38,7 @@ namespace QLMB.Controllers.Manager
                     }
                 }
                 //Không thoả --> Về trang xử lý chuyển trang
-                return RedirectToAction("Manager", "Redirect");
+                return RedirectToAction("Manager", "Account");
             }
 
             //Lỗi xử lý --> Skill Issue :))
@@ -63,7 +63,7 @@ namespace QLMB.Controllers.Manager
                     }
                 }
                 //Không thoả --> Về trang xử lý chuyển trang
-                return RedirectToAction("Manager", "Redirect");
+                return RedirectToAction("Manager", "Account");
             }
 
             //Lỗi xử lý --> Skill Issue :))
@@ -104,10 +104,12 @@ namespace QLMB.Controllers.Manager
     }
 }
 
-//Mã tình trạng
-//    1: Đang chờ duyệt
-//    2: Được duyệt
-//    3: Bị từ chối
-//    4: Đang làm
-//    5: Nghỉ việc
-//    6: Được tuyển
+/*
+Mã tình trạng (* = Được sử dụng)
+    1: Đang chờ duyệt
+    2: Được duyệt
+    3: Bị từ chối
+    4: Đang làm   *
+    5: Nghỉ việc  *
+    6: Được tuyển *
+ */

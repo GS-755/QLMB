@@ -8,19 +8,17 @@ namespace QLMB.Controllers.Customer
     {
         private database db = new database();
 
-        //Đăng nhập
-        public ActionResult LoginPage()
-        {
-            return View();
-        }
+        //Trang đăng nhập
+        public ActionResult LoginPage() => View();
+
 
         //Đăng xuất
         public ActionResult Logout()
         {
             Session.Abandon();
-
             return RedirectToAction("Index", "Home");
         }
+
 
         //POST đăng nhập
         [HttpPost]
@@ -34,20 +32,26 @@ namespace QLMB.Controllers.Customer
                     return RedirectToAction("Index", "Home");
 
                 //Còn lại ==> Nhân viên
-                else if (ManagerCheckLogin(TenDangNhap, MatKhau).Item1 == true)
-                {
-                    //Vào trang xử lý chuyển hướng
-                    return RedirectToAction("Manager", "Redirect");
-                }
                 else
                 {
-                    Session["AccountName"] = null;
-                    return View("LoginPage");
+                    (bool, NhanVien) result = ManagerCheckLogin(TenDangNhap, MatKhau);
+                    if (result.Item1)
+                    {
+                        switch (result.Item2.MATT)
+                        {
+                            case 6:
+                                Session["MANV"] = result.Item2.MaNV.Trim();
+                                return RedirectToAction("FirstLogin", "Account");
+                            default:
+                                return RedirectToAction("Manager", "Account");
+                        }              
+                    }
+                    else
+                        return View("LoginPage"); 
                 }
             }
             catch
             {
-                Session["renterStatus"] = null;
                 return View("LoginPage");
             }
         }
@@ -94,7 +98,7 @@ namespace QLMB.Controllers.Customer
         }
 
         //Nhân viên
-        private (bool, string) ManagerCheckLogin(string MaNV, string MatKhau)
+        private (bool, NhanVien) ManagerCheckLogin(string MaNV, string MatKhau)
         {
             int error = 0;
             if (MaNV == "")
@@ -107,13 +111,11 @@ namespace QLMB.Controllers.Customer
                 ModelState.AddModelError("inputPassword", "* Xin hãy điền mật khẩu");
                 error++;
             }
+
             if (error == 0)
             {
                 string authTmp = SHA256.ToSHA256(MatKhau);
-                NhanVien check = db.NhanViens.Where(
-                    a => a.MaNV.Trim() == MaNV.Trim()
-                    && a.MatKhau == authTmp
-                ).FirstOrDefault();
+                NhanVien check = db.NhanViens.Where(a => a.MaNV.Trim() == MaNV.Trim() && a.MatKhau == authTmp).FirstOrDefault();
 
                 //Thấy thông tin => Thông tin đúng
                 if (check != null)
@@ -122,35 +124,42 @@ namespace QLMB.Controllers.Customer
                     string[] name = check.ThongTinND.HoTen.Split(' ');
 
                     //Xử lý độ dài tên: Độ dài lớn hơn 1 mới bị cắt 2 tên cuối
-                    if (name.Length > 1)
+                    switch (name.Length)
                     {
-                        Session["AccountName"] = name[name.Length - 2] + " " + name[name.Length - 1];
+                        case 0:
+                            Session["AccountName"] = name[0];
+                            break;
+                        default:
+                            Session["AccountName"] = name[name.Length - 2] + " " + name[name.Length - 1];
+                            break;
                     }
-
-                    //Không thì lấy luôn
-                    else
-                    {
-                        Session["AccountName"] = name[0];
-                    }
-
+                    
                     Session["Role"] = check.ChucVu.TenCV.ToString();
                     Session["RoleID"] = check.ChucVu.MaChucVu.Trim();
 
-                    return (true, check.MaChucVu.ToString());
+                    return (true, check);
                 }
-
                 else
                 {
                     ModelState.AddModelError("Error", "* Tài khoản hoặc mật khẩu không đúng");
-
-                    return (false, "");
+                    return (false, null);
                 }
             }
             //Thông tin sai
             else
-            {
-                return (false, "");
-            }
+                return (false, null);
         }
     }
 }
+
+/*
+Mã tình trạng
+    1: Đang chờ duyệt
+    2: Được duyệt
+    3: Bị từ chối
+    4: Đang làm   *
+    5: Nghỉ việc  *
+    6: Được tuyển *
+
+    *: Được sử dụng 
+ */

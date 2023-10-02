@@ -9,26 +9,13 @@ namespace QLMB.Controllers.Customer
     public class ForgetPasswordController : Controller
     {
         private database db = new database();
-        public ActionResult ForgetPasswordPage()
-        {
-            return View();
-        }
+        
+        //Trang quên mật khẩu
+        public ActionResult ForgetPasswordPage() => View();
 
-        //Cài lại mật khẩu - Người thuê
-        public ActionResult rePasswordNguoiThue()
-        {
-            if (Session["TenDangNhap"] != null)
-                return View();
-            else
-                return RedirectToAction("ForgetPasswordPage", "ForgetPassword");
-        }
 
-        public ActionResult rePasswordNhanVien()
-        {
-            return View();
-        }
 
-        //Lấy CMND
+        //Xử lý lấy CMND
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult ForgetPasswordPage(string CMND)
@@ -62,11 +49,8 @@ namespace QLMB.Controllers.Customer
                         }
                     }
                 }
-
-                else
-                {
-                    return View();
-                }
+                
+                return View();
             }
             catch
             {
@@ -76,34 +60,8 @@ namespace QLMB.Controllers.Customer
         }
 
 
-        //Cập nhật mật khẩu
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult rePasswordNguoiThue(NguoiThue nguoiThue, String choice)
-        {
-            switch (choice)
-            {
-                case "Quay lại":
-                    return RedirectToAction("ForgetPasswordPage", "ForgetPassword");
-                default:
-                    try
-                    {
-                        if (checkRePassword(nguoiThue) == true)
-                        {
-                            updateDatabaseNguoiThue(nguoiThue);
-                            TempData["msg"] = "<script>alert('Đổi mật khẩu thành công');</script>";
-                            return RedirectToAction("LoginPage", "Login");
-                        }
-                        return View();
-                    }
-                    catch
-                    {
-                        ModelState.AddModelError("updateError", "* Lỗi hệ thống - Xin vui lòng thử lại !");
-                        return View();
-                    }
-            }
-           
-        }
+
+        //Check CMND người thuê
         private bool checkInfo(string CMND)
         {
             int error = 0;
@@ -136,16 +94,66 @@ namespace QLMB.Controllers.Customer
                 }
             }
 
-            if (error == 0)
+            switch (error)
             {
-                return true;
-            }
-            else
-            {
-                return false;
+                case 0:
+                    return true;
+                default:
+                    return false;
             }
         }
 
+
+
+
+        //----------- Người thuê -----------//
+        //Cài lại mật khẩu
+        public ActionResult rePasswordNguoiThue()
+        {
+            if (Session["TenDangNhap"] != null)
+                return View();
+            else
+                return RedirectToAction("ForgetPasswordPage", "ForgetPassword");
+        }
+
+
+
+        //Cập nhật mật khẩu
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult rePasswordNguoiThue(NguoiThue nguoiThue, string choice)
+        {
+            switch (choice)
+            {
+                case "Quay lại":
+                    return RedirectToAction("ForgetPasswordPage", "ForgetPassword");
+                
+                default:
+                    try
+                    {
+                        if (checkRePassword(nguoiThue) == true)
+                        {
+                            updateDatabaseNguoiThue(nguoiThue);
+                            TempData["msg"] = "<script>alert('Đổi mật khẩu thành công');</script>";
+
+                            //Xoá session
+                            Session.Remove("CMND");
+                            Session.Remove("TenDangNhap");
+
+                            return RedirectToAction("LoginPage", "Login");
+                        }
+                        return View();
+                    }
+                    catch
+                    {
+                        ModelState.AddModelError("updateError", "* Lỗi hệ thống - Xin vui lòng thử lại !");
+                        return View();
+                    }
+            }
+        }
+
+
+        //Check mật khẩu mới
         private bool checkRePassword(NguoiThue nguoiThue)
         {
             int error = 0;
@@ -157,28 +165,28 @@ namespace QLMB.Controllers.Customer
             }
 
             //Nhập lại mật khẩu
-            if (nguoiThue.NhapLaiMatKhau == null)
+            if (nguoiThue.rePassword == null)
             {
                 ModelState.AddModelError("reReserPassword", "* Xin hãy điền lại mật khẩu");
                 error++;
             }
-            else if (nguoiThue.MatKhau != nguoiThue.NhapLaiMatKhau)
+            else if (nguoiThue.MatKhau != nguoiThue.rePassword)
             {
                 ModelState.AddModelError("reReserPassword", "* Mật khẩu không khớp - Xin hãy điền lại");
                 error++;
             }
 
-            if (error == 0)
+            switch (error)
             {
-                return true;
+                case 0:
+                    return true;
+                default:
+                    return false;
             }
-            else
-            {
-                return false;
-            }
-            
         }
 
+
+        //Cập nhật dữ liệu
         private void updateDatabaseNguoiThue(NguoiThue nguoiThue)
         {
             string authTmp = SHA256.ToSHA256(nguoiThue.MatKhau);

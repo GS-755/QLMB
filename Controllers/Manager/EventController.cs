@@ -42,7 +42,7 @@ namespace QLMB.Controllers.Manager
                     }
                 }
                 //Không thoả --> Về trang xử lý chuyển trang
-                return RedirectToAction("Manager", "Redirect");
+                return RedirectToAction("Manager", "Account");
             }
 
             //Lỗi xử lý --> Skill Issue :))
@@ -83,7 +83,7 @@ namespace QLMB.Controllers.Manager
                     }
                 }
                 //Không thoả --> Về trang xử lý chuyển trang
-                return RedirectToAction("Manager", "Redirect");
+                return RedirectToAction("Manager", "Account");
             }
 
             //Lỗi xử lý --> Skill Issue :))
@@ -121,7 +121,7 @@ namespace QLMB.Controllers.Manager
                 }
 
                 //Không thoả --> Về trang xử lý chuyển trang
-                return RedirectToAction("Manager", "Redirect");
+                return RedirectToAction("Manager", "Account");
             }
 
             //Lỗi xử lý --> Skill Issue :))

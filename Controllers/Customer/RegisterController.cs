@@ -10,17 +10,16 @@ namespace QLMB.Controllers.Customer
         private database db = new database();
         private ThongTinND info = new ThongTinND();
 
+        //----------- Người thuê -----------//
+        //Trang đăng ký
+        public ActionResult rentalInfo() => View();
 
-        //Thông tin: Người thuê
-        public ActionResult rentalInfo()
-        {
-            return View();
-        }
 
-        //Xử lý thông tin: Người thuê
+
+        //Xử lý thông tin
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult RentalInfo([Bind(Include = "CMND,NgayCap,HoTen,GioiTinh,NgaySinh,DiaChi,TenDangNhap,MatKhau,NhapLaiMatKhau")] ThongTinND thongTin)
+        public ActionResult RentalInfo(ThongTinND thongTin)
         {
             try
             {    
@@ -63,6 +62,9 @@ namespace QLMB.Controllers.Customer
             }
         }
 
+
+
+        //Kiểm tra thông tin
         private bool checkInfo(ThongTinND thongTin)
         {
             int error = 0;
@@ -167,12 +169,12 @@ namespace QLMB.Controllers.Customer
 
 
             //Nhập lại mật khẩu
-            if (thongTin.NhapLaiMatKhau == null)
+            if (thongTin.rePassword == null)
             {
                 ModelState.AddModelError("MatKhauLai", "* Xin hãy điền lại mật khẩu");
                 error++;
             }
-            else if(thongTin.MatKhau != thongTin.NhapLaiMatKhau)
+            else if(thongTin.MatKhau != thongTin.rePassword)
             {
                 ModelState.AddModelError("MatKhauLai", "* Mật khẩu không khớp - Xin hãy điền lại");
                 error++;
@@ -189,6 +191,9 @@ namespace QLMB.Controllers.Customer
             }
         }
 
+
+
+        //Thêm dữ liệu
         private void AddDatabase(ThongTinND thongTin)
         {
             string authTmp = SHA256.ToSHA256(thongTin.MatKhau);
@@ -212,7 +217,10 @@ namespace QLMB.Controllers.Customer
             db.SaveChanges();
         }
 
-        //Nhân viên
+
+
+        //----------- Nhân viên -----------//
+        //Chọn vị trí
         public ActionResult SelectRole()
         {
             ChucVu selected = new ChucVu();
@@ -220,15 +228,37 @@ namespace QLMB.Controllers.Customer
             return PartialView(selected);
         }
 
+
+
+        //Trang đăng ký
         public ActionResult employeeInfo()
         {
-            return View();
+            try
+            {
+                //Nếu RoleID != null --> Đã đăng nhập
+                if (Session["RoleID"] != null)
+                {
+                    //Đúng Role --> Vào
+                    if (Session["RoleID"].ToString() == "NS") 
+                        return View();
+                }
+                //Không thoả --> Về trang xử lý chuyển trang
+                return RedirectToAction("Manager", "Account");
+            }
+
+            //Lỗi xử lý --> Skill Issue :))
+            catch
+            {
+                return RedirectToAction("Index", "SkillIssue");
+            }
         }
 
-        //Xử lý thông tin: Người thuê
+
+
+        //Xử lý thông tin
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult employeeInfo([Bind(Include = "CMND,NgayCap,HoTen,GioiTinh,NgaySinh,DiaChi,ChucVu")] ThongTinND thongTin,ChucVu chucVu)
+        public ActionResult employeeInfo(ThongTinND thongTin,ChucVu chucVu)
         {
             Session["Testing"] = chucVu.MaChucVu;
             try
@@ -240,7 +270,7 @@ namespace QLMB.Controllers.Customer
                     {
                             AddDatabaseEmployee(thongTin, chucVu);
                             TempData["msg"] = "<script>alert('Đăng ký thành công');</script>";
-                            return RedirectToAction("HumanResourceMain", "HumanResource");
+                            return RedirectToAction("Main", "HumanResource");
                     }
                     else
                     {
@@ -262,6 +292,9 @@ namespace QLMB.Controllers.Customer
 
         }
 
+
+
+        //Kiểm tra dữ liệu
         private bool checkInfoEmployee(ThongTinND thongTin, ChucVu chucVu)
         {
             int error = 0;
@@ -360,6 +393,8 @@ namespace QLMB.Controllers.Customer
         }
 
 
+
+        //Thêm dữ liệu
         private void AddDatabaseEmployee(ThongTinND thongTin, ChucVu chucVu)
         {
             string authTmp = SHA256.ToSHA256("123456");

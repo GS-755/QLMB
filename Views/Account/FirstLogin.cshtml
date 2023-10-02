@@ -1,0 +1,42 @@
+﻿@model QLMB.Models.NhanVien
+
+@{
+    ViewBag.Title = "Đăng nhập lần đầu";
+    Layout = "~/Views/Shared/Manager.cshtml";
+}
+
+<h2>Đăng nhập lần đầu</h2>
+
+<section class="section">
+    <p class="text-center mt-3 mb-3">Xin vui lòng đặt lại mật khẩu</p>
+    <div class="container-fluid">
+        <div class="col">
+            <div class="row">
+                <div class="col-md-4"></div>
+                <div class="col-md-4">
+                    @using (Html.BeginForm("FirstLogin", "Account"))
+                    {
+                        @Html.AntiForgeryToken()
+                        <div class="row mb-3">
+                            <label for="TenDangNhap">Mật khẩu mới</label>
+                            @Html.PasswordFor(model => model.MatKhau, new { @class = "form-control" })
+                            @Html.ValidationMessage("employeePass", new { @class = "text-danger mt-1" })
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="TenDangNhap">Nhập lại mật khẩu</label>
+                            @Html.PasswordFor(model => model.rePassword, new { @class = "form-control" })
+                            @Html.ValidationMessage("reEmployeePass", new { @class = "text-danger mt-1" })
+                        </div>
+
+                        <div class="row mb-3">
+                            <input type="submit" class="btn btn-success" value="Đặt lại mật khẩu"/>
+                        </div>
+                    }
+                </div>
+                <div class="col-md-4"></div>
+            </div>
+        </div>
+    </div>
+</section>
+

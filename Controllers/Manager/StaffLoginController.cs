@@ -9,28 +9,32 @@ namespace QLMB.Controllers.Manager
         private database db = new database();
 
         //GET: StaffLogin/
-        public ActionResult Index()
-        {
-            return View();
-        }
+        public ActionResult Login() => View();
+
         //POST: StaffLogin/Login
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Login(string MaNV, string MatKhau)
         {
-            if (ManagerCheckLogin(MaNV, MatKhau).Item2.Trim() == "SKUD")
-                return RedirectToAction("EventMain", "Event");
-            else if (ManagerCheckLogin(MaNV, MatKhau).Item2.Trim() == "NS")
-                return RedirectToAction("HumanResourceMain", "HumanResource");
-            else
+            (bool, NhanVien) result = ManagerCheckLogin(MaNV, MatKhau);
+            if (result.Item1)
             {
-                ViewBag.StaffLoginStatus = "Tên đăng nhập hoặc Mật khẩu KHÔNG đúng!";
-
-                return View("Index");
+                switch (result.Item2.MATT)
+                {
+                    case 6:
+                        Session["MANV"] = result.Item2.MaNV.Trim();
+                        return RedirectToAction("FirstLogin", "Account");
+                    default:
+                        return RedirectToAction("Manager", "Account");
+                }
             }
-                
+
+            ViewBag.StaffLoginStatus = "Tên đăng nhập hoặc Mật khẩu KHÔNG đúng!";
+            return View("Index");       
         }
-        private (bool, string) ManagerCheckLogin(string MaNV, string MatKhau)
+
+
+        private (bool,NhanVien) ManagerCheckLogin(string MaNV, string MatKhau)
         {
             int error = 0;
             if (MaNV == "")
@@ -60,19 +64,19 @@ namespace QLMB.Controllers.Manager
                     Session["Role"] = check.ChucVu.TenCV.ToString();
                     Session["RoleID"] = check.ChucVu.MaChucVu.Trim();
 
-                    return (true, check.MaChucVu.ToString());
+                    return (true,check);
                 }
                 else
                 {
                     ModelState.AddModelError("Error", "* Tài khoản hoặc mật khẩu không đúng");
 
-                    return (false, "");
+                    return (false,null);
                 }
             }
             //Thông tin sai
             else
             {
-                return (false, "");
+                return (false,null);
             }
         }
         //Đăng xuất
