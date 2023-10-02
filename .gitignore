@@ -1,6 +1,6 @@
 # Visual Studio 2015/2017 cache/options directory
 .vs/
-bin\
-obj\Debug
-bin\QLMB.pdb
-bin\QLMB.dll
+bin/
+obj/Debug
+bin/QLMB.pdb
+bin/QLMB.dll
