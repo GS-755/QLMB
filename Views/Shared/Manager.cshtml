@@ -121,25 +121,31 @@
                 <li>
                     <div class="iocn-link">
                         <div class="link">
+                            <a href="@Url.Action("Main","HumanResource")">
 
-                            <!-- Icon -->
-                            <i class='bx bxs-calendar-event'></i>
+                                <!-- Icon -->
+                                <i class='bx bxs-calendar-event'></i>
 
-                            <!-- Link -->
-                            <span>@Html.ActionLink("Nhân sự", "HumanResourceMain", "HumanResource", null, new { @class = "link_name" })</span>
+                                <!-- Tên -->
+                                <span class="link_name">Nhân sự</span>
+                            </a>   
                         </div>
+
                         <i class='bx bxs-chevron-down arrow'></i>
                     </div>
 
                     @*Các mục con*@
                     <ul class="sub-menu">
                         <li>
-                            <div class="link">
-                                <span>@Html.ActionLink("Nhân sự", "HumanResourceMain", "HumanResource", null, new { @class = "link_name" })</span>
-                            </div>
+                            <a class="link_name" href="@Url.Action("Main","HumanResource")">Nhân sự</a>
                         </li>
+                        
                         <li>
-                            <a href="@Url.Action("employeeInfo", "Register", new { @class = "link_name" })">Thêm nhân viên</a>
+                            <a href="@Url.Action("Main","HumanResource")">Trang chủ</a>
+                        </li>
+                        
+                        <li>
+                        <a href="@Url.Action("employeeInfo", "Register")">Thêm nhân viên</a>
                         </li>
                     </ul>
                 </li>

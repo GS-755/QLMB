@@ -7,9 +7,10 @@ namespace QLMB.Controllers.Manager
     public class HumanResourceController : Controller
     {
         private database db = new database();
-
-        public ActionResult HumanResourceMain(string NameSearch)
+        public string CMNDtemp = null;
+        public ActionResult Main(string NameSearch)
         {
+            Session["tempInfo"] = null;
             try
             {
                 //Nếu RoleID != null --> Đã đăng nhập
@@ -56,7 +57,8 @@ namespace QLMB.Controllers.Manager
                     //Đúng Role --> Vào
                     if (Session["RoleID"].ToString() == "NS")
                     {
-                        return View(db.NhanViens.Where(s => s.CMND == CMND).FirstOrDefault());
+                        NhanVien info = db.NhanViens.Where(s => s.CMND == CMND).FirstOrDefault();
+                        return View(info);
                     }
                 }
                 //Không thoả --> Về trang xử lý chuyển trang
@@ -70,5 +72,40 @@ namespace QLMB.Controllers.Manager
             }
 
         }
+
+        [HttpPost]
+        public ActionResult Detail(NhanVien info, string btn)
+        {
+            NhanVien update = db.NhanViens.Where(S => S.CMND == info.CMND).First();
+            switch (btn)
+            {
+                case "Working":
+                    update.MATT = 4;
+                    break;
+
+                case "Fired":
+                    update.MATT = 5;
+                    break;
+
+                case "Hired":
+                    update.MATT = 6;
+                    break;
+            }
+            
+
+            db.Entry(update).State = System.Data.Entity.EntityState.Modified;
+
+            db.SaveChanges();
+
+            return View(update);
+        }
     }
 }
+
+//Mã tình trạng
+//    1: Đang chờ duyệt
+//    2: Được duyệt
+//    3: Bị từ chối
+//    4: Đang làm
+//    5: Nghỉ việc
+//    6: Được tuyển
