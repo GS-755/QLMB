@@ -2,5 +2,5 @@
 .vs/
 bin/
 obj/Debug
-/bin/QLMB.pdb
-/bin/QLMB.dll
+bin/QLMB.pdb
+bin/QLMB.dll
