@@ -1,10 +1,10 @@
 ﻿/* Debug section */
-/*.section { border: 1px solid #ff0000; }
+.section { border: 1px solid #ff0000; }
 .container-fluid { border: 1px solid #ff6a00; }
 .container { border: 1px solid #ff6a22; }
 .row { border: 1px solid #ffd800; }
 .col { border: 1px solid #4cff00; }
-[class*="col-"] { border: 1px solid #00ffff; }*/
+[class*="col-"] { border: 1px solid #00ffff; }
 
 /* 0. Common CSS(s) */
 * { 
