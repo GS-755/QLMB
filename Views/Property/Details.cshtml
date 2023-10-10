@@ -1,59 +1,55 @@
 ﻿@model QLMB.Models.MatBang
-
 @{
     ViewBag.Title = "Details";
     Layout = "~/Views/Shared/Manager.cshtml";
 }
+<link rel='stylesheet' type='text/css' media='screen' href='~/Resources/CSS/FormDetail.css'>
 
-<h2>Details</h2>
-
-<div>
-    <h4>MatBang</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Lau)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Lau)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DienTich)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DienTich)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Khu)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Khu)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.TienThue)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.TienThue)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.TinhTrang.TenTT)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.TinhTrang.TenTT)
-        </dd>
-
-    </dl>
+<div class="m-2">
+    @Html.ActionLink("Quay lại", "Index", null, new { @class="btn btn-outline-warning mt-2 mb-2" })
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.MaMB }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+<h2 class="text-uppercase mx-3">Chi tiết mặt bằng</h2>
+<hr />
+<section class="m-2">
+    <div class="container">
+        <div class="col">
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="Sold">
+                        <table>
+                            <tr>
+                                <th>Mã mặt bằng</th>
+                                <td>@Html.DisplayFor(k => k.MaMB)</td>
+                            </tr>
+                            <tr>
+                                <th>Lầu</th>
+                                <td>@Html.DisplayFor(k => k.Lau)</td>
+                            </tr>
+                            <tr>
+                                <th>Diện tích</th>
+                                <td>@Html.DisplayFor(k => k.DienTich)</td>
+                            </tr>
+                            <tr>
+                                <th>Khu</th>
+                                <td>@Html.DisplayFor(k => k.Khu)</td>
+                            </tr>
+                            <tr>
+                                <th>Tiền thuê</th>
+                                <td>@Html.DisplayFor(k => k.TienThue)</td>
+                            </tr>
+                            <tr>
+                                <th>Trạng thái</th>
+                                <td>@Html.DisplayFor(k => k.TinhTrang.TenTT)</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-md-7">
+                    @Html.ActionLink("Chỉnh sửa", "Edit", "Property", new { id = Model.MaMB }, new { @class = "btn btn-outline-warning" }) |
+                    @Html.ActionLink("Xoá", "Delete", "Property", new { id = Model.MaMB }, new { @class = "btn btn-outline-danger" })
+                </div>
+            </div>
+            <div class="col-md-2"></div>
+        </div>
+    </div>
+</section>

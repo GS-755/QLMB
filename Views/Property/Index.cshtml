@@ -1,56 +1,62 @@
 ﻿@model IEnumerable<QLMB.Models.MatBang>
-
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/Manager.cshtml";
 }
 
-<h2>Index</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+<h2 class="mt-1 mb-1">Quản lý mặt bằng</h2>
+<div class="mt-3 mb-3">
+    @Html.ActionLink("Thêm mặt bằng", "Create", null, new { @class="btn btn-primary" })
+</div>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Lau)
+            Mã <br />Mặt bằng
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.DienTich)
+            Lầu
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Khu)
+            Diện tích
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.TienThue)
+            Khu
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.TinhTrang.TenTT)
+            Tiền thuê
         </th>
-        <th></th>
+        <th>
+            Trạng thái
+        </th>
+        <th>
+            Hành động
+        </th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
         <td>
+            @Html.DisplayFor(modelItem => item.MaMB)
+        </td>
+        <td>
             @Html.DisplayFor(modelItem => item.Lau)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.DienTich)
+            @Html.DisplayFor(modelItem => item.DienTich) m<sup>2</sup>
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Khu)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.TienThue)
+            @String.Format($"{item.TienThue:0,0} VNĐ")
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.TinhTrang.TenTT)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.MaMB }) |
-            @Html.ActionLink("Details", "Details", new { id=item.MaMB }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.MaMB })
+            @Html.ActionLink("Chỉnh sửa", "Edit", new { id=item.MaMB }, new { @class="btn btn-outline-warning" }) |
+            @Html.ActionLink("Chi tiết", "Details", new { id=item.MaMB }, new { @class = "btn btn-outline-success" }) |
+            @Html.ActionLink("Xoá", "Delete", new { id=item.MaMB }, new { @class = "btn btn-outline-danger" })
         </td>
     </tr>
 }
