@@ -138,6 +138,7 @@
     <Compile Include="Controllers\Manager\StaffLoginController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\SkillIssueController.cs" />
+    <Compile Include="Controllers\Test\PropertyController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -311,6 +312,11 @@
     <Content Include="Views\SkillIssue\Index.cshtml" />
     <Content Include="Views\StaffLogin\Login.cshtml" />
     <Content Include="Views\Account\FirstLogin.cshtml" />
+    <Content Include="Views\Property\Create.cshtml" />
+    <Content Include="Views\Property\Delete.cshtml" />
+    <Content Include="Views\Property\Details.cshtml" />
+    <Content Include="Views\Property\Edit.cshtml" />
+    <Content Include="Views\Property\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
