@@ -11,16 +11,18 @@ namespace QLMB.Controllers.Customer
         private database db = new database();
         
         //Trang quên mật khẩu
-        public ActionResult ForgetPasswordPage() => View();
+        public ActionResult ForgetPassword()
+        {
+            return View();
+        }
 
 
 
         //Xử lý lấy CMND
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult ForgetPasswordPage(string CMND)
+        public ActionResult ForgetPassword(string CMND)
         {
-
             try
             {
                 //Nếu tên đăng nhập > 8 ký tự ==> Người thuê
@@ -49,13 +51,11 @@ namespace QLMB.Controllers.Customer
                         }
                     }
                 }
-                
                 return View();
             }
             catch
             {
-                ModelState.AddModelError("forgetError", "* Lỗi hệ thống - Xin vui lòng thử lại !");
-                return View();
+                return RedirectToAction("Index", "SkillIssue");
             }
         }
 
@@ -64,19 +64,19 @@ namespace QLMB.Controllers.Customer
         //Check CMND người thuê
         private bool checkInfo(string CMND)
         {
-            int error = 0;
+            bool error = true;
             //CMND chưa nhập
             if (CMND == "")
             {
                 ModelState.AddModelError("inputCMND", "* Xin hãy điền CMND/CCCD");
-                error++;
+                error = false;
             }
 
             //CMND Chưa đủ 12 số
             else if (CMND.Trim().Length != 12)
             {
                 ModelState.AddModelError("inputCMND", "* CMND/CCCD phải đủ 12 số");
-                error++;
+                error = false;
             }
             else
             {
@@ -87,20 +87,14 @@ namespace QLMB.Controllers.Customer
                 {
                     if (!char.IsNumber(numberCheck[i]))
                     {
-                        error++;
+                        error = false;
                         ModelState.AddModelError("inputCMND", "* CMND/CCCD không hợp lệ");
                         break;
                     }
                 }
             }
 
-            switch (error)
-            {
-                case 0:
-                    return true;
-                default:
-                    return false;
-            }
+            return error;
         }
 
 
@@ -156,33 +150,27 @@ namespace QLMB.Controllers.Customer
         //Check mật khẩu mới
         private bool checkRePassword(NguoiThue nguoiThue)
         {
-            int error = 0;
+            bool error = true;
             //Mật khẩu
             if (nguoiThue.MatKhau == null)
             {
                 ModelState.AddModelError("resetPassword", "* Xin hãy điền mật khẩu");
-                error++;
+                error = false;
             }
 
             //Nhập lại mật khẩu
             if (nguoiThue.rePassword == null)
             {
                 ModelState.AddModelError("reReserPassword", "* Xin hãy điền lại mật khẩu");
-                error++;
+                error = false;
             }
             else if (nguoiThue.MatKhau != nguoiThue.rePassword)
             {
                 ModelState.AddModelError("reReserPassword", "* Mật khẩu không khớp - Xin hãy điền lại");
-                error++;
+                error = false;
             }
 
-            switch (error)
-            {
-                case 0:
-                    return true;
-                default:
-                    return false;
-            }
+            return error;
         }
 
 

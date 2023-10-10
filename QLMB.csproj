@@ -296,12 +296,12 @@
     <Content Include="Views\Event\Detail.cshtml" />
     <Content Include="Views\Event\EventMain.cshtml" />
     <Content Include="Views\Event\SaleMain.cshtml" />
-    <Content Include="Views\ForgetPassword\ForgetPasswordPage.cshtml" />
+    <Content Include="Views\ForgetPassword\ForgetPassword.cshtml" />
     <Content Include="Views\ForgetPassword\rePasswordNguoiThue.cshtml" />
     <Content Include="Views\Home\ClearSession.cshtml" />
     <Content Include="Views\HumanResource\Detail.cshtml" />
     <Content Include="Views\HumanResource\Main.cshtml" />
-    <Content Include="Views\Login\LoginPage.cshtml" />
+    <Content Include="Views\Login\Login.cshtml" />
     <Content Include="Views\Register\employeeInfo.cshtml" />
     <Content Include="Views\Register\rentalAccount.cshtml" />
     <Content Include="Views\Register\rentalInfo.cshtml" />
@@ -311,6 +311,7 @@
     <Content Include="Views\SkillIssue\Index.cshtml" />
     <Content Include="Views\StaffLogin\Login.cshtml" />
     <Content Include="Views\Account\FirstLogin.cshtml" />
+    <Content Include="Views\Account\Banned.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
