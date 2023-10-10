@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.EnterpriseServices.CompensatingResourceManager;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -16,6 +17,8 @@ namespace QLMB.Controllers
         {
             if (Session["RoleID"] != null)
             {
+                Session.Remove("Page");
+
                 switch (Session["RoleID"].ToString())
                 {
                     case "NS":
@@ -37,6 +40,13 @@ namespace QLMB.Controllers
                 case null: return Manager();
                 default: return View();
             }
+        }
+
+
+        public ActionResult Banned()
+        {
+            Session.Remove("RoleID");
+            return View();
         }
 
 
