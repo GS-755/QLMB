@@ -22,6 +22,8 @@ namespace QLMB.Controllers
                         return RedirectToAction("Main", "HumanResource");
                     case "SKUD":
                         return RedirectToAction("EventMain", "Event");
+                    case "MB":
+                        return RedirectToAction("Index", "Property");
                     default:
                         return RedirectToAction("Index", "Home");
                 }

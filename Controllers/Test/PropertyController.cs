@@ -9,24 +9,31 @@ namespace QLMB.Controllers.Test
 {
     public class PropertyController : Controller
     {
+        // Database & Constant configurations
         private database db = new database();
+        private readonly string ROLE = "MB";
+
+        /*
+            Boolean condition(s)
+            1.  Users that have logged in
+            2.  Users with a valid role
+        */
+        public bool IsLoggedIn() => Session["RoleID"] != null;
+        public bool IsValidRole() => Session["RoleID"].ToString() == ROLE;
 
         // GET: Property
         public ActionResult Index()
         {
             try
             {
-                if (Session["RoleID"] != null)
+                if (IsLoggedIn() && IsValidRole())
                 {
-                    if (Session["RoleID"].ToString() == "MB")
-                    {
-                        IQueryable<MatBang> matBangs = db.MatBangs.Include(m => m.TinhTrang);
+                    IQueryable<MatBang> matBangs = db.MatBangs.Include(m => m.TinhTrang);
 
-                        return View(matBangs.ToList());
-                    }
+                    return View(matBangs.ToList());
                 }
 
-                return RedirectToAction("Login", "StaffLogin");
+                return RedirectToAction("LoginPage", "Login");
             }
             catch 
             {
@@ -37,18 +44,15 @@ namespace QLMB.Controllers.Test
         {
             try
             {
-                if (Session["RoleID"] != null)
+                if (IsLoggedIn() && IsValidRole())
                 {
-                    if (Session["RoleID"].ToString() == "MB")
-                    {
-                        List<TinhTrang> dsTinhTrang = db.TinhTrangs.Where(k => k.MATT >= 7).ToList();
-                        ViewBag.MATT = new SelectList(dsTinhTrang, "MaTT", "TenTT");
+                    List<TinhTrang> dsTinhTrang = db.TinhTrangs.Where(k => k.MATT >= 7).ToList();
+                    ViewBag.MATT = new SelectList(dsTinhTrang, "MaTT", "TenTT");
 
-                        return View();
-                    }
+                    return View();
                 }
 
-                return RedirectToAction("Login", "StaffLogin");
+                return RedirectToAction("LoginPage", "Login");
             }
             catch
             {
@@ -59,25 +63,22 @@ namespace QLMB.Controllers.Test
         {
             try
             {
-                if (Session["RoleID"] != null)
+                if (IsLoggedIn() && IsValidRole())
                 {
-                    if (Session["RoleID"].ToString() == "MB")
+                    if (id == null)
                     {
-                        if (id == null)
-                        {
-                            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                        }
-                        MatBang matBang = db.MatBangs.Find(id);
-                        if (matBang == null)
-                        {
-                            return HttpNotFound();
-                        }
-
-                        return View(matBang);
+                        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                     }
+                    MatBang matBang = db.MatBangs.Find(id);
+                    if (matBang == null)
+                    {
+                        return HttpNotFound();
+                    }
+
+                    return View(matBang);
                 }
 
-                return RedirectToAction("Login", "StaffLogin");
+                return RedirectToAction("LoginPage", "Login");
             }
             catch
             {
@@ -88,27 +89,24 @@ namespace QLMB.Controllers.Test
         {
             try
             {
-                if (Session["RoleID"] != null)
+                if (IsLoggedIn() && IsValidRole())
                 {
-                    if (Session["RoleID"].ToString() == "MB")
+                    if (id == null)
                     {
-                        if (id == null)
-                        {
-                            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                        }
-                        MatBang matBang = db.MatBangs.Find(id);
-                        if (matBang == null)
-                        {
-                            return HttpNotFound();
-                        }
-                        List<TinhTrang> dsTinhTrang = db.TinhTrangs.Where(k => k.MATT >= 7).ToList();
-                        ViewBag.MATT = new SelectList(dsTinhTrang, "MaTT", "TenTT", matBang.MATT);
+                        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    }
+                    MatBang matBang = db.MatBangs.Find(id);
+                    if (matBang == null)
+                    {
+                        return HttpNotFound();
+                    }
+                    List<TinhTrang> dsTinhTrang = db.TinhTrangs.Where(k => k.MATT >= 7).ToList();
+                    ViewBag.MATT = new SelectList(dsTinhTrang, "MaTT", "TenTT", matBang.MATT);
 
-                        return View(matBang);
-                    }    
+                    return View(matBang);
                 }
 
-                return RedirectToAction("Login", "StaffLogin");
+                return RedirectToAction("LoginPage", "Login");
             }
             catch
             {
@@ -119,25 +117,22 @@ namespace QLMB.Controllers.Test
         {
             try
             {
-                if (Session["RoleID"] != null)
+                if (IsLoggedIn() && IsValidRole())
                 {
-                    if (Session["RoleID"].ToString() == "MB")
+                    if (id == null)
                     {
-                        if (id == null)
-                        {
-                            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                        }
-                        MatBang matBang = db.MatBangs.Find(id);
-                        if (matBang == null)
-                        {
-                            return HttpNotFound();
-                        }
+                        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    }
+                    MatBang matBang = db.MatBangs.Find(id);
+                    if (matBang == null)
+                    {
+                        return HttpNotFound();
+                    }
 
-                        return View(matBang);
-                    }    
+                    return View(matBang);
                 }
 
-                return RedirectToAction("Login", "StaffLogin");
+                return RedirectToAction("LoginPage", "Login");
             }
             catch
             {
