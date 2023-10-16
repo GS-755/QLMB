@@ -23,9 +23,9 @@ namespace QLMB.Models
         public string MaChucVu { get; set; }
         public string TenCV { get; set; }
         public double HeSoLuong { get; set; }
+        public List<ChucVu> ListChucVu { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<NhanVien> NhanViens { get; set; }
-        public List<ChucVu> ListChucVu { get; internal set; }
     }
 }

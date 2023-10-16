@@ -63,6 +63,7 @@
     <Property Name="Khu" Type="int" Nullable="false" />
     <Property Name="TienThue" Type="float" Nullable="false" />
     <Property Name="MATT" Type="smallint" Nullable="false" />
+    <Property Name="HinhMB" Type="nvarchar(max)" />
   </EntityType>
   <EntityType Name="NguoiThue">
     <Key>
@@ -306,7 +307,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__SuKienUuD__TenDa__1F98B2C1">
+  <Association Name="FK__SuKienUuD__TenDa__5AEE82B9">
     <End Role="NguoiThue" Type="Self.NguoiThue" Multiplicity="1" />
     <End Role="SuKienUuDai" Type="Self.SuKienUuDai" Multiplicity="*" />
     <ReferentialConstraint>
@@ -318,7 +319,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__SuKienUuDa__MaDM__1EA48E88">
+  <Association Name="FK__SuKienUuDa__MaDM__59FA5E80">
     <End Role="DanhMuc" Type="Self.DanhMuc" Multiplicity="1" />
     <End Role="SuKienUuDai" Type="Self.SuKienUuDai" Multiplicity="*" />
     <ReferentialConstraint>
@@ -330,7 +331,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__SuKienUuDa__MaNV__208CD6FA">
+  <Association Name="FK__SuKienUuDa__MaNV__5BE2A6F2">
     <End Role="NhanVien" Type="Self.NhanVien" Multiplicity="0..1" />
     <End Role="SuKienUuDai" Type="Self.SuKienUuDai" Multiplicity="*" />
     <ReferentialConstraint>
@@ -342,7 +343,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__SuKienUuDa__MATT__2180FB33">
+  <Association Name="FK__SuKienUuDa__MATT__5CD6CB2B">
     <End Role="TinhTrang" Type="Self.TinhTrang" Multiplicity="1" />
     <End Role="SuKienUuDai" Type="Self.SuKienUuDai" Multiplicity="*" />
     <ReferentialConstraint>
@@ -473,19 +474,19 @@
       <End Role="TinhTrang" EntitySet="TinhTrang" />
       <End Role="NhanVien" EntitySet="NhanVien" />
     </AssociationSet>
-    <AssociationSet Name="FK__SuKienUuD__TenDa__1F98B2C1" Association="Self.FK__SuKienUuD__TenDa__1F98B2C1">
+    <AssociationSet Name="FK__SuKienUuD__TenDa__5AEE82B9" Association="Self.FK__SuKienUuD__TenDa__5AEE82B9">
       <End Role="NguoiThue" EntitySet="NguoiThue" />
       <End Role="SuKienUuDai" EntitySet="SuKienUuDai" />
     </AssociationSet>
-    <AssociationSet Name="FK__SuKienUuDa__MaDM__1EA48E88" Association="Self.FK__SuKienUuDa__MaDM__1EA48E88">
+    <AssociationSet Name="FK__SuKienUuDa__MaDM__59FA5E80" Association="Self.FK__SuKienUuDa__MaDM__59FA5E80">
       <End Role="DanhMuc" EntitySet="DanhMuc" />
       <End Role="SuKienUuDai" EntitySet="SuKienUuDai" />
     </AssociationSet>
-    <AssociationSet Name="FK__SuKienUuDa__MaNV__208CD6FA" Association="Self.FK__SuKienUuDa__MaNV__208CD6FA">
+    <AssociationSet Name="FK__SuKienUuDa__MaNV__5BE2A6F2" Association="Self.FK__SuKienUuDa__MaNV__5BE2A6F2">
       <End Role="NhanVien" EntitySet="NhanVien" />
       <End Role="SuKienUuDai" EntitySet="SuKienUuDai" />
     </AssociationSet>
-    <AssociationSet Name="FK__SuKienUuDa__MATT__2180FB33" Association="Self.FK__SuKienUuDa__MATT__2180FB33">
+    <AssociationSet Name="FK__SuKienUuDa__MATT__5CD6CB2B" Association="Self.FK__SuKienUuDa__MATT__5CD6CB2B">
       <End Role="TinhTrang" EntitySet="TinhTrang" />
       <End Role="SuKienUuDai" EntitySet="SuKienUuDai" />
     </AssociationSet>

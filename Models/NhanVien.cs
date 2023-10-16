@@ -11,7 +11,6 @@ namespace QLMB.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations.Schema;
 
     public partial class NhanVien
     {
@@ -24,13 +23,15 @@ namespace QLMB.Models
             this.SuKienUuDais = new HashSet<SuKienUuDai>();
             this.ThuChis = new HashSet<ThuChi>();
         }
-    
+
         public string MaNV { get; set; }
         public string MatKhau { get; set; }
         public string MaChucVu { get; set; }
         public short MATT { get; set; }
         public string CMND { get; set; }
-    
+        public string rePassword { get; set; }
+
+
         public virtual ChucVu ChucVu { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DonXinThue> DonXinThues { get; set; }
@@ -44,10 +45,5 @@ namespace QLMB.Models
         public virtual ICollection<SuKienUuDai> SuKienUuDais { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ThuChi> ThuChis { get; set; }
-
-
-        // -- Not mapped -- //
-        [NotMapped]
-        public string rePassword { get; set; }
     }
 }

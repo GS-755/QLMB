@@ -63,6 +63,7 @@
     <EntitySetMapping Name="MatBangs">
       <EntityTypeMapping TypeName="DoanHK5Model.MatBang">
         <MappingFragment StoreEntitySet="MatBang">
+          <ScalarProperty Name="HinhMB" ColumnName="HinhMB" />
           <ScalarProperty Name="MaMB" ColumnName="MaMB" />
           <ScalarProperty Name="Lau" ColumnName="Lau" />
           <ScalarProperty Name="DienTich" ColumnName="DienTich" />

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="DoanHK5Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="DoanHK5Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="ChucVu">
           <Key>
             <PropertyRef Name="MaChucVu" />
@@ -68,6 +68,7 @@
           <Property Name="Khu" Type="int" Nullable="false" />
           <Property Name="TienThue" Type="float" Nullable="false" />
           <Property Name="MATT" Type="smallint" Nullable="false" />
+          <Property Name="HinhMB" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="NguoiThue">
           <Key>
@@ -311,7 +312,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__SuKienUuD__TenDa__1F98B2C1">
+        <Association Name="FK__SuKienUuD__TenDa__5AEE82B9">
           <End Role="NguoiThue" Type="Self.NguoiThue" Multiplicity="1" />
           <End Role="SuKienUuDai" Type="Self.SuKienUuDai" Multiplicity="*" />
           <ReferentialConstraint>
@@ -323,7 +324,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__SuKienUuDa__MaDM__1EA48E88">
+        <Association Name="FK__SuKienUuDa__MaDM__59FA5E80">
           <End Role="DanhMuc" Type="Self.DanhMuc" Multiplicity="1" />
           <End Role="SuKienUuDai" Type="Self.SuKienUuDai" Multiplicity="*" />
           <ReferentialConstraint>
@@ -335,7 +336,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__SuKienUuDa__MaNV__208CD6FA">
+        <Association Name="FK__SuKienUuDa__MaNV__5BE2A6F2">
           <End Role="NhanVien" Type="Self.NhanVien" Multiplicity="0..1" />
           <End Role="SuKienUuDai" Type="Self.SuKienUuDai" Multiplicity="*" />
           <ReferentialConstraint>
@@ -347,7 +348,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__SuKienUuDa__MATT__2180FB33">
+        <Association Name="FK__SuKienUuDa__MATT__5CD6CB2B">
           <End Role="TinhTrang" Type="Self.TinhTrang" Multiplicity="1" />
           <End Role="SuKienUuDai" Type="Self.SuKienUuDai" Multiplicity="*" />
           <ReferentialConstraint>
@@ -478,19 +479,19 @@
             <End Role="TinhTrang" EntitySet="TinhTrang" />
             <End Role="NhanVien" EntitySet="NhanVien" />
           </AssociationSet>
-          <AssociationSet Name="FK__SuKienUuD__TenDa__1F98B2C1" Association="Self.FK__SuKienUuD__TenDa__1F98B2C1">
+          <AssociationSet Name="FK__SuKienUuD__TenDa__5AEE82B9" Association="Self.FK__SuKienUuD__TenDa__5AEE82B9">
             <End Role="NguoiThue" EntitySet="NguoiThue" />
             <End Role="SuKienUuDai" EntitySet="SuKienUuDai" />
           </AssociationSet>
-          <AssociationSet Name="FK__SuKienUuDa__MaDM__1EA48E88" Association="Self.FK__SuKienUuDa__MaDM__1EA48E88">
+          <AssociationSet Name="FK__SuKienUuDa__MaDM__59FA5E80" Association="Self.FK__SuKienUuDa__MaDM__59FA5E80">
             <End Role="DanhMuc" EntitySet="DanhMuc" />
             <End Role="SuKienUuDai" EntitySet="SuKienUuDai" />
           </AssociationSet>
-          <AssociationSet Name="FK__SuKienUuDa__MaNV__208CD6FA" Association="Self.FK__SuKienUuDa__MaNV__208CD6FA">
+          <AssociationSet Name="FK__SuKienUuDa__MaNV__5BE2A6F2" Association="Self.FK__SuKienUuDa__MaNV__5BE2A6F2">
             <End Role="NhanVien" EntitySet="NhanVien" />
             <End Role="SuKienUuDai" EntitySet="SuKienUuDai" />
           </AssociationSet>
-          <AssociationSet Name="FK__SuKienUuDa__MATT__2180FB33" Association="Self.FK__SuKienUuDa__MATT__2180FB33">
+          <AssociationSet Name="FK__SuKienUuDa__MATT__5CD6CB2B" Association="Self.FK__SuKienUuDa__MATT__5CD6CB2B">
             <End Role="TinhTrang" EntitySet="TinhTrang" />
             <End Role="SuKienUuDai" EntitySet="SuKienUuDai" />
           </AssociationSet>
@@ -511,8 +512,7 @@
             <End Role="TienThue" EntitySet="TienThue" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="DoanHK5Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -596,6 +596,7 @@
           <Property Name="MATT" Type="Int16" Nullable="false" />
           <NavigationProperty Name="DonXinThues" Relationship="Self.FK__DonXinThue__MaMB__4F7CD00D" FromRole="MatBang" ToRole="DonXinThue" />
           <NavigationProperty Name="TinhTrang" Relationship="Self.FK__MatBang__MATT__3D5E1FD2" FromRole="MatBang" ToRole="TinhTrang" />
+          <Property Name="HinhMB" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="NguoiThue">
           <Key>
@@ -1134,6 +1135,7 @@
           <EntitySetMapping Name="MatBangs">
             <EntityTypeMapping TypeName="DoanHK5Model.MatBang">
               <MappingFragment StoreEntitySet="MatBang">
+                <ScalarProperty Name="HinhMB" ColumnName="HinhMB" />
                 <ScalarProperty Name="MaMB" ColumnName="MaMB" />
                 <ScalarProperty Name="Lau" ColumnName="Lau" />
                 <ScalarProperty Name="DienTich" ColumnName="DienTich" />

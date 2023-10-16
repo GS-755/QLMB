@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
@@ -10,6 +11,7 @@ namespace QLMB.Controllers.Test
     public class PropertyController : Controller
     {
         // Database & Constant configurations
+        private readonly string SERVER_IMG_PATH = "~/Resources/Picture/Property/";
         private database db = new database();
         private readonly string ROLE = "MB";
 
@@ -143,19 +145,23 @@ namespace QLMB.Controllers.Test
         // POST: Property
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "MaMB,Lau,DienTich,Khu,TienThue,MATT")] MatBang matBang)
+        public ActionResult Create(MatBang matBang)
         {
             try
             {
-                if (ModelState.IsValid)
+                if (matBang.UploadImage != null)
                 {
-                    db.MatBangs.Add(matBang);
-                    db.SaveChanges();
-                    return RedirectToAction("Index");
+                    string fileName = Path.GetFileNameWithoutExtension(matBang.UploadImage.FileName);
+                    string extension = Path.GetExtension(matBang.UploadImage.FileName);
+                    fileName += extension;
+                    matBang.HinhMB = SERVER_IMG_PATH + fileName;
+                    matBang.UploadImage.SaveAs(Path.Combine(Server.MapPath(SERVER_IMG_PATH), fileName));
                 }
+                db.MatBangs.Add(matBang);
+                db.SaveChanges();
                 ViewBag.MATT = new SelectList(db.TinhTrangs, "MATT", "TenTT", matBang.MATT);
 
-                return View(matBang);
+                return RedirectToAction("Index");
             }
             catch
             {

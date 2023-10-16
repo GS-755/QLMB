@@ -29,14 +29,11 @@ namespace QLMB.Models
         public string DiaChi { get; set; }
         public string TenDangNhap { get; set; }
         public string MatKhau { get; set; }
-        
-    
+        public string rePassword { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<NguoiThue> NguoiThues { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<NhanVien> NhanViens { get; set; }
-
-        // -- Not Mapped -- //
-        public string rePassword { get; set; }
     }
 }

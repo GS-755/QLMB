@@ -11,7 +11,9 @@ namespace QLMB.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Web;
+
     public partial class MatBang
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -26,6 +28,9 @@ namespace QLMB.Models
         public int Khu { get; set; }
         public double TienThue { get; set; }
         public short MATT { get; set; }
+        public string HinhMB { get; set; }
+        [NotMapped]
+        public HttpPostedFileBase UploadImage { get; set; } 
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DonXinThue> DonXinThues { get; set; }
