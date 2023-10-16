@@ -9,7 +9,10 @@ namespace QLMB.Controllers.Customer
         private database db = new database();
 
         //Trang đăng nhập
-        public ActionResult LoginPage() => View();
+        public ActionResult Login()
+        {
+            return View();
+        }
 
 
         //Đăng xuất
@@ -39,20 +42,22 @@ namespace QLMB.Controllers.Customer
                     {
                         switch (result.Item2.MATT)
                         {
+                            case 5:
+                                return RedirectToAction("Banned", "Account");
                             case 6:
                                 Session["MANV"] = result.Item2.MaNV.Trim();
                                 return RedirectToAction("FirstLogin", "Account");
                             default:
                                 return RedirectToAction("Manager", "Account");
-                        }              
+                        }
                     }
                     else
-                        return View("LoginPage"); 
+                        return View("Login");
                 }
             }
             catch
             {
-                return View("LoginPage");
+                return RedirectToAction("Index", "SkillIssue");
             }
         }
 
@@ -60,18 +65,19 @@ namespace QLMB.Controllers.Customer
         //Người thuê
         private bool rentalCheckLogin(string TenDangNhap, string MatKhau)
         {
-            int error = 0;
+            bool error = true;
             if (TenDangNhap == "")
             {
                 ModelState.AddModelError("inputUsername", "* Xin hãy điền tên đăng nhập");
-                error++;
+                error = false;
             }
             if (MatKhau == "")
             {
                 ModelState.AddModelError("inputPassword", "* Xin hãy điền mật khẩu");
-                error++;
+                error = false;
             }
-            if (error == 0)
+
+            if (error)
             {
                 string authTmp = SHA256.ToSHA256(MatKhau);
                 var check = db.NguoiThues.Where(a => a.TenDangNhap == TenDangNhap.Trim() && a.MatKhau == authTmp).FirstOrDefault();
@@ -100,19 +106,19 @@ namespace QLMB.Controllers.Customer
         //Nhân viên
         private (bool, NhanVien) ManagerCheckLogin(string MaNV, string MatKhau)
         {
-            int error = 0;
+            bool error = true;
             if (MaNV == "")
             {
                 ModelState.AddModelError("inputUsername", "* Xin hãy điền tên đăng nhập");
-                error++;
+                error = false;
             }
             if (MatKhau == "")
             {
                 ModelState.AddModelError("inputPassword", "* Xin hãy điền mật khẩu");
-                error++;
+                error = false;
             }
 
-            if (error == 0)
+            if (error)
             {
                 string authTmp = SHA256.ToSHA256(MatKhau);
                 NhanVien check = db.NhanViens.Where(a => a.MaNV.Trim() == MaNV.Trim() && a.MatKhau == authTmp).FirstOrDefault();
