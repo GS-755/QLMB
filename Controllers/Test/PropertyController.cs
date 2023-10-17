@@ -170,7 +170,7 @@ namespace QLMB.Controllers.Test
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "MaMB,Lau,DienTich,Khu,TienThue,MATT")] MatBang matBang)
+        public ActionResult Edit(MatBang matBang)
         {
             try
             {
