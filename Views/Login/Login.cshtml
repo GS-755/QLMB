@@ -4,11 +4,11 @@
     ViewBag.Title = "Đăng nhập";
     if (Session["Page"] != null && Session["Page"].ToString() == "Staff")
     {
-        Layout = "~/Views/Shared/Manager.cshtml";
+        Layout = "~/Views/Shared/_Manager.cshtml";
     }
     else
     {
-        Layout = "~/Views/Shared/_MasterLayout.cshtml";
+        Layout = "~/Views/Shared/_HomePage.cshtml";
     }
 }
 
@@ -69,6 +69,8 @@
         </div>
     </div>
 }
+
+
 else
 {
     <div class="container mt-3 section">
