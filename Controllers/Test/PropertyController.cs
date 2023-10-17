@@ -11,7 +11,6 @@ namespace QLMB.Controllers.Test
     public class PropertyController : Controller
     {
         // Database & Constant configurations
-        private readonly string SERVER_IMG_PATH = "~/Resources/Picture/Property/";
         private database db = new database();
         private readonly string ROLE = "MB";
 
@@ -35,7 +34,7 @@ namespace QLMB.Controllers.Test
                     return View(matBangs.ToList());
                 }
 
-                return RedirectToAction("LoginPage", "Login");
+                return RedirectToAction("Login", "Login");
             }
             catch 
             {
@@ -54,7 +53,7 @@ namespace QLMB.Controllers.Test
                     return View();
                 }
 
-                return RedirectToAction("LoginPage", "Login");
+                return RedirectToAction("Login", "Login");
             }
             catch
             {
@@ -80,7 +79,7 @@ namespace QLMB.Controllers.Test
                     return View(matBang);
                 }
 
-                return RedirectToAction("LoginPage", "Login");
+                return RedirectToAction("Login", "Login");
             }
             catch
             {
@@ -108,7 +107,7 @@ namespace QLMB.Controllers.Test
                     return View(matBang);
                 }
 
-                return RedirectToAction("LoginPage", "Login");
+                return RedirectToAction("Login", "Login");
             }
             catch
             {
@@ -134,7 +133,7 @@ namespace QLMB.Controllers.Test
                     return View(matBang);
                 }
 
-                return RedirectToAction("LoginPage", "Login");
+                return RedirectToAction("Login", "Login");
             }
             catch
             {
@@ -154,8 +153,8 @@ namespace QLMB.Controllers.Test
                     string fileName = Path.GetFileNameWithoutExtension(matBang.UploadImage.FileName);
                     string extension = Path.GetExtension(matBang.UploadImage.FileName);
                     fileName += extension;
-                    matBang.HinhMB = SERVER_IMG_PATH + fileName;
-                    matBang.UploadImage.SaveAs(Path.Combine(Server.MapPath(SERVER_IMG_PATH), fileName));
+                    matBang.HinhMB = MatBang.SERVER_IMG_PATH + fileName;
+                    matBang.UploadImage.SaveAs(Path.Combine(Server.MapPath(MatBang.SERVER_IMG_PATH), fileName));
                 }
                 db.MatBangs.Add(matBang);
                 db.SaveChanges();
@@ -174,17 +173,18 @@ namespace QLMB.Controllers.Test
         {
             try
             {
-                if (ModelState.IsValid)
+                if (matBang.UploadImage != null)
                 {
-                    db.Entry(matBang).State = EntityState.Modified;
-                    db.SaveChanges();
-
-                    return RedirectToAction("Index");
+                    string fileName = Path.GetFileNameWithoutExtension(matBang.UploadImage.FileName);
+                    string extension = Path.GetExtension(matBang.UploadImage.FileName);
+                    fileName += extension;
+                    matBang.HinhMB = MatBang.SERVER_IMG_PATH + fileName;
+                    matBang.UploadImage.SaveAs(Path.Combine(Server.MapPath(MatBang.SERVER_IMG_PATH), fileName));
                 }
-                List<TinhTrang> dsTinhTrang = db.TinhTrangs.Where(k => k.MATT >= 7).ToList();
-                ViewBag.MATT = new SelectList(dsTinhTrang, "MaTT", "TenTT", matBang.MATT);
+                db.Entry(matBang).State = EntityState.Modified;
+                db.SaveChanges();
 
-                return View(matBang);
+                return RedirectToAction("Index");
             }
             catch
             {

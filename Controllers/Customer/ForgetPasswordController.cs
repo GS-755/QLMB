@@ -33,7 +33,7 @@ namespace QLMB.Controllers.Customer
                     {
                         Session["CMND"] = nt.CMND.Trim();
                         Session["TenDangNhap"] = nt.TenDangNhap;
-                        return RedirectToAction("rePasswordNguoiThue", "ForgetPassword");
+                        return RedirectToAction("rePasswordNguoiThue","ForgetPassword");
                     }
                     else
                     {
@@ -107,7 +107,7 @@ namespace QLMB.Controllers.Customer
             if (Session["TenDangNhap"] != null)
                 return View();
             else
-                return RedirectToAction("ForgetPasswordPage", "ForgetPassword");
+                return RedirectToAction("ForgetPassword", "ForgetPassword");
         }
 
 
@@ -120,7 +120,7 @@ namespace QLMB.Controllers.Customer
             switch (choice)
             {
                 case "Quay lại":
-                    return RedirectToAction("ForgetPasswordPage", "ForgetPassword");
+                    return RedirectToAction("ForgetPassword", "ForgetPassword");
                 
                 default:
                     try

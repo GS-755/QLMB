@@ -9,17 +9,19 @@
 
 namespace QLMB.Models
 {
-    using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Web;
 
     public partial class MatBang
     {
+        public readonly static string SERVER_IMG_PATH = "~/Resources/Picture/Property/";
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public MatBang()
         {
             this.DonXinThues = new HashSet<DonXinThue>();
+            this.HinhMB = MatBang.SERVER_IMG_PATH;
         }
     
         public string MaMB { get; set; }
