@@ -42,7 +42,7 @@ namespace QLMB.Controllers.Customer
                         {
                             Session["CMND"] = nv.CMND.Trim();
                             Session["TenDangNhap"] = nv.MaNV;
-                            return RedirectToAction("rePasswordNhanVien", "ForgetPassword");
+                            return RedirectToAction("rePasswordNhanVien","ForgetPassword");
                         }
                         else
                         {

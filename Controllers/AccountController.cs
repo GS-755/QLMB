@@ -13,6 +13,7 @@ namespace QLMB.Controllers
     public class AccountController : Controller
     {
         private database db = new database();
+        
         public ActionResult Manager()
         {
             if (Session["RoleID"] != null)
@@ -32,7 +33,6 @@ namespace QLMB.Controllers
             return RedirectToAction("Index","Home");
         }
 
-
         public ActionResult FirstLogin()
         {
             switch (Session["MANV"])
@@ -42,13 +42,16 @@ namespace QLMB.Controllers
             }
         }
 
-
         public ActionResult Banned()
         {
             Session.Remove("RoleID");
             return View();
         }
 
+        public ActionResult Profile()
+        {
+            return View();
+        }
 
         [HttpPost]
         public ActionResult FirstLogin(NhanVien info)

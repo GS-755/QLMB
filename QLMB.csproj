@@ -236,6 +236,7 @@
     <Content Include="Resources\CSS\MainMenu_User.css" />
     <Content Include="Resources\CSS\Manager.css" />
     <Content Include="Resources\CSS\MultipleItem_Carousel.css" />
+    <Content Include="Resources\CSS\Profile.css" />
     <Content Include="Resources\CSS\tableInfo.css" />
     <Content Include="Resources\JavaScript\reload.js" />
     <Content Include="Resources\JavaScript\managerNavBar.js" />
@@ -309,6 +310,7 @@
     <Content Include="Views\StaffLogin\Login.cshtml" />
     <Content Include="Views\Account\FirstLogin.cshtml" />
     <Content Include="Views\Account\Banned.cshtml" />
+    <Content Include="Views\Account\Profile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
