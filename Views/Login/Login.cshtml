@@ -1,123 +1,63 @@
-﻿@model QLMB.Models.NguoiThue
-
-@{
+﻿@{
     ViewBag.Title = "Đăng nhập";
-    if (Session["Page"] != null && Session["Page"].ToString() == "Staff")
-    {
-        Layout = "~/Views/Shared/_Manager.cshtml";
-    }
-    else
-    {
-        Layout = "~/Views/Shared/_HomePage.cshtml";
-    }
+    Layout = "~/Views/Shared/_HomePage.cshtml";
 }
 
-@if (Session["Page"] == null)
-{
-    <div class="container mt-3">
-        <div class="col">
-            <div class="row">
-                <div class="col-md-4"></div>
-                <div class="col-md-4">
-                    <h2 class="text-center text-uppercase">Đăng nhập</h2>
+<div class="container mt-3">
+    <div class="col">
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="col-md-4">
+                <h2 class="text-center text-uppercase">Đăng nhập</h2>
 
-                    @*Xác định HttpPost*@
-                    @using (Html.BeginForm("Login", "Login"))
-                    {
-                        @*Tính năng bảo mật - Tránh đăng nhập chéo trang*@
-                        @Html.AntiForgeryToken()
+                @*Xác định HttpPost*@
+                @using (Html.BeginForm("Login", "Login"))
+                {
+                    @*Tính năng bảo mật - Tránh đăng nhập chéo trang*@
+                    @Html.AntiForgeryToken()
 
-                        <div class="col m-4">
+                    <div class="col m-4">
 
-                            @*Tên đăng nhập*@
-                            <div class="row">
-                                <label for="TenDangNhap" class="mb-2">Tên đăng nhập:</label>
-                                <input type="text" name="TenDangNhap" class="form-control" placeholder="vd: abc123" />
-                                @Html.ValidationMessage("inputUsername", new { @class = "text-danger mt-1" })
-                            </div>
-
-
-                            @*Mật khẩu*@
-                            <div class="row mt-3">
-                                <label for="MatKhau" class="mb-2">Mật khẩu:</label>
-                                <input type="password" name="MatKhau" class="form-control" />
-                                @Html.ValidationMessage("inputPassword", new { @class = "text-danger mt-1" })
-                            </div>
-
-
-                            @*Thông báo lỗi đăng nhập*@
-                            @Html.ValidationMessage("Error", new { @class = "text-danger mt-1" })
-
-
-                            <div class="text-center mt-3">
-                                @*Nút đăng nhập*@
-                                <input type="submit" value="Đăng nhập" class="btn btn-success" />
-
-                                @*Nút đăng ký*@
-                                @Html.ActionLink("Đăng ký", "rentalInfo", "Register", null, new { @class = "btn btn-primary mx-3" })
-                            </div>
-
-                            <div class="text-center mt-2">
-                                @Html.ActionLink("Quên tài khoản hay mật khẩu ?", "ForgetPassword", "ForgetPassword", null, new { @style = "text-decoration: none;" })
-                            </div>
+                        @*Tên đăng nhập*@
+                        <div class="row">
+                            <label for="username" class="mb-2">Tên đăng nhập:</label>
+                            <input type="text" name="username" class="form-control" placeholder="vd: abc123" />
+                            @Html.ValidationMessage("inputUsername", new { @class = "text-danger mt-1" })
                         </div>
-                    }
-
-                </div>
-                <div class="col-md-4"></div>
-            </div>
-        </div>
-    </div>
-}
 
 
-else
-{
-    <div class="container mt-3 section">
-        <div class="col">
-            <div class="row">
-                <div class="col-md-4"></div>
-                    <div class="col-md-4">
-                        <h2 class="text-center text-uppercase">Đăng nhập</h2>
-
-                        @*Xác định HttpPost*@
-                        @using (Html.BeginForm("Login", "Login"))
-                        {
-                            @*Tính năng bảo mật - Tránh đăng nhập chéo trang*@
-                            @Html.AntiForgeryToken()
-
-                            <div class="col m-4">
-
-                                @*Tên đăng nhập*@
-                                <div class="row">
-                                    <label for="TenDangNhap" class="mb-2">Tên đăng nhập:</label>
-                                    <input type="text" name="TenDangNhap" class="form-control" placeholder="vd: abc123" />
-                                    @Html.ValidationMessage("inputUsername", new { @class = "text-danger mt-1" })
-                                </div>
+                        @*Mật khẩu*@
+                        <div class="row mt-3">
+                            <label for="password" class="mb-2">Mật khẩu:</label>
+                            <input type="password" name="password" class="form-control" />
+                            @Html.ValidationMessage("inputPassword", new { @class = "text-danger mt-1" })
+                        </div>
 
 
-                                @*Mật khẩu*@
-                                <div class="row mt-3">
-                                    <label for="MatKhau" class="mb-2">Mật khẩu:</label>
-                                    <input type="password" name="MatKhau" class="form-control" />
-                                    @Html.ValidationMessage("inputPassword", new { @class = "text-danger mt-1" })
-                                </div>
+                        @*Thông báo lỗi đăng nhập*@
+                        @Html.ValidationMessage("Error", new { @class = "text-danger mt-1" })
 
 
-                                @*Thông báo lỗi đăng nhập*@
-                                @Html.ValidationMessage("Error", new { @class = "text-danger mt-1" })
+                        <div class="text-center mt-3">
+                            @*Nút đăng nhập*@
+                            <input type="submit" value="Đăng nhập" class="btn btn-success" />
 
-                                @*Nút đăng nhập*@
-                                <div class="row mb-3">
-                                    <input type="submit" class="btn btn-success" value="Đăng nhập" />
-                                </div>
-                            </div>
-                         }
+                            @*Nút đăng ký*@
+                            @Html.ActionLink("Đăng ký", "rentalInfo", "Register", null, new { @class = "btn btn-primary mx-3" })
+                        </div>
+
+                        <div class="text-center mt-2">
+                            @Html.ActionLink("Quên tài khoản hay mật khẩu ?", "ForgetPassword", "ForgetPassword", null, new { @style = "text-decoration: none;" })
+                        </div>
                     </div>
+                 }
+
             </div>
+            <div class="col-md-4"></div>
         </div>
     </div>
-}
+</div>
 
-@*Hiện chữ thông báo*@
+
+@*Hiện thông báo*@
 @Html.Raw(TempData["msg"])

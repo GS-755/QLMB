@@ -1,70 +1,105 @@
 ﻿@model QLMB.Models.ThongTinND
 
 @{
-    ViewBag.Title = "Profile";
+    ViewBag.Title = "Thông tin tài khoản";
     Layout = "~/Views/Shared/_Manager.cshtml";
+
+    QLMB.Models.ThongTinND User = (QLMB.Models.ThongTinND)Session["UserInfo"];
+    QLMB.Models.NhanVien Employee = (QLMB.Models.NhanVien)Session["EmployeeInfo"];
 }
 
-<h2>Profile</h2>
+<link rel="stylesheet" href="~/Resources/CSS/Profile.css">
+<script type="text/javascript" href="~/Resources/JavaScript/ProfilePage.css"></script>
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>ThongTinND</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.CMND)
+<div class="container light-style flex-grow-1 container-p-y">
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.NgayCap, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.NgayCap, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.NgayCap, "", new { @class = "text-danger" })
+    <div class="d-flex justify-content-between">
+        @Html.ActionLink("< Quay lại", "Manager", "Account", null, new { @class = "btn btn-primary mb-0" })
+        <h4 class="font-weight-bold"> Thông tin tài khoản </h4>
+    </div>
+
+    <!-- Thanh Sidebar -->
+    <div class="card overflow-hidden mt-2">
+        <div class="row no-gutters row-bordered row-border-light">
+            <div class="col-md-3">
+                <div class="list-group list-group-flush account-settings-links">
+
+                    <!-- Hình Avatar -->
+                    <div class="justify-content-center form-group col">
+
+                        <img src="~/Resources/Picture/User/userDefault.png" class="avatar">
+
+
+                        <!-- Thông tin nhân viên -->
+                        <h5 class="col text-center mt-1">@User.HoTen</h5>
+
+                    </div>
+
+                    <!-- Tổng quan -->
+                    @if (Session["ChangePasswordError"] == null)
+                    {
+                        <a class="list-group-item list-group-item-action active" data-toggle="list"
+                           href="#account-general">Tổng quan</a>
+                    }
+                    else
+                    {
+                        <a class="list-group-item list-group-item-action" data-toggle="list"
+                           href="#account-general">Tổng quan</a>
+                    }
+
+                    <!-- Đổi mật khẩu -->
+                    @if (Session["ChangePasswordError"] == null)
+                    {
+                        <a class="list-group-item list-group-item-action " data-toggle="list"
+                           href="#account-change-password">Đổi mật khẩu</a>
+                    }
+                    else
+                    {
+                        <a class="list-group-item list-group-item-action active" data-toggle="list"
+                           href="#account-change-password">Đổi mật khẩu</a>
+                    }
+
+                </div>
             </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.HoTen, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.HoTen, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.HoTen, "", new { @class = "text-danger" })
-            </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.GioiTinh, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.GioiTinh, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.GioiTinh, "", new { @class = "text-danger" })
-            </div>
-        </div>
+            <div class="col-md-9">
+                <div class="tab-content">
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.NgaySinh, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.NgaySinh, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.NgaySinh, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                    <!-- Trang Tổng quan -->
+                    @if (Session["ChangePasswordError"] == null)
+                    {
+                        <div class="tab-pane fade active show" id="account-general">
+                            @{Html.RenderAction("GeneralPage", "Account", new { info = Model });}
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="tab-pane fade" id="account-general">
+                            @{Html.RenderAction("GeneralPage", "Account", new { info = Model });}
+                        </div>
+                    }
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.DiaChi, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.DiaChi, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.DiaChi, "", new { @class = "text-danger" })
-            </div>
-        </div>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                    <!-- Trang đổi mật khẩu -->
+                    @if (Session["ChangePasswordError"] == null)
+                    {
+                        <div class="tab-pane fade" id="account-change-password">
+                            @{Html.RenderAction("ChangePasswordPage", "Account", new { info = Model });}
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="tab-pane fade active show" id="account-change-password">
+                            @{Html.RenderAction("ChangePasswordPage", "Account", new { info = Model });}
+                        </div>
+                    }
+                </div>
             </div>
         </div>
     </div>
-}
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
 </div>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.bundle.min.js"></script>

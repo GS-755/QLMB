@@ -49,5 +49,6 @@ namespace QLMB.Models
         // -- Not mapped -- //
         [NotMapped]
         public string rePassword { get; set; }
+        public string currentPassword { get; set; }
     }
 }

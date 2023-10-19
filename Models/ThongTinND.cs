@@ -27,8 +27,8 @@ namespace QLMB.Models
         public string GioiTinh { get; set; }
         public System.DateTime NgaySinh { get; set; }
         public string DiaChi { get; set; }
-        public string TenDangNhap { get; set; }
-        public string MatKhau { get; set; }
+        
+        
         
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -37,6 +37,9 @@ namespace QLMB.Models
         public virtual ICollection<NhanVien> NhanViens { get; set; }
 
         // -- Not Mapped -- //
+        public string username { get; set; }
+        public string password { get; set; }
         public string rePassword { get; set; }
+        public string currentPassword { get; set; }
     }
 }

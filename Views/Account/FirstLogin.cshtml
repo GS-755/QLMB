@@ -7,6 +7,8 @@
 
 <h2>Đăng nhập lần đầu</h2>
 
+
+
 <section class="section">
     <p class="text-center mt-3 mb-3">Xin vui lòng đặt lại mật khẩu</p>
     <div class="container-fluid">
@@ -14,9 +16,12 @@
             <div class="row">
                 <div class="col-md-4"></div>
                 <div class="col-md-4">
-                    @using (Html.BeginForm("FirstLogin", "Account"))
+                    @using (Html.BeginForm())
                     {
                         @Html.AntiForgeryToken()
+
+                        @Html.HiddenFor(model => model.MaNV)
+
                         <div class="row mb-3">
                             <label for="TenDangNhap">Mật khẩu mới</label>
                             @Html.PasswordFor(model => model.MatKhau, new { @class = "form-control" })
@@ -30,7 +35,7 @@
                         </div>
 
                         <div class="row mb-3">
-                            <input type="submit" class="btn btn-success" value="Đặt lại mật khẩu"/>
+                            <input type="submit" class="btn btn-success" value="Đặt lại mật khẩu" />
                         </div>
                     }
                 </div>

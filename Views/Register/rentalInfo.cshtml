@@ -106,7 +106,7 @@
                     <div class="form-group mt-4">
                         <label for="TenDangNhap">Tên đăng nhập</label>
                         <div class="row mt-1">
-                            @Html.EditorFor(model => model.TenDangNhap, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.EditorFor(model => model.username, new { htmlAttributes = new { @class = "form-control" } })
                             @Html.ValidationMessage("TenDangNhap", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -115,7 +115,7 @@
                     <div class="form-group mt-4">
                         <label for="MatKhau">Mật khẩu</label>
                         <div class="row mt-1">
-                            @Html.PasswordFor(model => model.MatKhau, new { @class = "form-control" })
+                            @Html.PasswordFor(model => model.password, new { @class = "form-control" })
                             @Html.ValidationMessage("MatKhau", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -137,7 +137,7 @@
                     <div class="text-center mt-3">
                         <div class="row mt-1">
                             <input type="submit" value="Đăng ký" class="btn btn-success" />
-                            @Html.ActionLink("Bạn đã có tài khoản ? Đăng nhập", "LoginPage", "Login", null, new { @style = "text-decoration: none" })
+                            @Html.ActionLink("Bạn đã có tài khoản ? Đăng nhập", "Login", "Login", null, new { @style = "text-decoration: none" })
                         </div>
 
                     </div>

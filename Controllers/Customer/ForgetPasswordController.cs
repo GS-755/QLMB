@@ -17,7 +17,6 @@ namespace QLMB.Controllers.Customer
         }
 
 
-
         //Xử lý lấy CMND
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -64,37 +63,13 @@ namespace QLMB.Controllers.Customer
         //Check CMND người thuê
         private bool checkInfo(string CMND)
         {
-            bool error = true;
-            //CMND chưa nhập
-            if (CMND == "")
-            {
-                ModelState.AddModelError("inputCMND", "* Xin hãy điền CMND/CCCD");
-                error = false;
-            }
+            (bool, string) checkCMND = Validation.CMND(CMND);
 
-            //CMND Chưa đủ 12 số
-            else if (CMND.Trim().Length != 12)
-            {
-                ModelState.AddModelError("inputCMND", "* CMND/CCCD phải đủ 12 số");
-                error = false;
-            }
-            else
-            {
-                //CMND có chứa chữ
-                char[] numberCheck = CMND.Trim().ToCharArray();
+            if (checkCMND.Item1)
+                return true;
 
-                for (int i = 0; i < CMND.Trim().Length; i++)
-                {
-                    if (!char.IsNumber(numberCheck[i]))
-                    {
-                        error = false;
-                        ModelState.AddModelError("inputCMND", "* CMND/CCCD không hợp lệ");
-                        break;
-                    }
-                }
-            }
-
-            return error;
+            ModelState.AddModelError("inputCMND", checkCMND.Item2);
+            return false;
         }
 
 
@@ -134,7 +109,7 @@ namespace QLMB.Controllers.Customer
                             Session.Remove("CMND");
                             Session.Remove("TenDangNhap");
 
-                            return RedirectToAction("LoginPage", "Login");
+                            return RedirectToAction("Login", "Login");
                         }
                         return View();
                     }
@@ -150,27 +125,23 @@ namespace QLMB.Controllers.Customer
         //Check mật khẩu mới
         private bool checkRePassword(NguoiThue nguoiThue)
         {
-            bool error = true;
+            (bool, string) password = Validation.Password(nguoiThue.MatKhau);
+            (bool, string) rePassword = Validation.rePassword(nguoiThue.MatKhau, nguoiThue.rePassword);
+
+            if(password.Item1 && rePassword.Item1)
+                return true;
+            
+
             //Mật khẩu
-            if (nguoiThue.MatKhau == null)
-            {
-                ModelState.AddModelError("resetPassword", "* Xin hãy điền mật khẩu");
-                error = false;
-            }
+            if (!password.Item1)
+                ModelState.AddModelError("resetPassword", password.Item2);
+
 
             //Nhập lại mật khẩu
-            if (nguoiThue.rePassword == null)
-            {
-                ModelState.AddModelError("reReserPassword", "* Xin hãy điền lại mật khẩu");
-                error = false;
-            }
-            else if (nguoiThue.MatKhau != nguoiThue.rePassword)
-            {
-                ModelState.AddModelError("reReserPassword", "* Mật khẩu không khớp - Xin hãy điền lại");
-                error = false;
-            }
+            if (!rePassword.Item1)
+                ModelState.AddModelError("reResetPassword", rePassword.Item2);
 
-            return error;
+            return false;
         }
 
 

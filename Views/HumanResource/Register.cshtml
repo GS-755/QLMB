@@ -5,13 +5,13 @@
     Layout = "~/Views/Shared/_Manager.cshtml";
 }
 
-@Html.ActionLink("Quay lại", "Main", "HumanResource", null, new { @class = "btn btn-primary mb-3" })
+@Html.ActionLink("< Quay lại", "Main", "HumanResource", null, new { @class = "btn btn-primary mb-0" })
 <div class="container">
     <div class="col">
         <div class="row">
             <div class="col-md-3"></div>
             <div class="col-md-6">
-                @using (Html.BeginForm("employeeInfo", "Register", FormMethod.Post, new
+                @using (Html.BeginForm("Register", "HumanResource", FormMethod.Post, new
                 {
                     enctype = "multipart/form-data"
                 }))
@@ -52,7 +52,7 @@
                         <div class="form-group mt-4">
                             <label>Chức vụ</label>
                             <div class="row mt-1">
-                                @{Html.RenderAction("SelectRole", "Register");
+                                @{Html.RenderAction("SelectRole", "HumanResource");
                                 }
                                 @Html.ValidationMessage("ChonChucVu", new { @class = "text-danger" })
                             </div>
