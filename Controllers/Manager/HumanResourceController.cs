@@ -54,15 +54,15 @@ namespace QLMB.Controllers.Manager
                     if (Session["Page"] == null)
                         return RedirectToAction("Main");
 
-                    NhanVien info;
+                    ThongTinND info;
 
                     if (CMND == null && Session["HumanResourceTemp"] != null)
                     {
-                        info = (NhanVien)Session["HumanResourceTemp"];
+                        info = (ThongTinND)Session["HumanResourceTemp"];
                     }
                     else
                     {
-                        info = db.NhanViens.Where(s => s.CMND == CMND).FirstOrDefault();
+                        info = db.ThongTinNDs.Where(s => s.CMND == CMND).FirstOrDefault();
                         Session["HumanResourceTemp"] = info;
                     }
 

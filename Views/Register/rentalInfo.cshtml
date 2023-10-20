@@ -113,8 +113,10 @@
 
                     @*Mật khẩu*@
                     <div class="form-group mt-4">
-                        <label for="MatKhau">Mật khẩu</label>
+                        <label for="username" class="mb-2">Tên đăng nhập:</label>
                         <div class="row mt-1">
+                            
+                            <input type="text" name="username" class="form-control" placeholder="vd: abc123" />
                             @Html.PasswordFor(model => model.password, new { @class = "form-control" })
                             @Html.ValidationMessage("MatKhau", new { @class = "text-danger" })
                         </div>
