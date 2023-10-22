@@ -90,7 +90,7 @@ namespace QLMB.Controllers.Customer
         //Cập nhật mật khẩu
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult rePasswordNguoiThue(NguoiThue nguoiThue, string choice)
+        public ActionResult rePasswordNguoiThue(NguoiThue nguoiThue, string choice, string rePass)
         {
             switch (choice)
             {
@@ -100,7 +100,7 @@ namespace QLMB.Controllers.Customer
                 default:
                     try
                     {
-                        if (checkRePassword(nguoiThue) == true)
+                        if (checkRePassword(nguoiThue, rePass) == true)
                         {
                             updateDatabaseNguoiThue(nguoiThue);
                             TempData["msg"] = "<script>alert('Đổi mật khẩu thành công');</script>";
@@ -123,10 +123,10 @@ namespace QLMB.Controllers.Customer
 
 
         //Check mật khẩu mới
-        private bool checkRePassword(NguoiThue nguoiThue)
+        private bool checkRePassword(NguoiThue nguoiThue, string rePass)
         {
             (bool, string) password = Validation.Password(nguoiThue.MatKhau);
-            (bool, string) rePassword = Validation.rePassword(nguoiThue.MatKhau, nguoiThue.rePassword);
+            (bool, string) rePassword = Validation.rePassword(nguoiThue.MatKhau, rePass);
 
             if(password.Item1 && rePassword.Item1)
                 return true;

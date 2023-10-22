@@ -1,8 +1,4 @@
-﻿using Microsoft.Ajax.Utilities;
-using Newtonsoft.Json.Linq;
-using QLMB.Models;
-using System;
-using System.Data.Entity.Core.Common.CommandTrees;
+﻿using System;
 using System.Linq;
 
 namespace QLMB.Models
@@ -129,7 +125,7 @@ namespace QLMB.Models
         //Chức vụ
         public static (bool, string) Role(string value)
         {
-            if (value == null || value == "")
+            if (value == null || value == "" || value.Trim() == "Default")
                 return (false, "* Xin hãy chọn chức vụ");
            
             return (true, null);
@@ -192,7 +188,7 @@ namespace QLMB.Models
             database db = new database();
             NhanVien info = db.NhanViens.Where(a => a.CMND.Trim() == value.Trim()).FirstOrDefault();
 
-            if (info == null)
+            if (info != null)
                 return (false, "* Số CMND/CCCD này đã tồn tại trên hệ thống !");
 
             return (true, null);

@@ -11,37 +11,37 @@ namespace QLMB.Controllers.Customer
 
         //----------- Người thuê -----------//
         //Trang đăng ký
-        public ActionResult rentalInfo() => View();
-
+        public ActionResult rentalInfo()
+        {
+            return View();
+        }
 
 
         //Xử lý thông tin
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult RentalInfo(ThongTinND thongTin)
+        public ActionResult RentalInfo(ThongTinND thongTin, string username, string password, string rePassword)
         {
             try
             {    
-                if (checkInfo(thongTin))
+                if (checkInfo(thongTin, username, password, rePassword))
                 {
-                    var exist = db.ThongTinNDs.Any(s => s.CMND == thongTin.CMND || s.HoTen == thongTin.HoTen.ToUpper());
+                    var exist = db.ThongTinNDs.Any(s => s.CMND == thongTin.CMND);
                     if (!exist)
                     {
-                        exist = db.NguoiThues.Any(s => s.TenDangNhap == thongTin.username);
+                        exist = db.NguoiThues.Any(s => s.TenDangNhap == username.Trim());
                         if (!exist)
                         {
-                            AddDatabase(thongTin);
-                            TempData["msg"] = "<script>alert('Đăng ký thành công');</script>";
-                            return RedirectToAction("LoginPage", "Login");
+                            AddDatabase(thongTin, username, password);
+                            return RedirectToAction("Login", "Login");
                         }
                         else
                             ModelState.AddModelError("TrungTaiKhoan", "* Tài khoản đã tồn tại");
-                        
                     }
                     else
                         ModelState.AddModelError("TrungCMND", "* Bạn đã đăng ký tài khoản !");
-                } 
-                
+                }
+                Session["PrevUsername"] = username;
                 return View();
 
             }
@@ -55,7 +55,7 @@ namespace QLMB.Controllers.Customer
 
 
         //Kiểm tra thông tin
-        private bool checkInfo(ThongTinND thongTin)
+        private bool checkInfo(ThongTinND thongTin, string username, string password, string rePassword)
         {
             (bool, string) CMND = Validation.CMND(thongTin.CMND);
             (bool, string) NgayCap = Validation.NgayCap(thongTin.NgayCap);
@@ -64,9 +64,9 @@ namespace QLMB.Controllers.Customer
             (bool, string) NgaySinh = Validation.Birthday_25(thongTin.NgaySinh);
             (bool, string) DiaChi = Validation.Address(thongTin.DiaChi);
 
-            (bool, string) TenDangNhap = Validation.Username_8(thongTin.username);
-            (bool, string) MatKhau = Validation.Password(thongTin.password);
-            (bool, string) NhapLaiMatKhau = Validation.rePassword(thongTin.password, thongTin.rePassword);
+            (bool, string) TenDangNhap = Validation.Username_8(username);
+            (bool, string) MatKhau = Validation.Password(password);
+            (bool, string) NhapLaiMatKhau = Validation.rePassword(password, rePassword);
             
             bool check = CMND.Item1 && NgayCap.Item1 && HoTen.Item1 && GioiTinh.Item1 &&
                          NgaySinh.Item1 && DiaChi.Item1 && TenDangNhap.Item1 && MatKhau.Item1 && NhapLaiMatKhau.Item1;
@@ -118,9 +118,9 @@ namespace QLMB.Controllers.Customer
         }
 
         //Thêm dữ liệu
-        private void AddDatabase(ThongTinND thongTin)
+        private void AddDatabase(ThongTinND thongTin, string username, string password)
         {
-            string authTmp = SHA256.ToSHA256(thongTin.password);
+            string authTmp = SHA256.ToSHA256(password);
            
             ThongTinND info = new ThongTinND();
             info.CMND = thongTin.CMND.Trim();
@@ -133,12 +133,15 @@ namespace QLMB.Controllers.Customer
 
             NguoiThue account = new NguoiThue();
             account.CMND = thongTin.CMND.Trim();
-            account.TenDangNhap = thongTin.username.Trim();
+            account.TenDangNhap = username.Trim();
             account.MatKhau = authTmp.Trim();
 
             db.ThongTinNDs.Add(info);
             db.NguoiThues.Add(account);
             db.SaveChanges();
+
+            Session.Remove("PrevUsername");
+            TempData["msg"] = "<script>alert('Đăng ký thành công');</script>";
         }  
     }
 }

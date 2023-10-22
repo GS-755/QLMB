@@ -1,0 +1,25 @@
+﻿@model QLMB.Models.NhanVien
+
+@Html.HiddenFor(model => model.MatKhau)
+@Html.HiddenFor(model => model.MaNV)
+@Html.HiddenFor(model => model.TinhTrang)
+<!-- Mã nhân viên -->
+<div class="col">
+    <label class="form-label">Mã nhân viên</label>
+    @Html.EditorFor(model => model.MaNV, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+
+</div>
+
+<!-- Chức vụ -->
+<div class="col">
+    <label class="form-label">Chức vụ</label>
+    @{Html.RenderAction("EditRole", "HumanResource");}
+    @*<input type="text" value="@(((QLMB.Models.NhanVien)Session["EmployeeInfo"]).ChucVu.TenCV)" class="form-control" />*@
+</div>
+
+<!-- Tình trạng -->
+<div class="col">
+    <label class="form-label">Tình trạng</label>
+    @Html.EditorFor(model => model.TinhTrang.TenTT, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+    @*<input type="text" value="@(((QLMB.Models.NhanVien)Session["EmployeeInfo"]).ChucVu.TenCV)" class="form-control" />*@
+</div>

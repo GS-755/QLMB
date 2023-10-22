@@ -104,20 +104,25 @@
 
                     @*Tên đăng nhập*@
                     <div class="form-group mt-4">
-                        <label for="TenDangNhap">Tên đăng nhập</label>
+                        <label for="username">Tên đăng nhập</label>
                         <div class="row mt-1">
-                            @Html.EditorFor(model => model.username, new { htmlAttributes = new { @class = "form-control" } })
+                            @if (Session["PrevUsername"] != null)
+                            {
+                                <input type="text" name="username" class="form-control" placeholder="Ví dụ: abc123" value="@Session["PrevUsername"].ToString()" />
+                            }
+                            else
+                            {
+                                <input type="text" name="username" class="form-control" placeholder="Ví dụ: abc123"/>
+                            }
                             @Html.ValidationMessage("TenDangNhap", new { @class = "text-danger" })
                         </div>
                     </div>
 
                     @*Mật khẩu*@
                     <div class="form-group mt-4">
-                        <label for="username" class="mb-2">Tên đăng nhập:</label>
-                        <div class="row mt-1">
-                            
-                            <input type="text" name="username" class="form-control" placeholder="vd: abc123" />
-                            @Html.PasswordFor(model => model.password, new { @class = "form-control" })
+                        <label for="password" class="mb-2">Mật khẩu:</label>
+                        <div class="row mt-1">                
+                            <input type="password" name="password" class="form-control"/>
                             @Html.ValidationMessage("MatKhau", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -125,9 +130,9 @@
 
                     @*Nhập lại mật khẩu*@
                     <div class="form-group mt-4">
-                        <label for="NhapLaiMatKhau">Nhập lại mật khẩu</label>
+                        <label for="rePassword">Nhập lại mật khẩu</label>
                         <div class="row mt-1">
-                            @Html.PasswordFor(model => model.rePassword, new { @class = "form-control" })
+                            <input type="password" name="rePassword" class="form-control"/>
                             @Html.ValidationMessage("MatKhauLai", new { @class = "text-danger" })
                         </div>
                     </div>

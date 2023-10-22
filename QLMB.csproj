@@ -182,7 +182,11 @@
     <Compile Include="Models\NhanVien.cs">
       <DependentUpon>database.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\SHA256.cs" />
+    <Compile Include="Models\Process\ListChucVu.cs" />
+    <Compile Include="Models\Process\Edit.cs" />
+    <Compile Include="Models\Process\Shared.cs" />
+    <Compile Include="Models\Process\SHA256.cs" />
+    <Compile Include="Models\Process\Validation.cs" />
     <Compile Include="Models\SuKienUuDai.cs">
       <DependentUpon>database.tt</DependentUpon>
     </Compile>
@@ -198,7 +202,6 @@
     <Compile Include="Models\TinhTrang.cs">
       <DependentUpon>database.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Validation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -224,8 +227,8 @@
     <Content Include="Content\Site.css" />
     <Content Include="Models\database.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>database.Context.cs</LastGenOutput>
       <DependentUpon>database.edmx</DependentUpon>
+      <LastGenOutput>database.Context.cs</LastGenOutput>
     </Content>
     <Content Include="Models\database.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -316,6 +319,8 @@
     <Content Include="Views\Account\ChangePasswordPage.cshtml" />
     <Content Include="Views\Account\General.cshtml" />
     <Content Include="Views\Account\ChangePassword.cshtml" />
+    <Content Include="Views\HumanResource\EditRole.cshtml" />
+    <Content Include="Views\HumanResource\EditEmployee.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

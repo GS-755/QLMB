@@ -52,8 +52,7 @@
                         <div class="form-group mt-4">
                             <label>Chức vụ</label>
                             <div class="row mt-1">
-                                @{Html.RenderAction("SelectRole", "HumanResource");
-                                }
+                                @{Html.RenderAction("SelectRole", "HumanResource");}
                                 @Html.ValidationMessage("ChonChucVu", new { @class = "text-danger" })
                             </div>
                         </div>

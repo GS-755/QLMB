@@ -29,8 +29,8 @@
                         </div>
 
                         <div class="row mb-3">
-                            <label for="TenDangNhap">Nhập lại mật khẩu</label>
-                            @Html.PasswordFor(model => model.rePassword, new { @class = "form-control" })
+                            <label for="rePass">Nhập lại mật khẩu</label>
+                            <input type="password" name="rePass" class="form-control" />
                             @Html.ValidationMessage("reEmployeePass", new { @class = "text-danger mt-1" })
                         </div>
 

@@ -66,11 +66,11 @@ namespace QLMB.Controllers.Customer
         //POST đăng nhập (Nhân viên)
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult StaffLogin(string TenDangNhap, string MatKhau)
+        public ActionResult StaffLogin(string username, string password)
         {
             try
             {
-                (bool, NhanVien) result = ManagerCheckLogin(TenDangNhap, MatKhau);
+                (bool, NhanVien) result = ManagerCheckLogin(username, password);
                 if (result.Item1)
                 {
                     switch (result.Item2.MATT)

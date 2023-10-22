@@ -99,9 +99,9 @@ namespace QLMB.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult FirstLogin(NhanVien info)
+        public ActionResult FirstLogin(NhanVien info, string rePass)
         {
-            if (checkFirstTime(info))
+            if (checkFirstTime(info, rePass))
             {
                 NhanVien update = db.NhanViens.Where(s => info.MaNV.Trim() == s.MaNV.Trim()).FirstOrDefault();
 
@@ -167,9 +167,9 @@ namespace QLMB.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult ChangePassword(NhanVien info)
+        public ActionResult ChangePassword(NhanVien info, string currentPass, string rePass)
         {
-            if (checkChangePassword(info))
+            if (checkChangePassword(info, currentPass, rePass))
             {
                 info.MatKhau = SHA256.ToSHA256(info.MatKhau);
 
@@ -186,10 +186,10 @@ namespace QLMB.Controllers
 
 
         //*-- Kiểm tra Đăng nhập lần đầu --*//
-        private bool checkFirstTime(NhanVien info)
+        private bool checkFirstTime(NhanVien info, string rePass)
         {
             (bool, string) MatKhau = Validation.Password(info.MatKhau);
-            (bool, string) NhapLaiMatKhau = Validation.rePassword(info.MatKhau, info.rePassword);
+            (bool, string) NhapLaiMatKhau = Validation.rePassword(info.MatKhau, rePass);
 
             if (MatKhau.Item1 && NhapLaiMatKhau.Item1)
                 return true;
@@ -228,11 +228,11 @@ namespace QLMB.Controllers
         }
 
         //*-- Kiểm tra Đổi mật khẩu --*//
-        private bool checkChangePassword(NhanVien info)
+        private bool checkChangePassword(NhanVien info, string current, string rePass)
         {
-            (bool, string) currentPassword = Validation.CurrentPasswordEmployee(info.MaNV, info.currentPassword);
+            (bool, string) currentPassword = Validation.CurrentPasswordEmployee(info.MaNV, current);
             (bool, string) password = Validation.Password(info.MatKhau);
-            (bool, string) rePassword = Validation.Password(info.rePassword);
+            (bool, string) rePassword = Validation.Password(rePass);
 
             if(currentPassword.Item1 && password.Item1 && rePassword.Item1)
                  return true;
