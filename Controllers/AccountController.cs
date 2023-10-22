@@ -105,7 +105,11 @@ namespace QLMB.Controllers
             if (checkFirstTime(info, rePass))
             {
                 if (Edit.EployeeFirstLogin(db, info))
+                {
+                    Session["EmployeeInfo"] = db.NhanViens.Where(s => s.MaNV.Trim() == info.MaNV.Trim()).FirstOrDefault();
                     return Manager();
+                }
+                    
 
                 ModelState.AddModelError("changeError", "* Đổi mật khẩu không thành công - Vui lòng thử lại");
             }
