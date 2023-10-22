@@ -3,6 +3,7 @@ using System;
 using System.Linq;
 using System.Web.Mvc;
 using System.Data.Entity;
+using QLMB.Models.Process;
 
 namespace QLMB.Controllers.Customer
 {
@@ -27,38 +28,30 @@ namespace QLMB.Controllers.Customer
                 //Nếu tên đăng nhập > 8 ký tự ==> Người thuê
                 if (checkInfo(CMND) == true)
                 {
-                    var nt = db.NguoiThues.Where(s => s.CMND == CMND).FirstOrDefault();
-                    if(nt != null)
+                    (bool,string,NguoiThue) customer = Validation.ExistAccountCustomer(db, CMND);
+                    (bool, string, NhanVien) employee = Validation.ExistAccountEmployee(db, CMND);
+
+                    if (customer.Item1)
                     {
-                        Session["CMND"] = nt.CMND.Trim();
-                        Session["TenDangNhap"] = nt.TenDangNhap;
+                        Session["CMND"] = customer.Item3.CMND.Trim();
+                        Session["TenDangNhap"] = customer.Item3.TenDangNhap;
                         return RedirectToAction("rePasswordNguoiThue","ForgetPassword");
                     }
-                    else
-                    {
-                        var nv = db.NhanViens.Where(s => s.CMND == CMND).FirstOrDefault();
-                        if(nv != null)
-                        {
-                            Session["CMND"] = nv.CMND.Trim();
-                            Session["TenDangNhap"] = nv.MaNV;
-                            return RedirectToAction("rePasswordNhanVien","ForgetPassword");
-                        }
-                        else
-                        {
-                            ModelState.AddModelError("forgetError", "* Không tồn tại CMND/CCCD này trong hệ thống !");
-                            return View();
-                        }
-                    }
+
+                    //Chưa làm
+                    //if (employee.Item1)
+                    //{
+                    //    Session["CMND"] = employee.Item3.CMND.Trim();
+                    //    Session["TenDangNhap"] = employee.Item3.MaNV.Trim();
+                    //    return RedirectToAction("rePasswordNhanVien", "ForgetPassword");
+                    //}
+                    else 
+                        ModelState.AddModelError("forgetError", customer.Item2);
                 }
                 return View();
             }
-            catch
-            {
-                return RedirectToAction("Index", "SkillIssue");
-            }
+            catch { return RedirectToAction("Index", "SkillIssue"); }
         }
-
-
 
         //Check CMND người thuê
         private bool checkInfo(string CMND)
@@ -98,26 +91,24 @@ namespace QLMB.Controllers.Customer
                     return RedirectToAction("ForgetPassword", "ForgetPassword");
                 
                 default:
-                    try
+                    if (checkRePassword(nguoiThue, rePass) == true)
                     {
-                        if (checkRePassword(nguoiThue, rePass) == true)
+                        nguoiThue.CMND = Session["CMND"].ToString();
+                        nguoiThue.TenDangNhap = Session["TenDangNhap"].ToString();
+                        (bool, string) changePassword = Edit.CustomerPassword(db, nguoiThue);
+
+                        if (changePassword.Item1)
                         {
-                            updateDatabaseNguoiThue(nguoiThue);
-                            TempData["msg"] = "<script>alert('Đổi mật khẩu thành công');</script>";
+                            TempData["msg"] = $"<script>alert('{changePassword.Item2}');</script>";
 
                             //Xoá session
                             Session.Remove("CMND");
                             Session.Remove("TenDangNhap");
-
                             return RedirectToAction("Login", "Login");
                         }
-                        return View();
-                    }
-                    catch
-                    {
                         ModelState.AddModelError("updateError", "* Lỗi hệ thống - Xin vui lòng thử lại !");
-                        return View();
                     }
+                    return View();
             }
         }
 
@@ -131,7 +122,6 @@ namespace QLMB.Controllers.Customer
             if(password.Item1 && rePassword.Item1)
                 return true;
             
-
             //Mật khẩu
             if (!password.Item1)
                 ModelState.AddModelError("resetPassword", password.Item2);
@@ -142,19 +132,6 @@ namespace QLMB.Controllers.Customer
                 ModelState.AddModelError("reResetPassword", rePassword.Item2);
 
             return false;
-        }
-
-
-        //Cập nhật dữ liệu
-        private void updateDatabaseNguoiThue(NguoiThue nguoiThue)
-        {
-            string authTmp = SHA256.ToSHA256(nguoiThue.MatKhau);
-            nguoiThue.CMND = Session["CMND"].ToString();
-            nguoiThue.TenDangNhap = Session["TenDangNhap"].ToString();
-            nguoiThue.MatKhau = authTmp;
-
-            db.Entry(nguoiThue).State = EntityState.Modified;
-            db.SaveChanges();
         }
     }
 }

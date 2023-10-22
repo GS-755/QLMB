@@ -12,6 +12,7 @@ namespace QLMB.Controllers.Manager
     {
         private database db = new database();
 
+        //Trang chủ
         public ActionResult Main(string NameSearch)
         {
             try
@@ -43,6 +44,7 @@ namespace QLMB.Controllers.Manager
             //Lỗi xử lý --> Skill Issue :))
             catch { return RedirectToAction("Index", "SkillIssue");}
         }
+
 
 
         //Trang chi tiết
@@ -108,16 +110,20 @@ namespace QLMB.Controllers.Manager
                 if (User.MaChucVu.Trim() == Current.MaChucVu.Trim() && Current.MaChucVu.Trim() == "NS")
                     roll.MaChucVu = "NS";
 
-                if (Edit.EmployeeInfo(db, info, (NhanVien)Session["HumanResourceEmployeeTemp"], roll, currentCMND))
+                (bool, string) saveDetail = Edit.EmployeeInfo(db, info, (NhanVien)Session["HumanResourceEmployeeTemp"], roll, currentCMND);
+                if (saveDetail.Item1)
                 {
-                    TempData["msg"] = "<script>alert('Đổi thông tin thành công');</script>";
+                    TempData["msg"] = $"<script>alert('{saveDetail.Item2}');</script>";
                     Session.Remove("TempRole");
                     return RedirectToAction("Detail", "HumanResource", new { CMND = info.CMND.Trim() });
                 }
-                ModelState.AddModelError("editStatus", "Đổi thông tin thất bại");
+                ModelState.AddModelError("editStatus", saveDetail.Item2);
             }
             return View(info);
         }
+
+
+
 
         //Trang đăng ký
         public ActionResult Register()
@@ -150,17 +156,19 @@ namespace QLMB.Controllers.Manager
                 (bool, string) checkAccount = Validation.ExistAccount(db, info.CMND, info.HoTen);
                 if (checkAccount.Item1)
                 {
-                    if (Create.Employee(db, info, role))
+                    (bool, string) checkRegister = Create.Employee(db, info, role);
+                    if (checkRegister.Item1)
                     {
-                        TempData["msg"] = "<script>alert('Đăng ký thành công');</script>";
+                        TempData["msg"] = $"<script>alert('{checkRegister.Item2}');</script>";
                         return RedirectToAction("Register", "HumanResource");
                     }
-                    ModelState.AddModelError("TrungCMND", "Tạo tài khoản thất bại - Xin vui lòng thử lại !");
+                    ModelState.AddModelError("TrungCMND", checkRegister.Item2);
                 }
                 ModelState.AddModelError("TrungCMND", checkAccount.Item2);
             }
             return View();
         }
+
 
 
         //Chọn Chức vụ
@@ -193,6 +201,8 @@ namespace QLMB.Controllers.Manager
             return RedirectToAction("Manager", "Account");
         }
 
+
+        //*-- Xử lý --*//
 
         //Kiểm tra thông tin đăng ký
         private bool checkInfoEmployee(ThongTinND thongTin, ListChucVu chucVu)

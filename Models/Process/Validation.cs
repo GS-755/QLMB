@@ -141,6 +141,8 @@ namespace QLMB.Models
         }
 
 
+
+
         //*--- Kiểm 2 trường trở lên ---*//
         //Nhập lại mật khẩu
         public static (bool, string) rePassword(string pass, string rePass)
@@ -156,6 +158,8 @@ namespace QLMB.Models
 
             return (true, null);
         }
+
+
 
 
         //*--- Cần database ---*//
@@ -185,7 +189,7 @@ namespace QLMB.Models
             return (true, null, info);
         }
 
-        //Check tài khoản tồn tại
+        //Check tài khoản tồn tại - Tổng
         public static (bool, string) ExistAccount(database db, string infoCMND, string infoHoten)
         {
             if(db == null || !CMND(infoCMND).Item1 || !HoTen(infoHoten).Item1)
@@ -193,10 +197,48 @@ namespace QLMB.Models
 
             ThongTinND info = db.ThongTinNDs.Where(s => s.CMND.Trim() == infoCMND.Trim() || s.HoTen.ToUpper() == infoHoten.ToUpper()).FirstOrDefault();
             if (info != null) 
-                return (false, "* Người này đã có trên hệ thống !");
+                return (false, "* Tài khoản đã có trên hệ thống !");
 
             return (true, null);
         }
+
+
+        //Check tài khoản tồn tại - Nhân viên (Quên mật khẩu)
+        public static (bool, string, NhanVien) ExistAccountEmployee(database db, string infoCMND)
+        {
+            if (db == null || !CMND(infoCMND).Item1)
+                return (false, "Xác minh thất bại! - Xin hãy thử lại !", null);
+
+            NhanVien info = db.NhanViens.Where(s => s.CMND.Trim() == infoCMND.Trim()).FirstOrDefault();
+            if (info != null)
+                return (false, "* Không tồn tại CMND/CCCD này trong hệ thống !", null);
+
+            return (true, null, info);
+
+            
+        }
+
+
+        //Check tài khoản tồn tại - Khách hàng (Quên mật khẩu)
+        public static (bool, string, NguoiThue) ExistAccountCustomer(database db, string infoCMND)
+        {
+            if (db == null || !CMND(infoCMND).Item1)
+                return (false, "Xác minh thất bại! - Xin hãy thử lại !", null);
+
+            NguoiThue info = db.NguoiThues.Where(s => s.CMND.Trim() == infoCMND.Trim()).FirstOrDefault();
+
+            if (info == null)
+                return (false, "* Không tồn tại CMND/CCCD này trong hệ thống !", null);
+
+            return (true, null, info);
+        }
+
+
+
+
+
+
+
         //Check Chứng minh nhân dân đã tồn tại
         public static (bool, string) ExistCMND(string value)
         {

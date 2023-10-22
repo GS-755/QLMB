@@ -152,9 +152,7 @@ namespace QLMB.Controllers.Customer
                     return (true, checkLogin.Item3);
                 }
                 else
-                {
-                    ModelState.AddModelError("Error", "* Tài khoản hoặc mật khẩu không đúng");
-                }
+                    ModelState.AddModelError("Error", checkLogin.Item2);
             }
 
 

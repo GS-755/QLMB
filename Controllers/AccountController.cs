@@ -1,4 +1,5 @@
 ﻿using QLMB.Models;
+using QLMB.Models.Process;
 using System.Data.Entity;
 using System.Linq;
 using System.Runtime.Remoting.Messaging;
@@ -103,16 +104,10 @@ namespace QLMB.Controllers
         {
             if (checkFirstTime(info, rePass))
             {
-                NhanVien update = db.NhanViens.Where(s => info.MaNV.Trim() == s.MaNV.Trim()).FirstOrDefault();
+                if (Edit.EployeeFirstLogin(db, info))
+                    return Manager();
 
-                update.MATT = 4;
-                update.MatKhau = SHA256.ToSHA256(info.MatKhau);
-
-                //Lưu vào database
-                db.Entry(update).State = EntityState.Modified;
-                db.SaveChanges();
-
-                return Manager();
+                ModelState.AddModelError("changeError", "* Đổi mật khẩu không thành công - Vui lòng thử lại");
             }
             return View();
         }
@@ -135,20 +130,25 @@ namespace QLMB.Controllers
         {
             if (checkGeneral(info))
             {
-                db.Entry(info).State = EntityState.Modified;
-                db.SaveChanges();
-                Session["UserInfo"] = info;
+                (bool, string) saveProfile = Edit.EmployeeProfile(db, info);
+                
+                if (saveProfile.Item1)
+                {
+                    Session["UserInfo"] = info;
 
-                string[] name = info.HoTen.Split(' ');
+                    string[] name = info.HoTen.Split(' ');
 
-                //Xử lý độ dài tên: Độ dài lớn hơn 1 mới bị cắt 2 tên cuối
-                if (name.Length == 1)
-                    Session["AccountName"] = name[0];
+                    //Xử lý độ dài tên: Độ dài lớn hơn 1 mới bị cắt 2 tên cuối
+                    if (name.Length == 1)
+                        Session["AccountName"] = name[0];
+                    else
+                        Session["AccountName"] = name[name.Length - 2] + " " + name[name.Length - 1];
+
+
+                    TempData["msg"] = "<script>alert('Đổi thông tin thành công');</script>";
+                }
                 else
-                    Session["AccountName"] = name[name.Length - 2] + " " + name[name.Length - 1];
-
-
-                TempData["msg"] = "<script>alert('Đổi thông tin thành công');</script>";
+                    ModelState.AddModelError("ProfileFaield", saveProfile.Item2);
             }
             
             return View(info);
@@ -171,17 +171,16 @@ namespace QLMB.Controllers
         {
             if (checkChangePassword(info, currentPass, rePass))
             {
-                info.MatKhau = SHA256.ToSHA256(info.MatKhau);
+                (bool, string) savePassword = Edit.EmployeePassword(db, info);
 
-                db.Entry(info).State = EntityState.Modified;
-                db.SaveChanges();
-                TempData["msg"] = "<script>alert('Đổi mật khẩu thành công');</script>";
+                if(savePassword.Item1)
+                    TempData["msg"] = "<script>alert('Đổi mật khẩu thành công');</script>";
+                else
+                    ModelState.AddModelError("passwordFailed", savePassword.Item2);
             }
 
             return View(info);
         }
-
-
 
 
 

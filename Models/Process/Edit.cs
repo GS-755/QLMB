@@ -7,7 +7,7 @@ namespace QLMB.Models.Process
     public class Edit
     {
         private static string DefaultPassword = "123456";
-        public static bool EmployeeInfo(database db,ThongTinND info,NhanVien employee, ListChucVu roll, string currentCMND)
+        public static (bool,string) EmployeeInfo(database db,ThongTinND info,NhanVien employee, ListChucVu roll, string currentCMND)
         {
             try
             {
@@ -29,9 +29,9 @@ namespace QLMB.Models.Process
 
                 db.Entry(info).State = EntityState.Modified;
                 db.SaveChanges();
-                return true;
+                return (true, "Đổi thông tin thành công");
             }
-            catch {return false;}
+            catch {return (false, "Đổi thông tin thất bại"); }
         }
 
         private static void UpdateCMND(database db, string currentCMND, string newCMND)
@@ -78,6 +78,67 @@ namespace QLMB.Models.Process
                 return true;
             }
             catch { return false; }
+        }
+
+        public static bool EployeeFirstLogin(database db, NhanVien employee)
+        {
+            try
+            {
+                NhanVien update = db.NhanViens.Where(s => employee.MaNV.Trim() == s.MaNV.Trim()).FirstOrDefault();
+                
+                update.MATT = 4;
+                update.MatKhau = SHA256.ToSHA256(employee.MatKhau);
+
+                //Lưu vào database
+                db.Entry(update).State = EntityState.Modified;
+                db.SaveChanges();
+
+                return true;
+            }
+            catch { return false; }
+        }
+
+        public static (bool,string) EmployeeProfile(database db, ThongTinND info)
+        {
+            try
+            {
+                db.Entry(info).State = EntityState.Modified;
+                db.SaveChanges();
+
+                return (true,null);
+            }
+            catch { return (false, "* Đổi thông tin thất bại, vui lòng thử lại sau"); }
+        }
+
+        public static (bool, string) EmployeePassword(database db, NhanVien employee)
+        {
+            try
+            {
+                employee.MatKhau = SHA256.ToSHA256(employee.MatKhau);
+                db.Entry(employee).State = EntityState.Modified;
+                db.SaveChanges();
+
+                return (true, null);
+            }
+            catch { return (false, "* Đổi mật khẩu thất bại, vui lòng thử lại sau"); }
+        }
+
+
+
+        public static (bool, string) CustomerPassword(database db, NguoiThue info)
+        {
+            try
+            {
+                string authTmp = SHA256.ToSHA256(info.MatKhau);
+                info.MatKhau = authTmp;
+
+                db.Entry(info).State = EntityState.Modified;
+                db.SaveChanges();
+
+                return (true, "Đổi mật khẩu thành công");
+            }
+            catch { return (false, "* Lỗi hệ thống - Xin vui lòng thử lại !"); }
+
         }
     }
 }

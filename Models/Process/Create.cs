@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using static System.Collections.Specialized.BitVector32;
 
 namespace QLMB.Models.Process
 {
@@ -9,7 +10,7 @@ namespace QLMB.Models.Process
     {
         private static string DefaultPassword = "123456";
         //Thêm dữ liệu
-        public static bool Employee(database db, ThongTinND thongTin, ListChucVu chucVu)
+        public static (bool,string) Employee(database db, ThongTinND thongTin, ListChucVu chucVu)
         {
             try
             {
@@ -36,9 +37,38 @@ namespace QLMB.Models.Process
 
                 db.SaveChanges();
 
-                return true;
+                return (true, "Đăng ký thành công");
             }
-            catch { return false; }
+            catch { return (false, "Tạo tài khoản thất bại - Xin vui lòng thử lại !"); }
+        }
+
+        public static (bool,string) Customer(database db, ThongTinND thongTin, string username, string password)
+        {
+            try
+            {
+                string authTmp = SHA256.ToSHA256(password);
+
+                ThongTinND info = new ThongTinND();
+                info.CMND = thongTin.CMND.Trim();
+                info.NgayCap = thongTin.NgayCap;
+
+                info.HoTen = thongTin.HoTen.ToString();
+                info.GioiTinh = thongTin.GioiTinh.ToString();
+                info.NgaySinh = thongTin.NgaySinh;
+                info.DiaChi = thongTin.DiaChi.ToString();
+
+                NguoiThue account = new NguoiThue();
+                account.CMND = thongTin.CMND.Trim();
+                account.TenDangNhap = username.Trim();
+                account.MatKhau = authTmp.Trim();
+
+                db.ThongTinNDs.Add(info);
+                db.NguoiThues.Add(account);
+                db.SaveChanges();
+
+                return (true, "Đăng ký thành công");
+            }
+            catch { return (false, "* Bạn đã có tài khoản ! Vui lòng đăng nhập"); }
         }
     }
 }

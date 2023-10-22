@@ -1,4 +1,5 @@
 ﻿using QLMB.Models;
+using QLMB.Models.Process;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -22,37 +23,29 @@ namespace QLMB.Controllers.Customer
         [ValidateAntiForgeryToken]
         public ActionResult RentalInfo(ThongTinND thongTin, string username, string password, string rePassword)
         {
-            try
-            {    
-                if (checkInfo(thongTin, username, password, rePassword))
+            if (checkInfo(thongTin, username, password, rePassword))
+            {
+                (bool, string) checkAccount = Validation.ExistAccount(db, thongTin.CMND, thongTin.HoTen);
+
+                if (checkAccount.Item1)
                 {
-                    var exist = db.ThongTinNDs.Any(s => s.CMND == thongTin.CMND);
-                    if (!exist)
+                    (bool, string) saveInfo = Create.Customer(db, thongTin, username, password);
+
+                    if (saveInfo.Item1)
                     {
-                        exist = db.NguoiThues.Any(s => s.TenDangNhap == username.Trim());
-                        if (!exist)
-                        {
-                            AddDatabase(thongTin, username, password);
-                            return RedirectToAction("Login", "Login");
-                        }
-                        else
-                            ModelState.AddModelError("TrungTaiKhoan", "* Tài khoản đã tồn tại");
+                        Session.Remove("PrevUsername");
+                        TempData["msg"] = $"<script>alert('{saveInfo.Item2}');</script>";
+                        return RedirectToAction("Login", "Login");
                     }
                     else
-                        ModelState.AddModelError("TrungCMND", "* Bạn đã đăng ký tài khoản !");
+                        ModelState.AddModelError("TrungTaiKhoan", saveInfo.Item2);
                 }
-                Session["PrevUsername"] = username;
-                return View();
-
+                else
+                    ModelState.AddModelError("TrungCMND", checkAccount.Item2);
             }
-            catch
-            {
-                ViewBag.CitizenStatus = "Xác minh thất bại! - Xin hãy thử lại !";
-                return View();
-            }
+            Session["PrevUsername"] = username;
+            return View();
         }
-
-
 
         //Kiểm tra thông tin
         private bool checkInfo(ThongTinND thongTin, string username, string password, string rePassword)
@@ -115,33 +108,5 @@ namespace QLMB.Controllers.Customer
                 ModelState.AddModelError("MatKhauLai", NhapLaiMatKhau.Item2); 
 
             return false;
-        }
-
-        //Thêm dữ liệu
-        private void AddDatabase(ThongTinND thongTin, string username, string password)
-        {
-            string authTmp = SHA256.ToSHA256(password);
-           
-            ThongTinND info = new ThongTinND();
-            info.CMND = thongTin.CMND.Trim();
-            info.NgayCap = thongTin.NgayCap;
-            
-            info.HoTen = thongTin.HoTen.ToString();
-            info.GioiTinh = thongTin.GioiTinh.ToString();
-            info.NgaySinh = thongTin.NgaySinh;
-            info.DiaChi = thongTin.DiaChi.ToString();
-
-            NguoiThue account = new NguoiThue();
-            account.CMND = thongTin.CMND.Trim();
-            account.TenDangNhap = username.Trim();
-            account.MatKhau = authTmp.Trim();
-
-            db.ThongTinNDs.Add(info);
-            db.NguoiThues.Add(account);
-            db.SaveChanges();
-
-            Session.Remove("PrevUsername");
-            TempData["msg"] = "<script>alert('Đăng ký thành công');</script>";
-        }  
-    }
+        }    }
 }

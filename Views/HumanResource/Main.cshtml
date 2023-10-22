@@ -28,7 +28,6 @@
                     <tr>
                         <th scope="col">Mã nhân viên</th>
                         <th scope="col">Chức vụ</th>
-                        <th scope="col">CMND</th>
                         <th scope="col">Họ tên</th>
                         <th scope="col">Tình trạng</th>
                         <th scope="col"></th>
@@ -44,7 +43,6 @@
                                     @Html.DisplayFor(modelItem => item.MaNV)
                                 </td>
                                 <td style="width:90px">@Html.DisplayFor(modelItem => item.ChucVu.TenCV)</td>
-                                <td style="width:20px">@Html.DisplayFor(modelItem => item.CMND)</td>
                                 <td style="width:100px">@Html.DisplayFor(modelItem => item.ThongTinND.HoTen)</td>
                                 <td style="width:80px">@Html.DisplayFor(modelItem => item.TinhTrang.TenTT)</td>
                                 <td style="width:100px">
