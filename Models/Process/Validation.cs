@@ -131,7 +131,14 @@ namespace QLMB.Models
             return (true, null);
         }
 
+        //Chức vụ - Edit
+        public static (bool, string) RoleEdit(string value, string user, string current)
+        {
+            if (user.Trim() == current.Trim() && current == "NS")
+                return (true, null);
 
+            return Role(current);
+        }
 
 
         //*--- Kiểm 2 trường trở lên ---*//
@@ -178,7 +185,19 @@ namespace QLMB.Models
             return (true, null, info);
         }
 
-        //Check Chứng minh nhân dân đã tồn tại - Nhân viên
+        //Check tài khoản tồn tại
+        public static (bool, string) ExistAccount(database db, string infoCMND, string infoHoten)
+        {
+            if(db == null || !CMND(infoCMND).Item1 || !HoTen(infoHoten).Item1)
+                return (false, "Xác minh thất bại! - Xin hãy thử lại !");
+
+            ThongTinND info = db.ThongTinNDs.Where(s => s.CMND.Trim() == infoCMND.Trim() || s.HoTen.ToUpper() == infoHoten.ToUpper()).FirstOrDefault();
+            if (info != null) 
+                return (false, "* Người này đã có trên hệ thống !");
+
+            return (true, null);
+        }
+        //Check Chứng minh nhân dân đã tồn tại
         public static (bool, string) ExistCMND(string value)
         {
             (bool, string) checkCMND = CMND(value);
@@ -192,6 +211,15 @@ namespace QLMB.Models
                 return (false, "* Số CMND/CCCD này đã tồn tại trên hệ thống !");
 
             return (true, null);
+        }
+
+        //Check Chứng minh nhân dân (Cho edit)
+        public static (bool, string) CMNDEdit(string currentCMND, string newCMND)
+        {
+            if (CMND(currentCMND).Item1 && CMND(newCMND).Item1 && currentCMND.Trim() == newCMND.Trim())
+                return (true, null);
+
+            return ExistCMND(newCMND);
         }
 
         //Check mật khẩu cũ - Nhân viên

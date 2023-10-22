@@ -182,7 +182,8 @@
     <Compile Include="Models\NhanVien.cs">
       <DependentUpon>database.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Process\ListChucVu.cs" />
+    <Compile Include="Models\Process\Create.cs" />
+    <Compile Include="Models\ListChucVu.cs" />
     <Compile Include="Models\Process\Edit.cs" />
     <Compile Include="Models\Process\Shared.cs" />
     <Compile Include="Models\Process\SHA256.cs" />
@@ -307,7 +308,6 @@
     <Content Include="Views\HumanResource\Register.cshtml" />
     <Content Include="Views\Register\rentalAccount.cshtml" />
     <Content Include="Views\Register\rentalInfo.cshtml" />
-    <Content Include="Views\HumanResource\SelectRole.cshtml" />
     <Content Include="Views\Shared\_Manager.cshtml" />
     <Content Include="Views\Shared\_HomePage.cshtml" />
     <Content Include="Views\SkillIssue\Index.cshtml" />
@@ -319,8 +319,7 @@
     <Content Include="Views\Account\ChangePasswordPage.cshtml" />
     <Content Include="Views\Account\General.cshtml" />
     <Content Include="Views\Account\ChangePassword.cshtml" />
-    <Content Include="Views\HumanResource\EditRole.cshtml" />
-    <Content Include="Views\HumanResource\EditEmployee.cshtml" />
+    <Content Include="Views\HumanResource\SelectRole.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

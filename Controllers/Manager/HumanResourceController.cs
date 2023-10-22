@@ -41,10 +41,7 @@ namespace QLMB.Controllers.Manager
             }
 
             //Lỗi xử lý --> Skill Issue :))
-            catch
-            {
-                return RedirectToAction("Index", "SkillIssue");
-            }
+            catch { return RedirectToAction("Index", "SkillIssue");}
         }
 
 
@@ -70,8 +67,7 @@ namespace QLMB.Controllers.Manager
                         info = db.ThongTinNDs.Where(s => s.CMND == CMND).FirstOrDefault();
                         Session["HumanResourceTemp"] = info;
                         Session["HumanResourceEmployeeTemp"] = db.NhanViens.Where(s => s.CMND == CMND).FirstOrDefault();
-                        
-                        Session["MaCV"] = db.NhanViens.Where(s => s.CMND == CMND).FirstOrDefault().MaChucVu;
+                        Session.Remove("TempRole");
                     }
 
                     //Dùng để xử lý về lại trang trước đó
@@ -84,10 +80,7 @@ namespace QLMB.Controllers.Manager
             }
 
             //Lỗi xử lý --> Skill Issue :))
-            catch
-            {
-                return RedirectToAction("Index", "SkillIssue");
-            }
+            catch { return RedirectToAction("Index", "SkillIssue");}
         }
 
         [HttpPost]
@@ -108,95 +101,23 @@ namespace QLMB.Controllers.Manager
 
             if (checkEdit(info, roll, currentCMND))
             {
+                NhanVien User = (QLMB.Models.NhanVien)Session["EmployeeInfo"];
+                NhanVien Current = (QLMB.Models.NhanVien)Session["HumanResourceEmployeeTemp"];
+
+                //Xử lý việc tự edit cho chính mình
+                if (User.MaChucVu.Trim() == Current.MaChucVu.Trim() && Current.MaChucVu.Trim() == "NS")
+                    roll.MaChucVu = "NS";
+
                 if (Edit.EmployeeInfo(db, info, (NhanVien)Session["HumanResourceEmployeeTemp"], roll, currentCMND))
                 {
                     TempData["msg"] = "<script>alert('Đổi thông tin thành công');</script>";
+                    Session.Remove("TempRole");
                     return RedirectToAction("Detail", "HumanResource", new { CMND = info.CMND.Trim() });
                 }
                 ModelState.AddModelError("editStatus", "Đổi thông tin thất bại");
             }
             return View(info);
         }
-
-        //Chức vụ
-        public ActionResult EditRole(string CMND)
-        {
-            ListChucVu roll = new ListChucVu();
-            roll.SettingList(db.ChucVus.ToList<ChucVu>());
-            
-            if(Session["TempRole"] == null)
-            {
-                NhanVien employee = db.NhanViens.Where(s => s.CMND.Trim() == CMND.Trim()).FirstOrDefault();
-                roll.CurrentEmployee = employee.MaChucVu;
-            }
-            else
-                roll.CurrentEmployee = Session["TempRole"].ToString();
-
-            //ViewBag.DepartmentID = new SelectList(chucVu.List, "MaChucVu", "TenCV", MaChucVu);
-
-            return PartialView(roll);
-        }
-
-        private bool checkEdit(ThongTinND info, ListChucVu roll, string currentCMND)
-        {
-            (bool, string) HoTen = Validation.HoTen(info.HoTen);
-            (bool, string) NgaySinh = Validation.Birthday_25(info.NgaySinh);
-
-            bool CMNDcheck;
-            (bool, string) CMND = Validation.ExistCMND(info.CMND);
-
-            if (currentCMND == info.CMND.Trim())
-                CMNDcheck = true;
-            else
-                CMNDcheck = CMND.Item1;
-
-            (bool, string) NgayCap = Validation.NgayCap(info.NgayCap);
-            (bool, string) DiaChi = Validation.Address(info.DiaChi);
-
-            (bool, string) ChucVu = Validation.Role(roll.MaChucVu);
-
-            if (HoTen.Item1 && NgaySinh.Item1 && CMNDcheck && NgayCap.Item1 && DiaChi.Item1 && ChucVu.Item1)
-                return true;
-
-            if (!HoTen.Item1)
-                ModelState.AddModelError("editName", HoTen.Item2);
-
-            if (!NgaySinh.Item1)
-                ModelState.AddModelError("editNgaySinh", NgaySinh.Item2);
-            
-            if (!CMNDcheck)
-                ModelState.AddModelError("editCMND", CMND.Item2);
-                
-            
-            if (!NgayCap.Item1)
-                ModelState.AddModelError("editNgayCap", NgayCap.Item2);
-
-            if (!DiaChi.Item1)
-                ModelState.AddModelError("editAddress", DiaChi.Item2);
-
-            if (!ChucVu.Item1)
-                ModelState.AddModelError("editRole", ChucVu.Item2);
-
-            Session["TempRole"] = roll.MaChucVu;
-
-            return false;
-        }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        //*-- Đăng ký nhân viên --*//
 
         //Trang đăng ký
         public ActionResult Register()
@@ -208,6 +129,7 @@ namespace QLMB.Controllers.Manager
                 {
                     //Dùng để xử lý về lại trang trước đó
                     Session["Page"] = "EmployeeRegister";
+                    Session.Remove("TempRole");
                     return View();
                 }
                 //Không thoả --> Về trang xử lý chuyển trang
@@ -215,51 +137,64 @@ namespace QLMB.Controllers.Manager
             }
 
             //Lỗi xử lý --> Skill Issue :))
-            catch
-            {
-                return RedirectToAction("Index", "SkillIssue");
-            }
+            catch { return RedirectToAction("Index", "SkillIssue");}
         }
 
         //Xử lý thông tin
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Register(ThongTinND thongTin, ListChucVu chucVu)
+        public ActionResult Register(ThongTinND info, ListChucVu role)
         {
-            try
+            if (checkInfoEmployee(info, role))
             {
-                if (checkInfoEmployee(thongTin, chucVu))
+                (bool, string) checkAccount = Validation.ExistAccount(db, info.CMND, info.HoTen);
+                if (checkAccount.Item1)
                 {
-                    bool exist = db.ThongTinNDs.Any(s => s.CMND == thongTin.CMND || s.HoTen == thongTin.HoTen.ToUpper());
-
-                    if (!exist)
+                    if (Create.Employee(db, info, role))
                     {
-                        AddDatabaseEmployee(thongTin, chucVu);     
-                        return RedirectToAction("Main", "HumanResource");
+                        TempData["msg"] = "<script>alert('Đăng ký thành công');</script>";
+                        return RedirectToAction("Register", "HumanResource");
                     }
-                    ModelState.AddModelError("TrungCMND", "* Người này đã có trên hệ thống !");
+                    ModelState.AddModelError("TrungCMND", "Tạo tài khoản thất bại - Xin vui lòng thử lại !");
                 }
-                return View();
+                ModelState.AddModelError("TrungCMND", checkAccount.Item2);
             }
-            catch
-            {
-                ViewBag.CitizenStatus = "Xác minh thất bại! - Xin hãy thử lại !";
-                return View();
-            }
+            return View();
         }
 
 
-        //Chọn vị trí
-        public ActionResult SelectRole()
+        //Chọn Chức vụ
+        public ActionResult SelectRole(string CMND)
         {
-            ListChucVu roll = new ListChucVu();
-            roll.SettingList(db.ChucVus.ToList<ChucVu>());
+            if (checkRole() && Session["Page"] != null)
+            {
+                ListChucVu roll = new ListChucVu();
+                roll.SettingList(db.ChucVus.ToList<ChucVu>());
 
-            return PartialView(roll);
+
+                if (Session["TempRole"] != null)
+                    roll.CurrentEmployee = Session["TempRole"].ToString();
+
+                else if (!Validation.CMND(CMND).Item1 || Session["Page"].ToString() == "EmployeeRegister")
+                    roll.CurrentEmployee = "Default";
+
+                else
+                {
+                    NhanVien employee = db.NhanViens.Where(s => s.CMND.Trim() == CMND.Trim()).FirstOrDefault();
+                    roll.CurrentEmployee = employee.MaChucVu;
+                }
+
+
+                return PartialView(roll);
+            }
+            //ViewBag.DepartmentID = new SelectList(chucVu.List, "MaChucVu", "TenCV", MaChucVu);
+
+            //Không thoả --> Về trang xử lý chuyển trang
+            return RedirectToAction("Manager", "Account");
         }
 
 
-        //Kiểm tra dữ liệu
+        //Kiểm tra thông tin đăng ký
         private bool checkInfoEmployee(ThongTinND thongTin, ListChucVu chucVu)
         {
             (bool, string) CMND = Validation.ExistCMND(thongTin.CMND);
@@ -306,37 +241,52 @@ namespace QLMB.Controllers.Manager
             if (!ChucVu.Item1)
                 ModelState.AddModelError("ChonChucVu", ChucVu.Item2);
 
+            Session["TempRole"] = chucVu.MaChucVu;
+
             return false;
         }
 
 
-        //Thêm dữ liệu
-        private void AddDatabaseEmployee(ThongTinND thongTin, ListChucVu chucVu)
+
+        //Kiểm tra thông tin edit
+        private bool checkEdit(ThongTinND info, ListChucVu roll, string currentCMND)
         {
-            string authTmp = SHA256.ToSHA256("123456");
-            int soNV = db.NhanViens.Where(s => s.MaChucVu == chucVu.MaChucVu.Trim()).Count();
+            NhanVien User = (QLMB.Models.NhanVien)Session["EmployeeInfo"];
+            NhanVien Current = (QLMB.Models.NhanVien)Session["HumanResourceEmployeeTemp"];
 
-            ThongTinND info = new ThongTinND();
-            info.CMND = thongTin.CMND.Trim();
-            info.NgayCap = thongTin.NgayCap;
+            (bool, string) HoTen = Validation.HoTen(info.HoTen);
+            (bool, string) NgaySinh = Validation.Birthday_25(info.NgaySinh);
+            (bool, string) CMND = Validation.CMNDEdit(currentCMND, info.CMND);
+            (bool, string) NgayCap = Validation.NgayCap(info.NgayCap);
+            (bool, string) DiaChi = Validation.Address(info.DiaChi);
 
-            info.HoTen = thongTin.HoTen.ToString();
-            info.GioiTinh = thongTin.GioiTinh.ToString();
-            info.NgaySinh = thongTin.NgaySinh;
-            info.DiaChi = thongTin.DiaChi.ToString();
+            (bool, string) ChucVu = Validation.RoleEdit(roll.MaChucVu, User.MaChucVu, Current.MaChucVu);
 
-            NhanVien account = new NhanVien();
-            account.CMND = thongTin.CMND.Trim();
-            account.MaNV = chucVu.MaChucVu.Trim() + soNV.ToString();
-            account.MatKhau = authTmp.Trim();
-            account.MaChucVu = chucVu.MaChucVu.Trim();
-            account.MATT = 6;
+            if (HoTen.Item1 && NgaySinh.Item1 && CMND.Item1 && NgayCap.Item1 && DiaChi.Item1 && ChucVu.Item1)
+                return true;
 
-            db.ThongTinNDs.Add(info);
-            db.NhanViens.Add(account);
-            
-            db.SaveChanges();
-            TempData["msg"] = "<script>alert('Đăng ký thành công');</script>";
+            if (!HoTen.Item1)
+                ModelState.AddModelError("editName", HoTen.Item2);
+
+            if (!NgaySinh.Item1)
+                ModelState.AddModelError("editNgaySinh", NgaySinh.Item2);
+
+            if (!CMND.Item1)
+                ModelState.AddModelError("editCMND", CMND.Item2);
+
+
+            if (!NgayCap.Item1)
+                ModelState.AddModelError("editNgayCap", NgayCap.Item2);
+
+            if (!DiaChi.Item1)
+                ModelState.AddModelError("editAddress", DiaChi.Item2);
+
+            if (!ChucVu.Item1)
+                ModelState.AddModelError("editRole", ChucVu.Item2);
+
+            Session["TempRole"] = roll.MaChucVu;
+
+            return false;
         }
 
 

@@ -5,101 +5,156 @@
     Layout = "~/Views/Shared/_Manager.cshtml";
 }
 
-@Html.ActionLink("< Quay lại", "Main", "HumanResource", null, new { @class = "btn btn-primary mb-0" })
-<div class="container">
-    <div class="col">
-        <div class="row">
-            <div class="col-md-3"></div>
-            <div class="col-md-6">
-                @using (Html.BeginForm("Register", "HumanResource", FormMethod.Post, new
-                {
-                    enctype = "multipart/form-data"
-                }))
-                {
-                    @Html.AntiForgeryToken()
-                    <div class="form-horizontal m-3">
-                        <h4 class="text-center">TẠO TÀI KHOẢN</h4>
-                        <hr />
-                        @*Họ và tên*@
-                        <div class="form-group mt-4">
-                            <label for="CMND">Họ và Tên</label>
+<link rel="stylesheet" href="~/Resources/CSS/Profile.css">
+<script type="text/javascript" href="~/Resources/JavaScript/ProfilePage.css"></script>
 
-                            <div class="row mt-1">
-                                @Html.EditorFor(model => model.HoTen, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessage("HoTen", new { @class = "text-danger mt-1" })
-                            </div>
-                        </div>
-                        @*Giới tính*@
-                        <div class="form-group row mt-4 ">
-                            <div class="col-md-4">
-                                <label for="GioiTinh">Giới tính:</label>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="GioiTinh" value="NAM" checked>
-                                    <label class="form-check-label" for="GioiTinh">Nam</label>
-                                </div>
-                            </div>
-                            <div class="col-md-5">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="GioiTinh" value="NỮ">
-                                    <label class="form-check-label" for="GioiTinh">Nữ</label>
-                                </div>
-                            </div>
-                            @Html.ValidationMessage("GioiTinh", new { @class = "text-danger mt-1" })
-                        </div>
-                        @*Chức vụ*@
-                        <div class="form-group mt-4">
-                            <label>Chức vụ</label>
-                            <div class="row mt-1">
-                                @{Html.RenderAction("SelectRole", "HumanResource");}
-                                @Html.ValidationMessage("ChonChucVu", new { @class = "text-danger" })
-                            </div>
-                        </div>
-                        @*Ngày sinh*@
-                        <div class="form-group mt-4">
-                            <label for="NgaySinh">Ngày sinh</label>
-                            <div class="row mt-1">
-                                @Html.TextBoxFor(model => model.NgaySinh, new { @type = "date", @class = "form-control datepicker", })
-                                @Html.ValidationMessage("NgaySinhND", new { @class = "text-danger mt-1" })
-                            </div>
-                        </div>
-                        @*Chứng minh nhân dân | Căn cước công dân*@
-                        <div class="form-group mt-4">
-                            <label for="CMND">Số CCCD(CMND)</label>
-                            <div class="row mt-1">
-                                @Html.EditorFor(model => model.CMND, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessage("CMND", new { @class = "text-danger mt-1" })
-                            </div>
-                        </div>
-                        @*Ngày cấp*@
-                        <div class="form-group mt-4">
-                            <label for="NgayCap">Ngày cấp</label>
+<div class="container light-style flex-grow-1 container-p-y">
 
-                            <div class="row mt-1">
-                                @Html.TextBoxFor(model => model.NgayCap, new { @type = "date", @class = "form-control datepicker", })
-                                @Html.ValidationMessage("NgayCapCMND", new { @class = "text-danger mt-1" })
-                            </div>
-                        </div>
-                        @*Địa chỉ*@
-                        <div class="form-group mt-4">
-                            <label for="DiaChi">Địa chỉ</label>
-                            <div class="row mt-1">
-                                @Html.EditorFor(model => model.DiaChi, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessage("DiaChi", new { @class = "text-danger" })
-                            </div>
-                        </div>
-                        @Html.ValidationMessage("TrungTaiKhoan", new { @class = "text-danger" })
-                        @Html.ValidationMessage("TrungCMND", new { @class = "text-danger" })
-                        <div class="text-center mt-3">
-                            <div class="row mt-1">
-                                <input type="submit" value="Đăng ký" class="btn btn-success" />
-                            </div>
-                        </div>
-                    </div>
-                }
+    <div class="d-flex justify-content-between">
+        @Html.ActionLink("< Quay lại", "Main", "HumanResource", null, new { @class = "btn btn-primary mb-0" })
+        <h4 class="font-weight-bold"> Tạo tài khoản </h4>
+    </div>
+
+    <div class="card overflow-hidden mt-1 d-flex">
+        <div class="row no-gutters row-bordered row-border-light">
+            <div class="col-md-3">
+                <div class="list-group list-group-flush account-settings-links">
+                    <!-- Hình Avatar -->
+                    <img src="~/Resources/Picture/User/userDefault.png" class="avatar">
+                </div>
             </div>
-            <div class="col-md-3"></div>
+
+
+            <div class="col-md-9">
+                <div class="tab-content">
+
+                    <!-- Trang Tổng quan -->
+
+                    <div class="tab-pane fade active show" id="account-general">
+                        @using (Html.BeginForm(Html.BeginForm("Register", "HumanResource", FormMethod.Post, new
+                        { enctype = "multipart/form-data" })))
+                        {
+                            @Html.AntiForgeryToken()
+
+                            <div class="card-body">
+
+                                <!-- Họ và tên & Giới tính -->
+                                <div class="form-group row">
+
+                                    <!-- Họ và tên -->
+                                    <div class="col">
+                                        <label class="form-label">Họ và tên</label>
+                                        @Html.EditorFor(model => model.HoTen, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessage("HoTen", new { @class = "text-danger mt-1" })
+                                    </div>
+
+                                    <!-- Giới tính -->
+                                    <div class="col-3">
+                                        <label for="GioiTinh">Giới tính:</label>
+                                        <div class="row mt-3">
+                                            <!-- Nam -->
+                                            <div class="col">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="GioiTinh" value="NAM" checked>
+                                                    <label class="form-check-label" for="GioiTinh">Nam</label>
+                                                </div>
+                                            </div>
+
+                                            <!-- Nữ -->
+                                            <div class="col">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="GioiTinh" value="NỮ">
+                                                    <label class="form-check-label" for="GioiTinh">Nữ</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @Html.ValidationMessage("GioiTinh", new { @class = "text-danger mt-1" })
+                                    </div>
+                                </div>
+
+
+
+                                <!-- Ngày sinh & Chức vụ -->
+                                <div class="form-group row mt-1">
+
+                                    <!-- Ngày sinh -->
+                                    <div class="col">
+                                        <label for="NgaySinh" class="form-label">Ngày sinh</label>
+                                        @Html.TextBoxFor(model => model.NgaySinh, new { @type = "date", @class = "form-control datepicker", })
+                                        @Html.ValidationMessage("NgaySinhND", new { @class = "text-danger mt-1" })
+                                    </div>
+
+                                    <!-- Chức vụ -->
+                                    <div class="col">
+                                        <label class="form-label">Chức vụ</label>
+                                        @{Html.RenderAction("SelectRole", "HumanResource");}
+                                        @Html.ValidationMessage("ChonChucVu", new { @class = "text-danger" })
+                                    </div>
+
+                                </div>
+
+
+                                <!-- Thông tin CMND/CCCD -->
+                                <div class="form-group row mt-1">
+
+                                    <!-- Số CMND/CCCD -->
+                                    <div class="col">
+                                        <label for="CMND" class="form-label">CMND/CCCD</label>
+                                        @Html.EditorFor(model => model.CMND, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessage("CMND", new { @class = "text-danger mt-1" })
+                                    </div>
+
+                                    <!-- Ngày cấp -->
+                                    <div class="col">
+                                        <label class="form-label">Ngày cấp</label>
+                                        @Html.TextBoxFor(model => model.NgayCap, new { @type = "date", @class = "form-control datepicker", })
+                                        @Html.ValidationMessage("NgayCapCMND", new { @class = "text-danger mt-1" })
+                                    </div>
+
+                                </div>
+
+
+
+                                <!-- Địa chỉ -->
+                                <div class="form-group mt-1">
+                                    <label class="form-label">Địa chỉ</label>
+                                    @Html.EditorFor(model => model.DiaChi, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessage("DiaChi", new { @class = "text-danger" })
+                                </div>
+
+
+                                <!-- Upload hình ( Tạm ẩn )-->
+                                <!--<div class="form-group row mt-2">
+
+                                <label class="col-2"> Hình đại diện </label>
+                                <label class="btn btn-outline-primary col-3">
+                                Tải hình mới
+                                <input type="file" class="account-settings-fileinput">
+
+                                </label> &nbsp;-->
+                                <!-- button type="button" class="btn btn-default md-btn-flat">Reset</!--button -->
+                                <!--<p class="text-light small mt-1">Cho phép JPG, GIF và PNG. Dung lượng tối đa là 800K</p>
+                                </div>-->
+
+                                @Html.ValidationMessage("TrungTaiKhoan", new { @class = "text-danger" })
+                                @Html.ValidationMessage("TrungCMND", new { @class = "text-danger" })
+                            </div>
+
+                            <div class="d-flex flex-row-reverse mt-1">
+                                <button type="submit" class="btn btn-success">Đăng ký</button>&nbsp;
+                            </div>
+
+                        }
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+
 </div>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.bundle.min.js"></script>
+
+@*Hiện thông báo*@
+@Html.Raw(TempData["msg"])

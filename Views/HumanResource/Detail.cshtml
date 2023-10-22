@@ -136,7 +136,7 @@
                                 <!-- Chức vụ -->
                                 <div class="col">
                                     <label class="form-label">Chức vụ</label>
-                                    @{Html.RenderAction("EditRole", "HumanResource", new { CMND = Model.CMND });}
+                                    @{Html.RenderAction("SelectRole", "HumanResource", new { CMND = Model.CMND });}
                                     @Html.ValidationMessage("editRole", new { @class = "text-danger mt-1" })
                                     @*<input type="text" value="@(((QLMB.Models.NhanVien)Session["EmployeeInfo"]).ChucVu.TenCV)" class="form-control" />*@
                                 </div>
