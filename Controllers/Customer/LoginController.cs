@@ -8,13 +8,19 @@ namespace QLMB.Controllers.Customer
     {
         private database db = new database();
 
-        //Trang đăng nhập
+        //Trang đăng nhập (Chung)
         public ActionResult Login()
         {
             return View();
         }
 
+        //Trang đăng nhập (Nhân viên)
+        public ActionResult StaffLogin()
+        {
+            return View();
+        }
 
+        
         //Đăng xuất
         public ActionResult Logout()
         {
@@ -23,37 +29,32 @@ namespace QLMB.Controllers.Customer
         }
 
 
-        //POST đăng nhập
+        //POST đăng nhập (Chung)
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Login(string TenDangNhap, string MatKhau)
+        public ActionResult Login(string username, string password)
         {
             try
             {
                 //Nếu tên đăng nhập > 8 ký tự ==> Người thuê
-                if (rentalCheckLogin(TenDangNhap, MatKhau) == true)
+                if (rentalCheckLogin(username, password))
                     return RedirectToAction("Index", "Home");
 
                 //Còn lại ==> Nhân viên
-                else
+                (bool, NhanVien) result = ManagerCheckLogin(username, password);
+                if (result.Item1)
                 {
-                    (bool, NhanVien) result = ManagerCheckLogin(TenDangNhap, MatKhau);
-                    if (result.Item1)
+                    switch (result.Item2.MATT)
                     {
-                        switch (result.Item2.MATT)
-                        {
-                            case 5:
-                                return RedirectToAction("Banned", "Account");
-                            case 6:
-                                Session["MANV"] = result.Item2.MaNV.Trim();
-                                return RedirectToAction("FirstLogin", "Account");
-                            default:
-                                return RedirectToAction("Manager", "Account");
-                        }
+                        case 5:
+                            return RedirectToAction("Banned", "Account");
+                        case 6:
+                            return RedirectToAction("FirstLogin", "Account", new { MANV = result.Item2.MaNV });
+                        default:
+                            return RedirectToAction("Manager", "Account");
                     }
-                    else
-                        return View("Login");
                 }
+                return View("Login");
             }
             catch
             {
@@ -61,99 +62,109 @@ namespace QLMB.Controllers.Customer
             }
         }
 
+
+        //POST đăng nhập (Nhân viên)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult StaffLogin(string username, string password)
+        {
+            try
+            {
+                (bool, NhanVien) result = ManagerCheckLogin(username, password);
+                if (result.Item1)
+                {
+                    switch (result.Item2.MATT)
+                    {
+                        case 5:
+                            return RedirectToAction("Banned", "Account");
+                        case 6:
+                            return RedirectToAction("FirstLogin", "Account", new { MANV = result.Item2.MaNV });
+                        default:
+                            return RedirectToAction("Manager", "Account");
+                    }
+                }
+                return View("StaffLogin");
+            }
+            catch
+            {
+                return RedirectToAction("Index", "SkillIssue");
+            }
+        }
+
+
         //Kiểm tra thông tin đăng nhập
         //Người thuê
         private bool rentalCheckLogin(string TenDangNhap, string MatKhau)
         {
-            bool error = true;
-            if (TenDangNhap == "")
-            {
-                ModelState.AddModelError("inputUsername", "* Xin hãy điền tên đăng nhập");
-                error = false;
-            }
-            if (MatKhau == "")
-            {
-                ModelState.AddModelError("inputPassword", "* Xin hãy điền mật khẩu");
-                error = false;
-            }
+            (bool, string) username = Validation.Username(TenDangNhap);
+            (bool, string) password = Validation.Password(MatKhau);
 
-            if (error)
+            if (username.Item1 && password.Item1)
             {
-                string authTmp = SHA256.ToSHA256(MatKhau);
-                var check = db.NguoiThues.Where(a => a.TenDangNhap == TenDangNhap.Trim() && a.MatKhau == authTmp).FirstOrDefault();
+                (bool, string, NguoiThue) checkLogin = Validation.checkLoginRental(TenDangNhap, MatKhau);
 
-                //Thấy thông tin => Thông tin đúng
-                if (check != null)
+                if (checkLogin.Item1)
                 {
-                    var data = db.ThongTinNDs.Where(a => a.CMND == check.CMND).FirstOrDefault();
+                    ThongTinND data = db.ThongTinNDs.Where(a => a.CMND == checkLogin.Item3.CMND).First();
                     Session["AccountName"] = data.HoTen;
-
                     return true;
                 }
-                else
-                {
-                    ModelState.AddModelError("Error", "* Tài khoản hoặc mật khẩu không đúng");
-                    return false;
-                }
-            }
-            //Thông tin sai
-            else
-            {
+                ModelState.AddModelError("Error", checkLogin.Item2);
                 return false;
             }
+
+            if (!username.Item1)
+                ModelState.AddModelError("inputUsername", username.Item2);
+                
+            if (!password.Item1)
+                ModelState.AddModelError("inputPassword", password.Item2);
+
+            //Thông tin sai
+            return false;
         }
 
         //Nhân viên
         private (bool, NhanVien) ManagerCheckLogin(string MaNV, string MatKhau)
         {
-            bool error = true;
-            if (MaNV == "")
-            {
-                ModelState.AddModelError("inputUsername", "* Xin hãy điền tên đăng nhập");
-                error = false;
-            }
-            if (MatKhau == "")
-            {
-                ModelState.AddModelError("inputPassword", "* Xin hãy điền mật khẩu");
-                error = false;
-            }
+            (bool, string) username = Validation.Username(MaNV);
+            (bool, string) password = Validation.Password(MatKhau);
 
-            if (error)
+            if (username.Item1 && password.Item1)
             {
-                string authTmp = SHA256.ToSHA256(MatKhau);
-                NhanVien check = db.NhanViens.Where(a => a.MaNV.Trim() == MaNV.Trim() && a.MatKhau == authTmp).FirstOrDefault();
+                (bool, string, NhanVien) checkLogin = Validation.checkLoginEmployee(MaNV, MatKhau);
 
                 //Thấy thông tin => Thông tin đúng
-                if (check != null)
+                if (checkLogin.Item1)
                 {
-                    var data = db.ThongTinNDs.Where(a => a.CMND == check.CMND).FirstOrDefault();
-                    string[] name = check.ThongTinND.HoTen.Split(' ');
+                    string[] name = checkLogin.Item3.ThongTinND.HoTen.Split(' ');
 
                     //Xử lý độ dài tên: Độ dài lớn hơn 1 mới bị cắt 2 tên cuối
-                    switch (name.Length)
-                    {
-                        case 0:
-                            Session["AccountName"] = name[0];
-                            break;
-                        default:
-                            Session["AccountName"] = name[name.Length - 2] + " " + name[name.Length - 1];
-                            break;
-                    }
-                    
-                    Session["Role"] = check.ChucVu.TenCV.ToString();
-                    Session["RoleID"] = check.ChucVu.MaChucVu.Trim();
+                    if (name.Length == 1)
+                        Session["AccountName"] = name[0];
+                    else
+                        Session["AccountName"] = name[name.Length - 2] + " " + name[name.Length - 1];
 
-                    return (true, check);
+                    ThongTinND employeeInfo = db.ThongTinNDs.Where(s => s.CMND == checkLogin.Item3.CMND).FirstOrDefault();
+
+                    Session["EmployeeInfo"] = checkLogin.Item3;
+                    Session["UserInfo"] = employeeInfo;
+
+                    return (true, checkLogin.Item3);
                 }
                 else
-                {
-                    ModelState.AddModelError("Error", "* Tài khoản hoặc mật khẩu không đúng");
-                    return (false, null);
-                }
+                    ModelState.AddModelError("Error", checkLogin.Item2);
             }
+
+
+            if (!username.Item1)
+                ModelState.AddModelError("inputUsername", username.Item2);
+
+            if (!password.Item1)
+                ModelState.AddModelError("inputPassword", password.Item2);
+              
+
             //Thông tin sai
-            else
-                return (false, null);
+            return (false, null);
         }
     }
 }

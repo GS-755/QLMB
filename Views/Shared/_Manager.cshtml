@@ -1,9 +1,9 @@
 ﻿<!DOCTYPE html>
 <html lang="vi">
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<head>
 
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title - QLMB</title>
 
@@ -36,31 +36,27 @@
         @* Chức năng (Chuyển trang) *@
 
         <!-- Tránh hiện cài password lần đầu -->
-        @if (Session["MANV"] == null && Session["RoleID"] != null)
+        @if (Session["EmployeeInfo"] != null && ((QLMB.Models.NhanVien)Session["EmployeeInfo"]).MATT == 4)
         {
             <ul class="nav-links">
 
                 @* Trang điều khiển *@
-                <li>
-                    <!-- Link -->
-                    <a href="#">
-
-                        <!-- Icon -->
-                        <i class='bx bx-grid-alt'></i>
-
-                        <!-- Tên -->
-                        <span class="link_name">Thanh điều khiển</span>
-                    </a>
-
-                    <!-- Lúc thu lại -->
-                    <ul class="sub-menu blank">
+                <!--<li>-->
+                <!-- Link -->
+                <!--<a href="#">-->
+                <!-- Icon -->
+                <!--<i class='bx bx-grid-alt'></i>-->
+                <!-- Tên -->
+                <!--<span class="link_name">Thanh điều khiển</span>
+                </a>-->
+                <!-- Lúc thu lại -->
+                <!--<ul class="sub-menu blank">
                         <li><a class="link_name" href="#">Thanh điều khiển</a></li>
                     </ul>
-                </li>
-
-
+                </li>-->
                 @* Role Sự kiện - Ưu đãi *@
-                @if (Session["RoleID"].ToString() == "SKUD")
+                
+                @if ( ((QLMB.Models.NhanVien)Session["EmployeeInfo"]).MaChucVu.Trim() == "SKUD")
                 {
                     @* Trang Sự kiện *@
                     <li>
@@ -112,7 +108,7 @@
 
 
                 @* Role Nhân sự *@
-                @if (Session["RoleID"].ToString() == "NS")
+                @if ( ((QLMB.Models.NhanVien)Session["EmployeeInfo"]).MaChucVu.Trim() == "NS")
                 {
                     @* Trang nhân sự *@
                     <li>
@@ -132,7 +128,7 @@
                         <ul class="sub-menu">
                             <li><a class="link_name" href="@Url.Action("Main","HumanResource")">Nhân sự</a></li>
                             <li><a href="@Url.Action("Main","HumanResource")">Trang chủ</a></li>
-                            <li><a href="@Url.Action("employeeInfo", "Register")">Thêm nhân viên</a></li>
+                            <li><a href="@Url.Action("Register", "HumanResource")">Thêm nhân viên</a></li>
                         </ul>
                     </li>
                 }
@@ -140,28 +136,30 @@
         }
 
         <!--Thông tin người dùng-->
-        @if (@Session["Role"] != null)
+        @if (@Session["EmployeeInfo"] != null)
         {
             <div class="profile-content">
                 <div class="profile">
 
-                    <div class="profile-details">
+                    <a href="@Url.Action("General", "Account")" style="text-decoration: none; color:white">
+                        <div class="profile-details">
 
-                        <!-- Hình người dùng-->
-                        <i class='bx bx-user' id="userImg"></i>
+                            <!-- Hình người dùng-->
+                            <i class='bx bx-user' id="userImg"></i>
 
-                        <!-- Thông tin -->
-                        <div class="name-job">
-                            <!-- Họ tên -->
-                            <div class="name">@Session["AccountName"]</div>
+                            <!-- Thông tin -->
+                            <div class="name-job">
+                                <!-- Họ tên -->
+                                <div class="name">@Session["AccountName"].ToString()</div>
 
-                            <!-- Chức vụ -->
-                            <div class="job">@Session["Role"]</div>
+                                <!-- Chức vụ -->
+                                <div class="job">@(((QLMB.Models.NhanVien)Session["EmployeeInfo"]).ChucVu.TenCV)</div>
+                            </div>
                         </div>
-                    </div>
+                    </a>
 
                     <!-- Đăng xuất -->
-                    <a href="@Url.Action("Logout", "StaffLogin")">
+                    <a href="@Url.Action("Logout", "Login")">
                         <i class='bx bx-log-out' style='color:#ffffff' id="log_out"></i>
                     </a>
                 </div>

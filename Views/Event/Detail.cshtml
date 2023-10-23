@@ -8,6 +8,8 @@
 
 <link rel='stylesheet' type='text/css' media='screen' href='~/Resources/CSS/FormDetail.css'>
 
+@Html.ActionLink("< Quay lại", "Return", "Account", null, new { @class = "btn btn-primary mb-0" })
+
 <div class="body">
     <div>
         <h2>Chi tiết đơn xin</h2>
@@ -74,21 +76,4 @@
             </div>
         </div>
     }
-
-
-
-    <p>
-        @if (Session["Page"] == "SK")
-        {
-            @Html.ActionLink("Quay lại danh sách", "EventMain")
-        }
-        else
-        {
-            <div class="mt-1">
-            @Html.ActionLink("Quay lại danh sách", "SaleMain")
-            </div>
-
-        }
-    </p>
-
 </div>

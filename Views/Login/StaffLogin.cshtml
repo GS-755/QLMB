@@ -1,0 +1,48 @@
+﻿@{
+    ViewBag.Title = "Đăng nhập";
+    Layout = "~/Views/Shared/_Manager.cshtml";
+}
+
+<section class="section">
+    <h2 class="text-center mt-3 mb-3">Đăng nhập Nhân viên</h2>
+    <div class="container-fluid">
+        <div class="col">
+            <div class="row">
+                <div class="col-md-4"></div>
+                <div class="col-md-4">
+
+                    @*Xác định HttpPost*@
+                    @using (Html.BeginForm("StaffLogin", "Login"))
+                    {
+                        @*Tính năng bảo mật - Tránh đăng nhập chéo trang*@
+                        @Html.AntiForgeryToken()
+
+                        @*Tên đăng nhập*@
+                        <div class="row mb-3">
+                            <label for="username">Tên đăng nhập</label>
+                            <input type="text" name="username" class="form-control" placeholder="vd: abc123" />
+                            @Html.ValidationMessage("inputUsername", new { @class = "text-danger mt-1" })
+                        </div>
+
+                        @*Mật khẩu*@
+                        <div class="row mb-3">
+                            <label for="password">Mật khẩu</label>
+                            <input type="password" name="password" class="form-control" />
+                            @Html.ValidationMessage("inputPassword", new { @class = "text-danger mt-1" })
+                        </div>
+
+
+                        @*Thông báo lỗi đăng nhập*@
+                        @Html.ValidationMessage("Error", new { @class = "text-danger mt-1" })
+
+                        @*Nút đăng nhập*@
+                        <div class="row mb-3">
+                            <input type="submit" class="btn btn-success" value="Đăng nhập" />
+                        </div>
+                    }
+                </div>
+                <div class="col-md-4"></div>
+            </div>
+        </div>
+    </div>
+</section>
