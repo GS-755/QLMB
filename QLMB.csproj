@@ -237,6 +237,7 @@
       <LastGenOutput>database.cs</LastGenOutput>
     </Content>
     <Content Include="Resources\CSS\FormDetail.css" />
+    <Content Include="Resources\CSS\main.css" />
     <Content Include="Resources\CSS\MainMenu_User.css" />
     <Content Include="Resources\CSS\Manager.css" />
     <Content Include="Resources\CSS\MultipleItem_Carousel.css" />
