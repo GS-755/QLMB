@@ -11,7 +11,7 @@ namespace QLMB.Models
 {
     using System;
     using System.Collections.Generic;
-
+    
     public partial class ThongTinND
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -20,17 +20,15 @@ namespace QLMB.Models
             this.NguoiThues = new HashSet<NguoiThue>();
             this.NhanViens = new HashSet<NhanVien>();
         }
-
+    
         public string CMND { get; set; }
         public System.DateTime NgayCap { get; set; }
         public string HoTen { get; set; }
         public string GioiTinh { get; set; }
         public System.DateTime NgaySinh { get; set; }
         public string DiaChi { get; set; }
-        public string TenDangNhap { get; set; }
-        public string MatKhau { get; set; }
-        public string rePassword { get; set; }
-
+        public string HinhAvatar { get; set; }
+    
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<NguoiThue> NguoiThues { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

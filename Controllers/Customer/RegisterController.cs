@@ -1,5 +1,5 @@
 ﻿using QLMB.Models;
-using System;
+using QLMB.Models.Process;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -12,414 +12,101 @@ namespace QLMB.Controllers.Customer
 
         //----------- Người thuê -----------//
         //Trang đăng ký
-        public ActionResult rentalInfo() => View();
-
+        public ActionResult rentalInfo()
+        {
+            return View();
+        }
 
 
         //Xử lý thông tin
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult RentalInfo(ThongTinND thongTin)
+        public ActionResult RentalInfo(ThongTinND thongTin, string username, string password, string rePassword)
         {
-            try
-            {    
-                if (checkInfo(thongTin))
+            if (checkInfo(thongTin, username, password, rePassword))
+            {
+                (bool, string) checkAccount = Validation.ExistAccount(db, thongTin.CMND, thongTin.HoTen);
+
+                if (checkAccount.Item1)
                 {
-                    var exist = db.ThongTinNDs.Any(s => s.CMND == thongTin.CMND || s.HoTen == thongTin.HoTen.ToUpper());
-                    if (!exist)
+                    (bool, string) saveInfo = Create.Customer(db, thongTin, username, password);
+
+                    if (saveInfo.Item1)
                     {
-                        exist = db.NguoiThues.Any(s => s.TenDangNhap == thongTin.TenDangNhap);
-                        if (!exist)
-                        {
-                            AddDatabase(thongTin);
-                            TempData["msg"] = "<script>alert('Đăng ký thành công');</script>";
-                            return RedirectToAction("LoginPage", "Login");
-                        }
-                        else
-                        {
-                            ModelState.AddModelError("TrungTaiKhoan", "* Tài khoản đã tồn tại");
-                            return View();
-                        }
-                        
+                        Session.Remove("PrevUsername");
+                        TempData["msg"] = $"<script>alert('{saveInfo.Item2}');</script>";
+                        return RedirectToAction("Login", "Login");
                     }
                     else
-                    {
-                        ModelState.AddModelError("TrungCMND", "* Bạn đã đăng ký tài khoản !");
-                        return View();
-                    }
+                        ModelState.AddModelError("TrungTaiKhoan", saveInfo.Item2);
                 }
                 else
-                {
-                    
-                    return View();
-                }
-
+                    ModelState.AddModelError("TrungCMND", checkAccount.Item2);
             }
-            catch
-            {
-                ViewBag.CitizenStatus = "Xác minh thất bại! - Xin hãy thử lại !";
-                return View();
-            }
+            Session["PrevUsername"] = username;
+            return View();
         }
 
-
-
         //Kiểm tra thông tin
-        private bool checkInfo(ThongTinND thongTin)
+        private bool checkInfo(ThongTinND thongTin, string username, string password, string rePassword)
         {
-            int error = 0;
+            (bool, string) CMND = Validation.CMND(thongTin.CMND);
+            (bool, string) NgayCap = Validation.NgayCap(thongTin.NgayCap);
+            (bool, string) HoTen = Validation.HoTen(thongTin.HoTen);
+            (bool, string) GioiTinh = Validation.Gender(thongTin.GioiTinh);
+            (bool, string) NgaySinh = Validation.Birthday_25(thongTin.NgaySinh);
+            (bool, string) DiaChi = Validation.Address(thongTin.DiaChi);
+
+            (bool, string) TenDangNhap = Validation.Username_8(username);
+            (bool, string) MatKhau = Validation.Password(password);
+            (bool, string) NhapLaiMatKhau = Validation.rePassword(password, rePassword);
             
+            bool check = CMND.Item1 && NgayCap.Item1 && HoTen.Item1 && GioiTinh.Item1 &&
+                         NgaySinh.Item1 && DiaChi.Item1 && TenDangNhap.Item1 && MatKhau.Item1 && NhapLaiMatKhau.Item1;
+
+            if (check)
+                return true;
+
             //CMND chưa nhập
-            if(thongTin.CMND == null)
-            {
-                ModelState.AddModelError("CMND", "* Xin hãy điền CMND/CCCD");
-                error++;
-            }
-
-            //CMND Chưa đủ 12 số
-            else if (thongTin.CMND.Trim().Length != 12)
-            {
-                ModelState.AddModelError("CMND", "* CMND/CCCD phải đủ 12 số");
-                error++;
-            }
-            else
-            {
-                //CMND có chứa chữ
-                char[] numberCheck = thongTin.CMND.Trim().ToCharArray();
-
-                for (int i = 0; i < thongTin.CMND.Trim().Length; i++)
-                {
-                    if (!char.IsNumber(numberCheck[i]))
-                    {
-                        error++;
-                        ModelState.AddModelError("CMND", "* CMND/CCCD không hợp lệ");
-                        break;
-                    }
-                }
-            }
+            if (!CMND.Item1)
+                ModelState.AddModelError("CMND", CMND.Item2);
 
 
             //Ngày cấp
-            if (thongTin.NgayCap > DateTime.Now || thongTin.NgayCap.Year < 1900) 
-            {
-                ModelState.AddModelError("NgayCapCMND", "* Ngày cấp không hợp lệ");
-                error++;
-            }
-
+            if (!NgayCap.Item1) 
+                ModelState.AddModelError("NgayCapCMND", NgayCap.Item2);
 
             //Họ tên
-            if (thongTin.HoTen == null)
-            {
-                ModelState.AddModelError("HoTen", "* Xin hãy điền họ tên");
-                error++;
-            }
+            if (!HoTen.Item1)
+                ModelState.AddModelError("HoTen", HoTen.Item2);
 
 
             //Giới tính
-            if (thongTin.GioiTinh == null)
-            {
-                ModelState.AddModelError("GioiTinh", "* Xin hãy chọn giới tính");
-                error++;
-            }
+            if (!GioiTinh.Item1)
+                ModelState.AddModelError("GioiTinh", GioiTinh.Item2);
 
 
             //Ngày sinh
-            if (thongTin.NgaySinh.Year >= DateTime.Now.Year - 25)
-            {
-                ModelState.AddModelError("NgaySinhND", "* Bạn chưa đủ tuổi để đăng ký");
-                error++;
-            }
+            if (!NgaySinh.Item1)
+                ModelState.AddModelError("NgaySinhND", NgaySinh.Item2);
             
-            //Ngày sinh không hợp lệ
-            else if (thongTin.NgaySinh.Year < 1800)
-            {
-                ModelState.AddModelError("NgaySinhND", "* Ngày sinh không hợp lệ");
-                error++;
-            }
-
-
             //Địa chỉ
-            if(thongTin.DiaChi == null)
-            {
-                ModelState.AddModelError("DiaChi", "* Xin hãy nhập địa chỉ");
-                error++;
-            }
+            if(!DiaChi.Item1)
+                ModelState.AddModelError("DiaChi", DiaChi.Item2);
 
 
             //Tên đăng nhập
-            if (thongTin.TenDangNhap == null)
-            {
-                ModelState.AddModelError("TenDangNhap", "* Xin hãy điền tên đăng nhập");
-                error++;
-            }
-            else if (thongTin.TenDangNhap.Trim().Length < 8)
-            {
-                ModelState.AddModelError("TenDangNhap", "* Tên đăng nhập phải dài hơn 8 ký tự");
-                error++;
-            }
-
-
+            if (!TenDangNhap.Item1)
+                ModelState.AddModelError("TenDangNhap", TenDangNhap.Item2);
 
             //Mật khẩu
-            if (thongTin.MatKhau == null)
-            {
-                ModelState.AddModelError("MatKhau", "* Xin hãy điền mật khẩu");
-                error++;
-            }
-
+            if (!MatKhau.Item1)
+                ModelState.AddModelError("MatKhau", MatKhau.Item2);
 
             //Nhập lại mật khẩu
-            if (thongTin.rePassword == null)
-            {
-                ModelState.AddModelError("MatKhauLai", "* Xin hãy điền lại mật khẩu");
-                error++;
-            }
-            else if(thongTin.MatKhau != thongTin.rePassword)
-            {
-                ModelState.AddModelError("MatKhauLai", "* Mật khẩu không khớp - Xin hãy điền lại");
-                error++;
-            }
+            if(!NhapLaiMatKhau.Item1)
+                ModelState.AddModelError("MatKhauLai", NhapLaiMatKhau.Item2); 
 
-
-            if (error == 0)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-
-
-        //Thêm dữ liệu
-        private void AddDatabase(ThongTinND thongTin)
-        {
-            string authTmp = SHA256.ToSHA256(thongTin.MatKhau);
-           
-            ThongTinND info = new ThongTinND();
-            info.CMND = thongTin.CMND.Trim();
-            info.NgayCap = thongTin.NgayCap;
-            
-            info.HoTen = thongTin.HoTen.ToString();
-            info.GioiTinh = thongTin.GioiTinh.ToString();
-            info.NgaySinh = thongTin.NgaySinh;
-            info.DiaChi = thongTin.DiaChi.ToString();
-
-            NguoiThue account = new NguoiThue();
-            account.CMND = thongTin.CMND.Trim();
-            account.TenDangNhap = thongTin.TenDangNhap.Trim();
-            account.MatKhau = authTmp.Trim();
-
-            db.ThongTinNDs.Add(info);
-            db.NguoiThues.Add(account);
-            db.SaveChanges();
-        }
-
-
-
-        //----------- Nhân viên -----------//
-        //Chọn vị trí
-        public ActionResult SelectRole()
-        {
-            ChucVu selected = new ChucVu();
-            selected.ListChucVu = db.ChucVus.ToList<ChucVu>();
-            return PartialView(selected);
-        }
-
-
-
-        //Trang đăng ký
-        public ActionResult employeeInfo()
-        {
-            try
-            {
-                //Nếu RoleID != null --> Đã đăng nhập
-                if (Session["RoleID"] != null)
-                {
-                    //Đúng Role --> Vào
-                    if (Session["RoleID"].ToString() == "NS") 
-                        return View();
-                }
-                //Không thoả --> Về trang xử lý chuyển trang
-                return RedirectToAction("Manager", "Account");
-            }
-
-            //Lỗi xử lý --> Skill Issue :))
-            catch
-            {
-                return RedirectToAction("Index", "SkillIssue");
-            }
-        }
-
-
-
-        //Xử lý thông tin
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult employeeInfo(ThongTinND thongTin,ChucVu chucVu)
-        {
-            Session["Testing"] = chucVu.MaChucVu;
-            try
-            {
-                if (checkInfoEmployee(thongTin,chucVu))
-                {
-                    var exist = db.ThongTinNDs.Any(s => s.CMND == thongTin.CMND || s.HoTen == thongTin.HoTen.ToUpper());
-                    if (!exist)
-                    {
-                            AddDatabaseEmployee(thongTin, chucVu);
-                            TempData["msg"] = "<script>alert('Đăng ký thành công');</script>";
-                            return RedirectToAction("Main", "HumanResource");
-                    }
-                    else
-                    {
-                        ModelState.AddModelError("TrungCMND", "* Người này đã có trên hệ thống !");
-                        return View();
-                    }
-                }
-                else
-                {
-                    return View();
-                }
-
-            }
-            catch
-            {
-                ViewBag.CitizenStatus = "Xác minh thất bại! - Xin hãy thử lại !";
-                return View();
-            }
-
-        }
-
-
-
-        //Kiểm tra dữ liệu
-        private bool checkInfoEmployee(ThongTinND thongTin, ChucVu chucVu)
-        {
-            int error = 0;
-
-            //CMND chưa nhập
-            if (thongTin.CMND == null)
-            {
-                ModelState.AddModelError("CMND", "* Xin hãy điền CMND/CCCD");
-                error++;
-            }
-
-            //CMND Chưa đủ 12 số
-            else if (thongTin.CMND.Trim().Length != 12)
-            {
-                ModelState.AddModelError("CMND", "* CMND/CCCD phải đủ 12 số");
-                error++;
-            }
-            else
-            {
-                //CMND có chứa chữ
-                char[] numberCheck = thongTin.CMND.Trim().ToCharArray();
-
-                for (int i = 0; i < thongTin.CMND.Trim().Length; i++)
-                {
-                    if (!char.IsNumber(numberCheck[i]))
-                    {
-                        error++;
-                        ModelState.AddModelError("CMND", "* CMND/CCCD không hợp lệ");
-                        break;
-                    }
-                }
-            }
-
-
-            //Ngày cấp
-            if (thongTin.NgayCap > DateTime.Now || thongTin.NgayCap.Year < 1900)
-            {
-                ModelState.AddModelError("NgayCapCMND", "* Ngày cấp không hợp lệ");
-                error++;
-            }
-
-
-            //Họ tên
-            if (thongTin.HoTen == null)
-            {
-                ModelState.AddModelError("HoTen", "* Xin hãy điền họ tên");
-                error++;
-            }
-
-
-            //Giới tính
-            if (thongTin.GioiTinh == null)
-            {
-                ModelState.AddModelError("GioiTinh", "* Xin hãy chọn giới tính");
-                error++;
-            }
-
-
-            //Ngày sinh
-            if (thongTin.NgaySinh.Year >= DateTime.Now.Year - 25)
-            {
-                ModelState.AddModelError("NgaySinhND", "* Bạn chưa đủ tuổi để đăng ký");
-                error++;
-            }
-
-            //Ngày sinh không hợp lệ
-            else if (thongTin.NgaySinh.Year < 1800)
-            {
-                ModelState.AddModelError("NgaySinhND", "* Ngày sinh không hợp lệ");
-                error++;
-            }
-
-
-            //Địa chỉ
-            if (thongTin.DiaChi == null)
-            {
-                ModelState.AddModelError("DiaChi", "* Xin hãy nhập địa chỉ");
-                error++;
-            }
-
-            //Chức vụ
-            if (chucVu.MaChucVu == null)
-            {
-                ModelState.AddModelError("ChonChucVu", "* Xin hãy chọn chức vụ");
-                error++;
-            }
-
-            if (error == 0)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-
-
-        //Thêm dữ liệu
-        private void AddDatabaseEmployee(ThongTinND thongTin, ChucVu chucVu)
-        {
-            string authTmp = SHA256.ToSHA256("123456");
-            int soNV = db.NhanViens.Where(s => s.MaChucVu == chucVu.MaChucVu.Trim()).Count();
-
-            ThongTinND info = new ThongTinND();
-            info.CMND = thongTin.CMND.Trim();
-            info.NgayCap = thongTin.NgayCap;
-
-            info.HoTen = thongTin.HoTen.ToString();
-            info.GioiTinh = thongTin.GioiTinh.ToString();
-            info.NgaySinh = thongTin.NgaySinh;
-            info.DiaChi = thongTin.DiaChi.ToString();
-
-            NhanVien account = new NhanVien();
-            account.CMND = thongTin.CMND.Trim();
-            account.MaNV = chucVu.MaChucVu.Trim() + soNV.ToString();
-            account.MatKhau = authTmp.Trim();
-            account.MaChucVu = chucVu.MaChucVu.Trim();
-            account.MATT = 6;
-
-            db.ThongTinNDs.Add(info);
-            db.NhanViens.Add(account);
-            db.SaveChanges();
-        }
-
-    }
+            return false;
+        }    }
 }

@@ -1,0 +1,17 @@
+﻿@model QLMB.Models.ListChucVu
+
+@{
+    QLMB.Models.NhanVien User = (QLMB.Models.NhanVien)Session["EmployeeInfo"];
+    QLMB.Models.NhanVien Current = (QLMB.Models.NhanVien)Session["HumanResourceEmployeeTemp"];
+}
+
+@if (Session["Page"].ToString() == "EmployeeDetail" && User.MaChucVu.Trim() == Current.MaChucVu.Trim() && Current.MaChucVu.Trim() == "NS")
+{
+    @Html.DropDownListFor(model => model.MaChucVu, new SelectList(Model.List, "MaChucVu", "TenCV", Model.CurrentEmployee), new { @class = "form-control", @disabled = "disabled" })
+}
+else
+{
+    @Html.DropDownListFor(model => model.MaChucVu, new SelectList(Model.List, "MaChucVu", "TenCV", Model.CurrentEmployee), new { @class = "form-control" })
+}
+
+

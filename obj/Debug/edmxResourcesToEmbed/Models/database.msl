@@ -119,6 +119,7 @@
           <ScalarProperty Name="GioiTinh" ColumnName="GioiTinh" />
           <ScalarProperty Name="NgaySinh" ColumnName="NgaySinh" />
           <ScalarProperty Name="DiaChi" ColumnName="DiaChi" />
+          <ScalarProperty Name="HinhAvatar" ColumnName="HinhAvatar" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

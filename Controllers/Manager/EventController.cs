@@ -17,30 +17,26 @@ namespace QLMB.Controllers.Manager
         {
             try
             {
-                //Nếu RoleID != null --> Đã đăng nhập
-                if (Session["RoleID"] != null)
+                //Kiểm tra hợp lệ
+                if (checkRole())
                 {
-                    //Đúng Role --> Vào
-                    if (Session["RoleID"].ToString() == "SKUD")
+                    List<SuKienUuDai> data = db.SuKienUuDais.Where(s => s.MaDM.Trim() == "SK").ToList();
+
+                    //Xử lý tìm kiếm
+                    if (NameSearch != null)
                     {
-                        //Dùng để xử lý về lại trang trước đó trong Detail
-                        Session["Page"] = "SK";
-
-                        List<SuKienUuDai> data = db.SuKienUuDais.Where(s => s.MaDM.Trim() == "SK").ToList();
-
-                        //Xử lý tìm kiếm
-                        if (NameSearch != null)
-                        {
-                            data = data.Where(s => s.NgayLamDon.ToString().Contains(NameSearch) ||
-                                                   s.NgayBatDau.ToString().Contains(NameSearch) ||
-                                                   s.NgayKetThuc.ToString().Contains(NameSearch) ||
-                                                   s.NguoiThue.ThongTinND.HoTen.ToUpper().Contains(NameSearch.ToUpper()) ||
-                                                   s.TieuDe.ToUpper().Contains(NameSearch.ToUpper()) ||
-                                                   s.TinhTrang.TenTT.ToUpper().Contains(NameSearch.ToUpper())).ToList();
-                        }
-                        return View(data);
+                        data = data.Where(s => s.NgayLamDon.ToString().Contains(NameSearch) ||
+                                               s.NgayBatDau.ToString().Contains(NameSearch) ||
+                                               s.NgayKetThuc.ToString().Contains(NameSearch) ||
+                                               s.NguoiThue.ThongTinND.HoTen.ToUpper().Contains(NameSearch.ToUpper()) ||
+                                               s.TieuDe.ToUpper().Contains(NameSearch.ToUpper()) ||
+                                               s.TinhTrang.TenTT.ToUpper().Contains(NameSearch.ToUpper())).ToList();
                     }
+                    //Dùng để xử lý về lại trang trước đó
+                    Session["Page"] = "EventMain";
+                    return View(data);
                 }
+
                 //Không thoả --> Về trang xử lý chuyển trang
                 return RedirectToAction("Manager", "Account");
             }
@@ -56,32 +52,27 @@ namespace QLMB.Controllers.Manager
         {
             try
             {
-                //Nếu RoleID != null --> Đã đăng nhập
-                if (Session["RoleID"] != null)
+                //Kiểm tra hợp lệ
+                if (checkRole())
                 {
-                    //Đúng Role --> Vào
-                    if (Session["RoleID"].ToString() == "SKUD")
+                    List<SuKienUuDai> data = db.SuKienUuDais.
+                                       Where(s => s.MaDM.Trim() == "UD").ToList();
+
+                    //Xử lý tìm kiếm
+                    if (NameSearch != null)
                     {
-                        //Dùng để xử lý về lại trang trước đó trong Detail
-                        Session["Page"] = "UD";
-
-                        List<SuKienUuDai> data = db.SuKienUuDais.
-                                           Where(s => s.MaDM.Trim() == "UD").ToList();
-
-                        //Xử lý tìm kiếm
-                        if (NameSearch != null)
-                        {
-                            data = data.Where(s => s.NgayLamDon.ToString().Contains(NameSearch) ||
-                                                   s.NgayBatDau.ToString().Contains(NameSearch) ||
-                                                   s.NgayKetThuc.ToString().Contains(NameSearch) ||
-                                                   s.NguoiThue.ThongTinND.HoTen.ToUpper().Contains(NameSearch.ToUpper()) ||
-                                                   s.TieuDe.ToUpper().Contains(NameSearch.ToUpper()) ||
-                                                   s.TinhTrang.TenTT.ToUpper().Contains(NameSearch.ToUpper())).ToList();
-                        }
-
-                        return View(data);
+                        data = data.Where(s => s.NgayLamDon.ToString().Contains(NameSearch) ||
+                                               s.NgayBatDau.ToString().Contains(NameSearch) ||
+                                               s.NgayKetThuc.ToString().Contains(NameSearch) ||
+                                               s.NguoiThue.ThongTinND.HoTen.ToUpper().Contains(NameSearch.ToUpper()) ||
+                                               s.TieuDe.ToUpper().Contains(NameSearch.ToUpper()) ||
+                                               s.TinhTrang.TenTT.ToUpper().Contains(NameSearch.ToUpper())).ToList();
                     }
+                    //Dùng để xử lý về lại trang trước đó
+                    Session["Page"] = "SaleMain";
+                    return View(data);
                 }
+
                 //Không thoả --> Về trang xử lý chuyển trang
                 return RedirectToAction("Manager", "Account");
             }
@@ -91,33 +82,38 @@ namespace QLMB.Controllers.Manager
             {
                 return RedirectToAction("Index", "SkillIssue");
             }
-
-
         }
 
         public ActionResult Detail(DateTime NgayLamDon, string NguoiLamDon, string tieuDe)
         {
             try
             {
-                //Nếu RoleID != null --> Đã đăng nhập
-                if (Session["RoleID"] != null)
+                //Kiểm tra hợp lệ
+                if (checkRole())
                 {
-                    //Đúng Role --> Vào
-                    if (Session["RoleID"].ToString() == "SKUD")
+                    if (Session["Page"] == null)
+                        return RedirectToAction("EventMain");
+
+                    SuKienUuDai info;
+
+                    if (NgayLamDon == null && NgayLamDon == null && tieuDe == null && Session["EventTemp"] != null)
                     {
-                        if (Session["Page"] == null)
-                            return RedirectToAction("EventMain");
-
-
+                        info = (SuKienUuDai)Session["EventTemp"];
+                    }
+                    else
+                    {
                         //EntityFunctions.TruncateTime([DateTime]) để lấy DateTime vì LingQ không hỗ trợ
-                        SuKienUuDai info = db.SuKienUuDais.Where(
+                        info = db.SuKienUuDais.Where(
                                      s => EntityFunctions.TruncateTime(s.NgayLamDon) == EntityFunctions.TruncateTime(NgayLamDon)
                                   && s.NguoiThue.ThongTinND.HoTen == NguoiLamDon
                                   && s.TieuDe == tieuDe
                                   ).FirstOrDefault();
 
-                        return View(info);
+                        Session["EventTemp"] = info;
                     }
+                    //Dùng để xử lý về lại trang trước đó
+                    Session["Page"] = "EventDetail";
+                    return View(info);
                 }
 
                 //Không thoả --> Về trang xử lý chuyển trang
@@ -129,6 +125,20 @@ namespace QLMB.Controllers.Manager
             {
                 return RedirectToAction("Index", "SkillIssue");
             }
+        }
+
+        //Kiểm tra hợp lệ
+        private bool checkRole()
+        {
+            //Nếu EmployeeInfo == null --> Chưa đăng nhập
+            if (Session["EmployeeInfo"] == null)
+                return false;
+
+            //Đúng Role --> Vào
+            if (((NhanVien)Session["EmployeeInfo"]).MaChucVu.Trim() == "SKUD")
+                return true;
+
+            return false;
         }
     }
 }

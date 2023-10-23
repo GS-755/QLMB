@@ -24,8 +24,7 @@ namespace QLMB.Models
         public string TenDangNhap { get; set; }
         public string MatKhau { get; set; }
         public string CMND { get; set; }
-        public string rePassword { get; set; }
-
+    
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DonXinThue> DonXinThues { get; set; }
         public virtual ThongTinND ThongTinND { get; set; }

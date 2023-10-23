@@ -135,10 +135,8 @@
     <Compile Include="Controllers\Customer\RegisterController.cs" />
     <Compile Include="Controllers\Manager\EventController.cs" />
     <Compile Include="Controllers\Manager\HumanResourceController.cs" />
-    <Compile Include="Controllers\Manager\StaffLoginController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\SkillIssueController.cs" />
-    <Compile Include="Controllers\Manager\PropertyController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -184,7 +182,12 @@
     <Compile Include="Models\NhanVien.cs">
       <DependentUpon>database.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\SHA256.cs" />
+    <Compile Include="Models\Process\Create.cs" />
+    <Compile Include="Models\ListChucVu.cs" />
+    <Compile Include="Models\Process\Edit.cs" />
+    <Compile Include="Models\Process\Shared.cs" />
+    <Compile Include="Models\Process\SHA256.cs" />
+    <Compile Include="Models\Process\Validation.cs" />
     <Compile Include="Models\SuKienUuDai.cs">
       <DependentUpon>database.tt</DependentUpon>
     </Compile>
@@ -225,8 +228,8 @@
     <Content Include="Content\Site.css" />
     <Content Include="Models\database.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>database.Context.cs</LastGenOutput>
       <DependentUpon>database.edmx</DependentUpon>
+      <LastGenOutput>database.Context.cs</LastGenOutput>
     </Content>
     <Content Include="Models\database.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -237,6 +240,7 @@
     <Content Include="Resources\CSS\MainMenu_User.css" />
     <Content Include="Resources\CSS\Manager.css" />
     <Content Include="Resources\CSS\MultipleItem_Carousel.css" />
+    <Content Include="Resources\CSS\Profile.css" />
     <Content Include="Resources\CSS\tableInfo.css" />
     <Content Include="Resources\JavaScript\reload.js" />
     <Content Include="Resources\JavaScript\managerNavBar.js" />
@@ -246,6 +250,7 @@
     <Content Include="Resources\Picture\Logo\Logo_DarkMode.png" />
     <Content Include="Resources\Picture\Logo\Logo_LightMode.png" />
     <Content Include="Resources\Picture\SkillIssue\error-404.jpg" />
+    <Content Include="Resources\Picture\User\userDefault.png" />
     <Content Include="Resources\Query\Mohamed_Query.sql" />
     <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
@@ -294,30 +299,30 @@
     <Content Include="Views\Event\Detail.cshtml" />
     <Content Include="Views\Event\EventMain.cshtml" />
     <Content Include="Views\Event\SaleMain.cshtml" />
-    <Content Include="Views\ForgetPassword\ForgetPasswordPage.cshtml" />
+    <Content Include="Views\ForgetPassword\ForgetPassword.cshtml" />
     <Content Include="Views\ForgetPassword\rePasswordNguoiThue.cshtml" />
     <Content Include="Views\Home\ClearSession.cshtml" />
     <Content Include="Views\HumanResource\Detail.cshtml" />
     <Content Include="Views\HumanResource\Main.cshtml" />
-    <Content Include="Views\Login\LoginPage.cshtml" />
-    <Content Include="Views\Register\employeeInfo.cshtml" />
+    <Content Include="Views\Login\Login.cshtml" />
+    <Content Include="Views\HumanResource\Register.cshtml" />
     <Content Include="Views\Register\rentalAccount.cshtml" />
     <Content Include="Views\Register\rentalInfo.cshtml" />
-    <Content Include="Views\Register\SelectRole.cshtml" />
     <Content Include="Views\Shared\_Manager.cshtml" />
     <Content Include="Views\Shared\_HomePage.cshtml" />
     <Content Include="Views\SkillIssue\Index.cshtml" />
-    <Content Include="Views\StaffLogin\Login.cshtml" />
     <Content Include="Views\Account\FirstLogin.cshtml" />
-    <Content Include="Views\Property\Create.cshtml" />
-    <Content Include="Views\Property\Delete.cshtml" />
-    <Content Include="Views\Property\Details.cshtml" />
-    <Content Include="Views\Property\Edit.cshtml" />
-    <Content Include="Views\Property\Index.cshtml" />
+    <Content Include="Views\Account\Banned.cshtml" />
+    <Content Include="Views\Account\Profile.cshtml" />
+    <Content Include="Views\Login\StaffLogin.cshtml" />
+    <Content Include="Views\Account\GeneralPage.cshtml" />
+    <Content Include="Views\Account\ChangePasswordPage.cshtml" />
+    <Content Include="Views\Account\General.cshtml" />
+    <Content Include="Views\Account\ChangePassword.cshtml" />
+    <Content Include="Views\HumanResource\SelectRole.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Resources\Picture\Property\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />

@@ -25,9 +25,9 @@ namespace QLMB.Models
         }
     
         public string MaMB { get; set; }
-        public int Lau { get; set; }
+        public short Lau { get; set; }
         public double DienTich { get; set; }
-        public int Khu { get; set; }
+        public short Khu { get; set; }
         public double TienThue { get; set; }
         public short MATT { get; set; }
         public string HinhMB { get; set; }
