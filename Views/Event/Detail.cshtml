@@ -5,75 +5,168 @@
     Layout = "~/Views/Shared/_Manager.cshtml";
 }
 
+<link rel="stylesheet" href="~/Resources/CSS/Profile.css">
+<script type="text/javascript" href="~/Resources/JavaScript/ProfilePage.css"></script>
 
-<link rel='stylesheet' type='text/css' media='screen' href='~/Resources/CSS/FormDetail.css'>
+@using (Html.BeginForm(Html.BeginForm("Detail", "Event", FormMethod.Post, new
+{ enctype = "multipart/form-data" })))
+{
+    @Html.AntiForgeryToken()
 
-@Html.ActionLink("< Quay lại", "Return", "Account", null, new { @class = "btn btn-primary mb-0" })
 
-<div class="body">
-    <div>
-        <h2>Chi tiết đơn xin</h2>
-        <h3>Loại: @Model.DanhMuc.TenDM</h3>
+    <div class="d-flex justify-content-between">
+        @Html.ActionLink("< Quay lại", "returnLocal", "Event", null, new { @class = "btn btn-primary mb-0" })
+        <h4 class="font-weight-bold">Chi tiết</h4>
     </div>
 
-    <p style="font-weight:bold;font-size:25px" class="mt-2 mb-2">@Html.DisplayFor(model => model.TieuDe)</p>
+    <!-- Thanh Sidebar -->
+    <div class="card overflow-hidden mt-1 d-flex">
+        <div class="row no-gutters row-bordered row-border-light">
+            <div class="col-md-4">
+                <div class="list-group list-group-flush account-settings-links">
+                    <div class="d-flex justify-content-center form-group col">
+                        <img src="@Url.Content(Model.HinhBia)" width="358px" height="358px" />
+                    </div>
 
-    <div style="display:flex">
 
-        <div class="Picture">
-            <img src="@Url.Content(Model.HinhBia)" width="358px" height="358px" />
-        </div>
-        <div class="Sold">
-            <table>
-                <tr>
-                    <td>Ngày làm đơn</td>
-                    <td>@Html.DisplayFor(model => model.NgayLamDon)</td>
-                </tr>
-                <tr>
-                    <td>Người làm đơn</td>
-                    <td>@Html.DisplayFor(model => model.NguoiThue.ThongTinND.HoTen)</td>
-                </tr>
-                <tr>
-                    <td>Ngày bắt đầu</td>
-                    <td>@Convert.ToDateTime(Model.NgayBatDau).ToString("dd/MM/yyyy")</td>
-                </tr>
-                <tr>
-                    <td>Ngày kết thúc</td>
-                    <td>@Convert.ToDateTime(Model.NgayKetThuc).ToString("dd/MM/yyyy")</td>
-                </tr>
-                <tr>
-                    <td>Tình trạng</td>
-                    <td>@Html.DisplayFor(model => model.TinhTrang.TenTT)</td>
-                </tr>
-                @if (Model.MATT != 1)
-                {
-                    <tr>
-                        <td>Người duyệt đơn</td>
-                        <td>@Html.DisplayFor(model => model.NhanVien.ThongTinND.HoTen)</td>
-                    </tr>
-                    <tr>
-                        <td>Ngày duyệt</td>
-                        <td>@Convert.ToDateTime(Model.NgayDuyet).ToString("dd/MM/yyyy")</td>
-                    </tr>
-                }
-            </table>
+                </div>
+            </div>
+
+
+            <div class="col-md-8">
+                <div class="tab-content">
+
+                    <!-- Trang Tổng quan -->
+
+                    <div class="tab-pane fade active show" id="account-general">
+                        <div class="card-body">
+
+                            <div class="d-flex justify-content-between mb-2">
+                                <h4 div class="d-flex justify-content-start">Thông tin đơn</h4>
+
+                                <div class="d-flex justify-content-end">
+
+                                    @if (Model.MATT != 1)
+                                    {
+                                        <button type="submit" class="btn btn-warning" name="btn" value="Reset">Duyệt lại</button>
+                                    }
+                                    else
+                                    {
+                                        <button type="submit" class="btn btn-success ms-2" name="btn" value="Accept">Đồng ý</button>
+                                        <button type="submit" class="btn btn-danger ms-2" name="btn" value="Denied">Từ chối</button>
+                                    }
 
 
 
-        </div>
-        <div class="Form">
-            <input class="btn btn-success" type="submit" value="Đồng ý">
-            <input class="btn btn-danger" type="submit" value="Từ chối">
-        </div>
-    </div>
+                                </div>
+                            </div>
 
-    @if (Session["Page"] == "SK")
-    {
-        <div style="display:flex">
-            <div class="Description">
-                <p style="font-weight:bold; text-align:center">Mô tả</p>
-                <p>@Html.DisplayFor(model => model.MoTa)</p>
+
+
+                            <!-- Tiêu đề -->
+                            <div class="form-group mt-1">
+                                <label class="form-label">Tiêu đề</label>
+                                <h4>@Html.DisplayFor(model => model.TieuDe)</h4>
+                            </div>
+
+                            <!-- Mã đơn - Ngày làm đơn - Tình trạng -->
+                            <div class="form-group row">
+
+                                <!-- Mã đơn -->
+                                <div class="col">
+                                    <label class="form-label">Mã đơn</label>
+                                    @Html.HiddenFor(model => model.MaDon)
+                                    @Html.EditorFor(model => model.MaDon, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                </div>
+
+                                <!-- Ngày làm đơn -->
+                                <div class="col">
+                                    <label class="form-label">Ngày làm đơn</label>
+                                    @Html.TextBoxFor(model => model.NgayLamDon, new { @type = "date", @class = "form-control ui-datepicker", @Value = @Model.NgayLamDon.ToString("yyyy-MM-dd"), disabled = "disabled" })
+                                </div>
+
+                                <!-- Tình trạng -->
+                                <div class="col">
+                                    <label class="form-label">Tình trạng</label>
+                                    @Html.EditorFor(model => model.TinhTrang.TenTT, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                </div>
+                            </div>
+
+                            <!-- Danh mục & Ngày bắt đầu & Ngày kết thúc -->
+                            <div class="form-group row">
+
+                                <!-- Danh mục -->
+                                <div class="col">
+                                    <label class="form-label">Danh mục</label>
+                                    @Html.EditorFor(model => model.DanhMuc.TenDM, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                </div>
+
+                                <!-- Ngày bắt đầu -->
+                                <div class="col">
+                                    <label class="form-label">Ngày bắt đầu</label>
+                                    @Html.TextBoxFor(model => model.NgayBatDau, new { @type = "date", @class = "form-control ui-datepicker", @Value = @Model.NgayBatDau.ToString("yyyy-MM-dd"), disabled = "disabled" })
+                                </div>
+
+                                <!-- Ngày kết thúc -->
+                                <div class="col">
+                                    <label class="form-label">Ngày kết thúc</label>
+                                    @Html.TextBoxFor(model => model.NgayKetThuc, new { @type = "date", @class = "form-control ui-datepicker", @Value = @Model.NgayKetThuc?.ToString("yyyy-MM-dd"), disabled = "disabled" })
+                                </div>
+
+                            </div>
+
+                            <!-- Người làm đơn -->
+                            <div class="form-group mt-1">
+                                <label class="form-label">Người làm đơn</label>
+                                @Html.EditorFor(model => model.NguoiThue.ThongTinND.HoTen, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                @Html.ValidationMessage("editAddress", new { @class = "text-danger mt-1" })
+                            </div>
+
+                            @if (Model.MATT != 1)
+                            {
+
+                                <div class="form-group row mt-4">
+                                    <h4> Thông tin người duyệt bài</h4>
+
+                                    <!-- Danh mục -->
+                                    <div class="col">
+                                        <label class="form-label">Mã nhân viên</label>
+                                        @Html.EditorFor(model => model.MaNV, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                    </div>
+
+                                    <!-- Ngày bắt đầu -->
+                                    <div class="col">
+                                        <label class="form-label">Người duyệt bài</label>
+                                        @Html.EditorFor(model => model.NhanVien.ThongTinND.HoTen, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                    </div>
+
+                                    <!-- Ngày kết thúc -->
+                                    <div class="col">
+                                        <label class="form-label">Ngày duyệt</label>
+                                        @Html.TextBoxFor(model => model.NgayDuyet, new { @type = "date", @class = "form-control ui-datepicker", @Value = @Model.NgayDuyet?.ToString("yyyy-MM-dd"), disabled = "disabled" })
+                                    </div>
+                                </div>
+                            }
+
+                            @if (Model.MoTa != null)
+                            {
+                                <div class="form-group mt-4">
+                                    <h4>Mô tả</h4>
+                                    <p>@Html.DisplayFor(model => model.MoTa)</p>
+                                </div>
+                            }
+
+                            @Html.ValidationMessage("VerifiedFaield", new { @class = "text-danger mt-1" })
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    }
-</div>
+    </div>
+}
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.bundle.min.js"></script>
+
+@*Hiện thông báo*@
+@Html.Raw(TempData["msg"])

@@ -4,17 +4,17 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="8eae72a8de15449883099f4b6e229c9c" Name="Diagram1">
+      <Diagram DiagramId="417a1443dd854c599c6106a493212625" Name="Diagram1">
         <EntityTypeShape EntityType="DoanHK5Model.ChucVu" Width="1.5" PointX="3.75" PointY="8" IsExpanded="true" />
         <EntityTypeShape EntityType="DoanHK5Model.DanhMuc" Width="1.5" PointX="6" PointY="19.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="DoanHK5Model.DonXinThue" Width="1.5" PointX="5.25" PointY="14.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DoanHK5Model.DonXinThue" Width="1.5" PointX="5.25" PointY="14.875" IsExpanded="true" />
         <EntityTypeShape EntityType="DoanHK5Model.HopDong" Width="1.5" PointX="0.75" PointY="7.625" IsExpanded="true" />
         <EntityTypeShape EntityType="DoanHK5Model.HuyHopDong" Width="1.5" PointX="3" PointY="11.25" IsExpanded="true" />
         <EntityTypeShape EntityType="DoanHK5Model.Luong" Width="1.5" PointX="8.25" PointY="10.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DoanHK5Model.MatBang" Width="1.5" PointX="3" PointY="19.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DoanHK5Model.MatBang" Width="1.5" PointX="3" PointY="19.25" IsExpanded="true" />
         <EntityTypeShape EntityType="DoanHK5Model.NguoiThue" Width="1.5" PointX="6" PointY="22" IsExpanded="true" />
         <EntityTypeShape EntityType="DoanHK5Model.NhanVien" Width="1.5" PointX="6" PointY="9.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DoanHK5Model.SuKienUuDai" Width="1.5" PointX="8.25" PointY="14" IsExpanded="true" />
+        <EntityTypeShape EntityType="DoanHK5Model.SuKienUuDai" Width="1.5" PointX="8.25" PointY="13.875" IsExpanded="true" />
         <EntityTypeShape EntityType="DoanHK5Model.ThongTinND" Width="1.5" PointX="3.75" PointY="3.5" IsExpanded="true" />
         <EntityTypeShape EntityType="DoanHK5Model.ThuChi" Width="1.5" PointX="10.5" PointY="10.375" IsExpanded="true" />
         <EntityTypeShape EntityType="DoanHK5Model.TienThue" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />

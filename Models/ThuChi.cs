@@ -14,6 +14,7 @@ namespace QLMB.Models
     
     public partial class ThuChi
     {
+        public string MaDon { get; set; }
         public System.DateTime ThoiGian { get; set; }
         public string HinhThuc { get; set; }
         public double SoTien { get; set; }

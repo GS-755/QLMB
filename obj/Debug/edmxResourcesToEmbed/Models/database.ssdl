@@ -12,13 +12,14 @@
     <Key>
       <PropertyRef Name="MaDM" />
     </Key>
-    <Property Name="MaDM" Type="char" MaxLength="4" Nullable="false" />
+    <Property Name="MaDM" Type="char" MaxLength="2" Nullable="false" />
     <Property Name="TenDM" Type="nvarchar" MaxLength="50" Nullable="false" />
   </EntityType>
   <EntityType Name="DonXinThue">
     <Key>
-      <PropertyRef Name="ThoiGianXin" />
+      <PropertyRef Name="MaDon" />
     </Key>
+    <Property Name="MaDon" Type="char" MaxLength="6" Nullable="false" />
     <Property Name="ThoiGianXin" Type="datetime" Nullable="false" />
     <Property Name="MucDich" Type="nvarchar" MaxLength="500" Nullable="false" />
     <Property Name="ThoiHan" Type="int" Nullable="false" />
@@ -62,6 +63,7 @@
     <Property Name="DienTich" Type="float" Nullable="false" />
     <Property Name="Khu" Type="smallint" Nullable="false" />
     <Property Name="TienThue" Type="float" Nullable="false" />
+    <Property Name="HinhMB" Type="nvarchar(max)" />
     <Property Name="MATT" Type="smallint" Nullable="false" />
   </EntityType>
   <EntityType Name="NguoiThue">
@@ -84,12 +86,11 @@
   </EntityType>
   <EntityType Name="SuKienUuDai">
     <Key>
-      <PropertyRef Name="NgayLamDon" />
-      <PropertyRef Name="MaDM" />
-      <PropertyRef Name="TieuDe" />
+      <PropertyRef Name="MaDon" />
     </Key>
+    <Property Name="MaDon" Type="char" MaxLength="6" Nullable="false" />
     <Property Name="NgayLamDon" Type="datetime" Nullable="false" />
-    <Property Name="MaDM" Type="char" MaxLength="4" Nullable="false" />
+    <Property Name="MaDM" Type="char" MaxLength="2" Nullable="false" />
     <Property Name="TenDangNhap" Type="char" MaxLength="50" Nullable="false" />
     <Property Name="TieuDe" Type="nvarchar" MaxLength="100" Nullable="false" />
     <Property Name="MoTa" Type="nvarchar" MaxLength="500" />
@@ -114,8 +115,9 @@
   </EntityType>
   <EntityType Name="ThuChi">
     <Key>
-      <PropertyRef Name="ThoiGian" />
+      <PropertyRef Name="MaDon" />
     </Key>
+    <Property Name="MaDon" Type="char" MaxLength="6" Nullable="false" />
     <Property Name="ThoiGian" Type="datetime" Nullable="false" />
     <Property Name="HinhThuc" Type="char" MaxLength="3" Nullable="false" />
     <Property Name="SoTien" Type="float" Nullable="false" />

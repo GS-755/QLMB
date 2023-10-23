@@ -14,6 +14,7 @@ namespace QLMB.Models
     
     public partial class DonXinThue
     {
+        public string MaDon { get; set; }
         public System.DateTime ThoiGianXin { get; set; }
         public string MucDich { get; set; }
         public int ThoiHan { get; set; }

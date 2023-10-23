@@ -10,8 +10,6 @@
 <link rel="stylesheet" href="~/Resources/CSS/Profile.css">
 <script type="text/javascript" href="~/Resources/JavaScript/ProfilePage.css"></script>
 
-<p>@Session["Testing"]</p>
-
 <div class="container light-style flex-grow-1 container-p-y">
 
     <div class="d-flex justify-content-between">
@@ -36,7 +34,7 @@
                             <h5 class="col text-center mt-1">@User.HoTen</h5>
                             <p class="col text-center mt-1">Chức vụ: @Employee.ChucVu.TenCV</p>
 
-                           
+
                         </div>
                     </div>
                 </div>
@@ -54,155 +52,155 @@
                         {
                             @Html.AntiForgeryToken()
 
-                        <div class="card-body">
+                            <div class="card-body">
 
-                            <div class="d-flex justify-content-between mb-2">
-                                <h3 div class="d-flex justify-content-start">Tổng quan</h3>
+                                <div class="d-flex justify-content-between mb-2">
+                                    <h3 div class="d-flex justify-content-start">Tổng quan</h3>
 
-                                <div class="d-flex justify-content-end">
-
-
-                                    @if (Employee.MATT == 5)
-                                    {
-                                        <button type="submit" class="btn btn-warning" name="btn" value="Hired">Tuyển lại</button>
-
-                                    }
-                                    else
-                                    {
-                                        <button type="submit" class="btn btn-primary" name="btn" value="ResetPassword">Cài lại mật khẩu</button>
-                                        <button type="submit" class="btn btn-danger ms-3" name="btn" value="Fired">Sa thải</button>
-                                    }
-                                </div>
-                            </div>
-                                
+                                    <div class="d-flex justify-content-end">
 
 
-                            <!-- Họ và tên & Giới tính -->
-                            <div class="form-group row">
+                                        @if (Employee.MATT == 5)
+                                        {
+                                            <button type="submit" class="btn btn-warning" name="btn" value="Hired">Tuyển lại</button>
 
-                                <!-- Họ và tên -->
-                                <div class="col">
-                                    <label class="form-label">Họ và tên</label>
-                                    @Html.EditorFor(model => model.HoTen, new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessage("editName", new { @class = "text-danger mt-1" })
+                                        }
+                                        else
+                                        {
+                                            <button type="submit" class="btn btn-primary" name="btn" value="ResetPassword">Cài lại mật khẩu</button>
+                                            <button type="submit" class="btn btn-danger ms-3" name="btn" value="Fired">Sa thải</button>
+                                        }
+                                    </div>
                                 </div>
 
-                                <!-- Giới tính -->
-                                <div class="col-3">
-                                    <label for="GioiTinh">Giới tính</label>
 
-                                    <div class="row mt-3">
-                                        <!-- Nam -->
-                                        <div class="col">
-                                            <div class="form-check">
-                                                @if (@Model.GioiTinh.ToUpper() == "NAM")
-                                                {
-                                                    <input class="form-check-input" type="radio" name="GioiTinh" value="NAM" checked>
-                                                }
-                                                else
-                                                {
-                                                    <input class="form-check-input" type="radio" name="GioiTinh" value="NAM">
-                                                }
-                                                <label class="form-check-label" for="GioiTinh">Nam</label>
+
+                                <!-- Họ và tên & Giới tính -->
+                                <div class="form-group row">
+
+                                    <!-- Họ và tên -->
+                                    <div class="col">
+                                        <label class="form-label">Họ và tên</label>
+                                        @Html.EditorFor(model => model.HoTen, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessage("editName", new { @class = "text-danger mt-1" })
+                                    </div>
+
+                                    <!-- Giới tính -->
+                                    <div class="col-3">
+                                        <label for="GioiTinh">Giới tính</label>
+
+                                        <div class="row mt-3">
+                                            <!-- Nam -->
+                                            <div class="col">
+                                                <div class="form-check">
+                                                    @if (@Model.GioiTinh.ToUpper() == "NAM")
+                                                    {
+                                                        <input class="form-check-input" type="radio" name="GioiTinh" value="NAM" checked>
+                                                    }
+                                                    else
+                                                    {
+                                                        <input class="form-check-input" type="radio" name="GioiTinh" value="NAM">
+                                                    }
+                                                    <label class="form-check-label" for="GioiTinh">Nam</label>
+                                                </div>
                                             </div>
-                                        </div>
 
-                                        <!-- Nữ -->
-                                        <div class="col">
-                                            <div class="form-check">
-                                                @if (@Model.GioiTinh.ToUpper() == "NỮ")
-                                                {
-                                                    <input class="form-check-input" type="radio" name="GioiTinh" value="NỮ" checked>
-                                                }
-                                                else
-                                                {
-                                                    <input class="form-check-input" type="radio" name="GioiTinh" value="NỮ">
-                                                }
-                                                <label class="form-check-label" for="GioiTinh">Nữ</label>
+                                            <!-- Nữ -->
+                                            <div class="col">
+                                                <div class="form-check">
+                                                    @if (@Model.GioiTinh.ToUpper() == "NỮ")
+                                                    {
+                                                        <input class="form-check-input" type="radio" name="GioiTinh" value="NỮ" checked>
+                                                    }
+                                                    else
+                                                    {
+                                                        <input class="form-check-input" type="radio" name="GioiTinh" value="NỮ">
+                                                    }
+                                                    <label class="form-check-label" for="GioiTinh">Nữ</label>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            <!-- Mã nhân viên & Chức vụ -->
-                            <div class="form-group row mt-1">
-                                <!-- Mã nhân viên -->
-                                <div class="col">
-                                    <label class="form-label disabled">Mã nhân viên</label>
-                                    <input type="text" value="@Employee.MaNV" class="form-control" disabled />
+                                <!-- Mã nhân viên & Chức vụ -->
+                                <div class="form-group row mt-1">
+                                    <!-- Mã nhân viên -->
+                                    <div class="col">
+                                        <label class="form-label disabled">Mã nhân viên</label>
+                                        <input type="text" value="@Employee.MaNV" class="form-control" disabled />
+                                    </div>
+
+                                    <!-- Chức vụ -->
+                                    <div class="col">
+                                        <label class="form-label">Chức vụ</label>
+                                        @{Html.RenderAction("SelectRole", "HumanResource", new { CMND = Model.CMND });}
+                                        @Html.ValidationMessage("editRole", new { @class = "text-danger mt-1" })
+                                        @*<input type="text" value="@(((QLMB.Models.NhanVien)Session["EmployeeInfo"]).ChucVu.TenCV)" class="form-control" />*@
+                                    </div>
+
+                                    <!-- Tình trạng -->
+                                    <div class="col">
+                                        <label class="form-label">Tình trạng</label>
+                                        <input type="text" value="@Employee.TinhTrang.TenTT" class="form-control" disabled />
+                                        @*@Html.EditorFor(model => model.TinhTrang.TenTT, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })*@
+                                        @*<input type="text" value="@(((QLMB.Models.NhanVien)Session["EmployeeInfo"]).ChucVu.TenCV)" class="form-control" />*@
+                                    </div>
                                 </div>
 
-                                <!-- Chức vụ -->
-                                <div class="col">
-                                    <label class="form-label">Chức vụ</label>
-                                    @{Html.RenderAction("SelectRole", "HumanResource", new { CMND = Model.CMND });}
-                                    @Html.ValidationMessage("editRole", new { @class = "text-danger mt-1" })
-                                    @*<input type="text" value="@(((QLMB.Models.NhanVien)Session["EmployeeInfo"]).ChucVu.TenCV)" class="form-control" />*@
+
+                                <!-- Ngày sinh -->
+                                <div class="form-group mt-1">
+                                    <label class="form-label">Ngày sinh</label>
+
+                                    @Html.TextBoxFor(model => model.NgaySinh, new { @type = "date", @class = "form-control ui-datepicker", @Value = @Model.NgaySinh.ToString("yyyy-MM-dd") })
+                                    @Html.ValidationMessage("editNgaySinh", new { @class = "text-danger mt-1" })
                                 </div>
 
-                                <!-- Tình trạng -->
-                                <div class="col">
-                                    <label class="form-label">Tình trạng</label>
-                                    <input type="text" value="@Employee.TinhTrang.TenTT" class="form-control" disabled />
-                                    @*@Html.EditorFor(model => model.TinhTrang.TenTT, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })*@
-                                    @*<input type="text" value="@(((QLMB.Models.NhanVien)Session["EmployeeInfo"]).ChucVu.TenCV)" class="form-control" />*@
-                                </div>
-                            </div>
+                                <!-- Thông tin CMND/CCCD -->
+                                <div class="form-group row mt-1">
 
+                                    <!-- Số CMND/CCCD -->
+                                    <div class="col">
+                                        <label for="CMND" class="form-label">CMND/CCCD</label>
+                                        @Html.EditorFor(model => model.CMND, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessage("editCMND", new { @class = "text-danger mt-1" })
+                                    </div>
 
-                            <!-- Ngày sinh -->
-                            <div class="form-group mt-1">
-                                <label class="form-label">Ngày sinh</label>
+                                    <!-- Ngày cấp -->
+                                    <div class="col">
+                                        <label class="form-label">Ngày cấp</label>
+                                        @Html.TextBoxFor(model => model.NgayCap, new { @type = "date", @class = "form-control ui-datepicker", @Value = @Model.NgayCap.ToString("yyyy-MM-dd") })
+                                        @Html.ValidationMessage("editNgayCap", new { @class = "text-danger mt-1" })
+                                    </div>
 
-                                @Html.TextBoxFor(model => model.NgaySinh, new { @type = "date", @class = "form-control ui-datepicker", @Value = @Model.NgaySinh.ToString("yyyy-MM-dd") })
-                                @Html.ValidationMessage("editNgaySinh", new { @class = "text-danger mt-1" })
-                            </div>
-
-                            <!-- Thông tin CMND/CCCD -->
-                            <div class="form-group row mt-1">
-
-                                <!-- Số CMND/CCCD -->
-                                <div class="col">
-                                    <label for="CMND" class="form-label">CMND/CCCD</label>
-                                    @Html.EditorFor(model => model.CMND, new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessage("editCMND", new { @class = "text-danger mt-1" })
                                 </div>
 
-                                <!-- Ngày cấp -->
-                                <div class="col">
-                                    <label class="form-label">Ngày cấp</label>
-                                    @Html.TextBoxFor(model => model.NgayCap, new { @type = "date", @class = "form-control ui-datepicker", @Value = @Model.NgayCap.ToString("yyyy-MM-dd") })
-                                    @Html.ValidationMessage("editNgayCap", new { @class = "text-danger mt-1" })
+
+
+                                <!-- Địa chỉ -->
+                                <div class="form-group mt-1">
+                                    <label class="form-label">Địa chỉ</label>
+                                    @Html.EditorFor(model => model.DiaChi, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessage("editAddress", new { @class = "text-danger mt-1" })
                                 </div>
 
+
+                                <!-- Upload hình ( Tạm ẩn )-->
+                                <!--<div class="form-group row mt-2">
+
+                                <label class="col-2"> Hình đại diện </label>
+                                <label class="btn btn-outline-primary col-3">
+                                Tải hình mới
+                                <input type="file" class="account-settings-fileinput">
+
+                                </label> &nbsp;-->
+                                <!-- button type="button" class="btn btn-default md-btn-flat">Reset</!--button -->
+                                <!--<p class="text-light small mt-1">Cho phép JPG, GIF và PNG. Dung lượng tối đa là 800K</p>
+                                </div>-->
+
+                                @Html.ValidationMessage("editStatus", new { @class = "text-danger mt-1" })
                             </div>
-
-
-
-                            <!-- Địa chỉ -->
-                            <div class="form-group mt-1">
-                                <label class="form-label">Địa chỉ</label>
-                                @Html.EditorFor(model => model.DiaChi, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessage("editAddress", new { @class = "text-danger mt-1" })
-                            </div>
-
-
-                            <!-- Upload hình ( Tạm ẩn )-->
-                            <!--<div class="form-group row mt-2">
-
-    <label class="col-2"> Hình đại diện </label>
-    <label class="btn btn-outline-primary col-3">
-    Tải hình mới
-    <input type="file" class="account-settings-fileinput">
-
-    </label> &nbsp;-->
-                            <!-- button type="button" class="btn btn-default md-btn-flat">Reset</!--button -->
-                            <!--<p class="text-light small mt-1">Cho phép JPG, GIF và PNG. Dung lượng tối đa là 800K</p>
-    </div>-->
-
-                            @Html.ValidationMessage("editStatus", new { @class = "text-danger mt-1" })
-                        </div>
 
                             <div class="d-flex flex-row-reverse mt-1">
                                 <button type="submit" class="btn btn-success">Lưu</button>&nbsp;

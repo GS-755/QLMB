@@ -17,13 +17,14 @@
           <Key>
             <PropertyRef Name="MaDM" />
           </Key>
-          <Property Name="MaDM" Type="char" MaxLength="4" Nullable="false" />
+          <Property Name="MaDM" Type="char" MaxLength="2" Nullable="false" />
           <Property Name="TenDM" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="DonXinThue">
           <Key>
-            <PropertyRef Name="ThoiGianXin" />
+            <PropertyRef Name="MaDon" />
           </Key>
+          <Property Name="MaDon" Type="char" MaxLength="6" Nullable="false" />
           <Property Name="ThoiGianXin" Type="datetime" Nullable="false" />
           <Property Name="MucDich" Type="nvarchar" MaxLength="500" Nullable="false" />
           <Property Name="ThoiHan" Type="int" Nullable="false" />
@@ -67,6 +68,7 @@
           <Property Name="DienTich" Type="float" Nullable="false" />
           <Property Name="Khu" Type="smallint" Nullable="false" />
           <Property Name="TienThue" Type="float" Nullable="false" />
+          <Property Name="HinhMB" Type="nvarchar(max)" />
           <Property Name="MATT" Type="smallint" Nullable="false" />
         </EntityType>
         <EntityType Name="NguoiThue">
@@ -89,12 +91,11 @@
         </EntityType>
         <EntityType Name="SuKienUuDai">
           <Key>
-            <PropertyRef Name="NgayLamDon" />
-            <PropertyRef Name="MaDM" />
-            <PropertyRef Name="TieuDe" />
+            <PropertyRef Name="MaDon" />
           </Key>
+          <Property Name="MaDon" Type="char" MaxLength="6" Nullable="false" />
           <Property Name="NgayLamDon" Type="datetime" Nullable="false" />
-          <Property Name="MaDM" Type="char" MaxLength="4" Nullable="false" />
+          <Property Name="MaDM" Type="char" MaxLength="2" Nullable="false" />
           <Property Name="TenDangNhap" Type="char" MaxLength="50" Nullable="false" />
           <Property Name="TieuDe" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="MoTa" Type="nvarchar" MaxLength="500" />
@@ -119,8 +120,9 @@
         </EntityType>
         <EntityType Name="ThuChi">
           <Key>
-            <PropertyRef Name="ThoiGian" />
+            <PropertyRef Name="MaDon" />
           </Key>
+          <Property Name="MaDon" Type="char" MaxLength="6" Nullable="false" />
           <Property Name="ThoiGian" Type="datetime" Nullable="false" />
           <Property Name="HinhThuc" Type="char" MaxLength="3" Nullable="false" />
           <Property Name="SoTien" Type="float" Nullable="false" />
@@ -548,14 +550,15 @@
           <Key>
             <PropertyRef Name="MaDM" />
           </Key>
-          <Property Name="MaDM" Type="String" MaxLength="4" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="MaDM" Type="String" MaxLength="2" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="TenDM" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="SuKienUuDais" Relationship="Self.FK__SuKienUuDa__MaDM__59FA5E80" FromRole="DanhMuc" ToRole="SuKienUuDai" />
         </EntityType>
         <EntityType Name="DonXinThue">
           <Key>
-            <PropertyRef Name="ThoiGianXin" />
+            <PropertyRef Name="MaDon" />
           </Key>
+          <Property Name="MaDon" Type="String" MaxLength="6" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="ThoiGianXin" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="MucDich" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="ThoiHan" Type="Int32" Nullable="false" />
@@ -612,6 +615,7 @@
           <Property Name="DienTich" Type="Double" Nullable="false" />
           <Property Name="Khu" Type="Int16" Nullable="false" />
           <Property Name="TienThue" Type="Double" Nullable="false" />
+          <Property Name="HinhMB" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="MATT" Type="Int16" Nullable="false" />
           <NavigationProperty Name="DonXinThues" Relationship="Self.FK__DonXinThue__MaMB__4F7CD00D" FromRole="MatBang" ToRole="DonXinThue" />
           <NavigationProperty Name="TinhTrang" Relationship="Self.FK__MatBang__MATT__3D5E1FD2" FromRole="MatBang" ToRole="TinhTrang" />
@@ -647,12 +651,11 @@
         </EntityType>
         <EntityType Name="SuKienUuDai">
           <Key>
-            <PropertyRef Name="NgayLamDon" />
-            <PropertyRef Name="MaDM" />
-            <PropertyRef Name="TieuDe" />
+            <PropertyRef Name="MaDon" />
           </Key>
+          <Property Name="MaDon" Type="String" MaxLength="6" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="NgayLamDon" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="MaDM" Type="String" MaxLength="4" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="MaDM" Type="String" MaxLength="2" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="TenDangNhap" Type="String" MaxLength="50" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="TieuDe" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="MoTa" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
@@ -683,8 +686,9 @@
         </EntityType>
         <EntityType Name="ThuChi">
           <Key>
-            <PropertyRef Name="ThoiGian" />
+            <PropertyRef Name="MaDon" />
           </Key>
+          <Property Name="MaDon" Type="String" MaxLength="6" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="ThoiGian" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="HinhThuc" Type="String" MaxLength="3" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="SoTien" Type="Double" Nullable="false" />
@@ -1130,6 +1134,7 @@
           <EntitySetMapping Name="DonXinThues">
             <EntityTypeMapping TypeName="DoanHK5Model.DonXinThue">
               <MappingFragment StoreEntitySet="DonXinThue">
+                <ScalarProperty Name="MaDon" ColumnName="MaDon" />
                 <ScalarProperty Name="ThoiGianXin" ColumnName="ThoiGianXin" />
                 <ScalarProperty Name="MucDich" ColumnName="MucDich" />
                 <ScalarProperty Name="ThoiHan" ColumnName="ThoiHan" />
@@ -1177,6 +1182,7 @@
                 <ScalarProperty Name="DienTich" ColumnName="DienTich" />
                 <ScalarProperty Name="Khu" ColumnName="Khu" />
                 <ScalarProperty Name="TienThue" ColumnName="TienThue" />
+                <ScalarProperty Name="HinhMB" ColumnName="HinhMB" />
                 <ScalarProperty Name="MATT" ColumnName="MATT" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1204,6 +1210,7 @@
           <EntitySetMapping Name="SuKienUuDais">
             <EntityTypeMapping TypeName="DoanHK5Model.SuKienUuDai">
               <MappingFragment StoreEntitySet="SuKienUuDai">
+                <ScalarProperty Name="MaDon" ColumnName="MaDon" />
                 <ScalarProperty Name="NgayLamDon" ColumnName="NgayLamDon" />
                 <ScalarProperty Name="MaDM" ColumnName="MaDM" />
                 <ScalarProperty Name="TenDangNhap" ColumnName="TenDangNhap" />
@@ -1234,6 +1241,7 @@
           <EntitySetMapping Name="ThuChis">
             <EntityTypeMapping TypeName="DoanHK5Model.ThuChi">
               <MappingFragment StoreEntitySet="ThuChi">
+                <ScalarProperty Name="MaDon" ColumnName="MaDon" />
                 <ScalarProperty Name="ThoiGian" ColumnName="ThoiGian" />
                 <ScalarProperty Name="HinhThuc" ColumnName="HinhThuc" />
                 <ScalarProperty Name="SoTien" ColumnName="SoTien" />

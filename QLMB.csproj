@@ -242,6 +242,7 @@
     <Content Include="Resources\CSS\MultipleItem_Carousel.css" />
     <Content Include="Resources\CSS\Profile.css" />
     <Content Include="Resources\CSS\tableInfo.css" />
+    <Content Include="Resources\CSS\tesst.css" />
     <Content Include="Resources\JavaScript\reload.js" />
     <Content Include="Resources\JavaScript\managerNavBar.js" />
     <Content Include="Resources\JavaScript\multipleItemCarousel.js" />
@@ -320,6 +321,7 @@
     <Content Include="Views\Account\General.cshtml" />
     <Content Include="Views\Account\ChangePassword.cshtml" />
     <Content Include="Views\HumanResource\SelectRole.cshtml" />
+    <Content Include="Views\Event\Test.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using System;
+using System.Data.Entity;
 using System.Linq;
 using static System.Data.Entity.Infrastructure.Design.Executor;
 
@@ -7,6 +8,7 @@ namespace QLMB.Models.Process
     public class Edit
     {
         private static string DefaultPassword = "123456";
+        //Nhân sự
         public static (bool,string) EmployeeInfo(database db,ThongTinND info,NhanVien employee, ListChucVu roll, string currentCMND)
         {
             try
@@ -105,7 +107,7 @@ namespace QLMB.Models.Process
                 db.Entry(info).State = EntityState.Modified;
                 db.SaveChanges();
 
-                return (true,null);
+                return (true, "Đổi thông tin thành công");
             }
             catch { return (false, "* Đổi thông tin thất bại, vui lòng thử lại sau"); }
         }
@@ -123,8 +125,38 @@ namespace QLMB.Models.Process
             catch { return (false, "* Đổi mật khẩu thất bại, vui lòng thử lại sau"); }
         }
 
+        //Sự kiện - Ưu đãi
+        public static (bool, string, SuKienUuDai) EventVerified(database db, string MaDon, string NguoiDuyet, string type)
+        {
+            SuKienUuDai info = db.SuKienUuDais.Where(s => s.MaDon.Trim() == MaDon.Trim()).FirstOrDefault();
+            
+            try
+            {
+                switch (type)
+                {
+                    case "Reset": info.MATT = 1;
+                        break;
+                    case "Accept": info.MATT = 2;
+                        break;
+                    case "Denied": info.MATT = 3;
+                        break;
+                }
 
+                info.MaNV = NguoiDuyet.Trim();
+                info.NgayDuyet = DateTime.Now;
 
+                db.Entry(info).State = EntityState.Modified;
+                db.SaveChanges();
+                if(info.MATT == 1)
+                    return (true, "Cài lại thành công", info);
+
+                return (true, "Duyệt bài thành công", info);
+            }
+            catch { return (false, "* Duyệt bài thất bại ! Vui lòng thử lại sau", info); }
+          
+        }
+
+        //Khách hàng
         public static (bool, string) CustomerPassword(database db, NguoiThue info)
         {
             try
