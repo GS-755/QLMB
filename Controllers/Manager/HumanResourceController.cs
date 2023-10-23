@@ -103,8 +103,8 @@ namespace QLMB.Controllers.Manager
 
             if (checkEdit(info, roll, currentCMND))
             {
-                NhanVien User = (QLMB.Models.NhanVien)Session["EmployeeInfo"];
-                NhanVien Current = (QLMB.Models.NhanVien)Session["HumanResourceEmployeeTemp"];
+                NhanVien User = (NhanVien)Session["EmployeeInfo"];
+                NhanVien Current = (NhanVien)Session["HumanResourceEmployeeTemp"];
 
                 //Xử lý việc tự edit cho chính mình
                 if (User.MaChucVu.Trim() == Current.MaChucVu.Trim() && Current.MaChucVu.Trim() == "NS")
@@ -261,8 +261,8 @@ namespace QLMB.Controllers.Manager
         //Kiểm tra thông tin edit
         private bool checkEdit(ThongTinND info, ListChucVu roll, string currentCMND)
         {
-            NhanVien User = (QLMB.Models.NhanVien)Session["EmployeeInfo"];
-            NhanVien Current = (QLMB.Models.NhanVien)Session["HumanResourceEmployeeTemp"];
+            NhanVien User = (NhanVien)Session["EmployeeInfo"];
+            NhanVien Current = (NhanVien)Session["HumanResourceEmployeeTemp"];
 
             (bool, string) HoTen = Validation.HoTen(info.HoTen);
             (bool, string) NgaySinh = Validation.Birthday_25(info.NgaySinh);

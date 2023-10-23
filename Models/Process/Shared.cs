@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core.Objects;
 using System.Linq;
 using System.Web;
 
@@ -25,5 +26,39 @@ namespace QLMB.Models.Process
 
             return STT;
         }
+
+        public static List<SuKienUuDai> listSKUD(database db, string NameSearch, string type)
+        {
+
+            List<SuKienUuDai> data = db.SuKienUuDais.Where(s => s.MaDM.Trim() == type.ToUpper()).ToList();
+
+            if(NameSearch == null || NameSearch == "")
+                return data;
+
+            NameSearch = NameSearch.ToUpper();
+
+            data = data.Where(s => s.MaDon.Contains(NameSearch) ||
+                                   s.NgayLamDon.ToString().Contains(NameSearch) ||
+
+                                   s.NguoiThue.ThongTinND.HoTen.ToUpper().Contains(NameSearch) ||
+                                   s.TenDangNhap.ToUpper().Contains(NameSearch) ||
+
+                                   s.TieuDe.ToUpper().Contains(NameSearch) ||
+
+                                   s.NgayBatDau.ToString().Contains(NameSearch) ||
+                                   s.NgayKetThuc.ToString().Contains(NameSearch) ||
+
+
+                                   
+                                   s.TieuDe.ToUpper().Contains(NameSearch.ToUpper()) ||
+
+
+                                   (s.MaNV != null && s.MaNV.ToUpper().Contains(NameSearch)) ||
+                                   (s.MaNV != null && s.NhanVien.ThongTinND.HoTen.ToUpper().Contains(NameSearch)) ||
+                                   (s.NgayDuyet != null && s.NgayDuyet.ToString().Contains(NameSearch)) ||
+
+                                   s.TinhTrang.TenTT.ToUpper().Contains(NameSearch)).ToList();
+            return data;
+        } 
     }
 }

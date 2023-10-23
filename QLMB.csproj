@@ -320,6 +320,7 @@
     <Content Include="Views\Account\General.cshtml" />
     <Content Include="Views\Account\ChangePassword.cshtml" />
     <Content Include="Views\HumanResource\SelectRole.cshtml" />
+    <Content Include="Views\Event\Test.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

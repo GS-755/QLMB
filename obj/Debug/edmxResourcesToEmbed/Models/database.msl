@@ -21,6 +21,7 @@
     <EntitySetMapping Name="DonXinThues">
       <EntityTypeMapping TypeName="DoanHK5Model.DonXinThue">
         <MappingFragment StoreEntitySet="DonXinThue">
+          <ScalarProperty Name="MaDon" ColumnName="MaDon" />
           <ScalarProperty Name="ThoiGianXin" ColumnName="ThoiGianXin" />
           <ScalarProperty Name="MucDich" ColumnName="MucDich" />
           <ScalarProperty Name="ThoiHan" ColumnName="ThoiHan" />
@@ -68,6 +69,7 @@
           <ScalarProperty Name="DienTich" ColumnName="DienTich" />
           <ScalarProperty Name="Khu" ColumnName="Khu" />
           <ScalarProperty Name="TienThue" ColumnName="TienThue" />
+          <ScalarProperty Name="HinhMB" ColumnName="HinhMB" />
           <ScalarProperty Name="MATT" ColumnName="MATT" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -95,6 +97,7 @@
     <EntitySetMapping Name="SuKienUuDais">
       <EntityTypeMapping TypeName="DoanHK5Model.SuKienUuDai">
         <MappingFragment StoreEntitySet="SuKienUuDai">
+          <ScalarProperty Name="MaDon" ColumnName="MaDon" />
           <ScalarProperty Name="NgayLamDon" ColumnName="NgayLamDon" />
           <ScalarProperty Name="MaDM" ColumnName="MaDM" />
           <ScalarProperty Name="TenDangNhap" ColumnName="TenDangNhap" />
@@ -125,6 +128,7 @@
     <EntitySetMapping Name="ThuChis">
       <EntityTypeMapping TypeName="DoanHK5Model.ThuChi">
         <MappingFragment StoreEntitySet="ThuChi">
+          <ScalarProperty Name="MaDon" ColumnName="MaDon" />
           <ScalarProperty Name="ThoiGian" ColumnName="ThoiGian" />
           <ScalarProperty Name="HinhThuc" ColumnName="HinhThuc" />
           <ScalarProperty Name="SoTien" ColumnName="SoTien" />

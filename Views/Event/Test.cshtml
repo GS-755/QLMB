@@ -1,0 +1,89 @@
+﻿@model IEnumerable<QLMB.Models.SuKienUuDai>
+
+@{
+    ViewBag.Title = "Test";
+    Layout = "~/Views/Shared/_Manager.cshtml";
+}
+
+<h2>Test</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<link rel="stylesheet" href="~/Resources/CSS/tesst.css" />
+
+<div class="view">
+    <div class="wrapper">
+        <table class="table">
+            <table>
+                <tr class="sticky-col">
+                    <th>
+                        @Html.DisplayNameFor(model => model.MoTa)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.HinhBia)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.NgayBatDau)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.NgayKetThuc)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.NgayDuyet)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.DanhMuc.TenDM)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.NguoiThue.MatKhau)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.NhanVien.MatKhau)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.TinhTrang.TenTT)
+                    </th>
+                    <th></th>
+                </tr>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.MoTa)
+                        </td>
+                        <td align="center" style="vertical-align:middle; width: 100px"><img src="@Url.Content(item.HinhBia)" class="img"  /></td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NgayBatDau)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NgayKetThuc)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NgayDuyet)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DanhMuc.TenDM)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NguoiThue.MatKhau)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NhanVien.MatKhau)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TinhTrang.TenTT)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                        </td>
+                    </tr>
+                }
+
+            </table>
+        </table>
+    </div>
+</div>

@@ -25,6 +25,7 @@ namespace QLMB.Models
         public double DienTich { get; set; }
         public short Khu { get; set; }
         public double TienThue { get; set; }
+        public string HinhMB { get; set; }
         public short MATT { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

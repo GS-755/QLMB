@@ -14,12 +14,13 @@
 }
 
 .table-scroll {
-    position: relative;
+    position: relative; 
     width: 100%;
     z-index: 1;
     margin: auto;
+    margin-left: 0; 
     overflow:auto;
-    height: 600px;
+    max-height: 700px;
 }
 
     .table-scroll table {
@@ -87,6 +88,6 @@ tfoot th:first-child {
 
 .img {
     width: 100px;
-    height: 100%;
+    height: 100px;
     object-fit: scale-down;
 }

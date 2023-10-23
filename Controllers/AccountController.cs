@@ -148,8 +148,7 @@ namespace QLMB.Controllers
                     else
                         Session["AccountName"] = name[name.Length - 2] + " " + name[name.Length - 1];
 
-
-                    TempData["msg"] = "<script>alert('Đổi thông tin thành công');</script>";
+                    TempData["msg"] = $"<script>alert('{saveProfile.Item2}');</script>";
                 }
                 else
                     ModelState.AddModelError("ProfileFaield", saveProfile.Item2);

@@ -5,6 +5,8 @@ using System.Linq;
 using System.Web.Mvc;
 using System.Collections.Generic;
 using System.Web.UI.WebControls;
+using System.Data.Entity;
+using QLMB.Models.Process;
 
 namespace QLMB.Controllers.Manager
 {
@@ -20,32 +22,20 @@ namespace QLMB.Controllers.Manager
                 //Kiểm tra hợp lệ
                 if (checkRole())
                 {
-                    List<SuKienUuDai> data = db.SuKienUuDais.Where(s => s.MaDM.Trim() == "SK").ToList();
+                    List<SuKienUuDai> data = Shared.listSKUD(db, NameSearch, "SK");
 
-                    //Xử lý tìm kiếm
-                    if (NameSearch != null)
-                    {
-                        data = data.Where(s => s.NgayLamDon.ToString().Contains(NameSearch) ||
-                                               s.NgayBatDau.ToString().Contains(NameSearch) ||
-                                               s.NgayKetThuc.ToString().Contains(NameSearch) ||
-                                               s.NguoiThue.ThongTinND.HoTen.ToUpper().Contains(NameSearch.ToUpper()) ||
-                                               s.TieuDe.ToUpper().Contains(NameSearch.ToUpper()) ||
-                                               s.TinhTrang.TenTT.ToUpper().Contains(NameSearch.ToUpper())).ToList();
-                    }
                     //Dùng để xử lý về lại trang trước đó
                     Session["Page"] = "EventMain";
+                    Session["EventLocal"] = "EventMain";
+                    Session.Remove("EventTemp");
                     return View(data);
                 }
-
                 //Không thoả --> Về trang xử lý chuyển trang
                 return RedirectToAction("Manager", "Account");
             }
 
             //Lỗi xử lý --> Skill Issue :))
-            catch
-            {
-                return RedirectToAction("Index", "SkillIssue");
-            }
+            catch { return RedirectToAction("Index", "SkillIssue"); }
         }
 
         public ActionResult SaleMain(string NameSearch)
@@ -55,21 +45,12 @@ namespace QLMB.Controllers.Manager
                 //Kiểm tra hợp lệ
                 if (checkRole())
                 {
-                    List<SuKienUuDai> data = db.SuKienUuDais.
-                                       Where(s => s.MaDM.Trim() == "UD").ToList();
-
-                    //Xử lý tìm kiếm
-                    if (NameSearch != null)
-                    {
-                        data = data.Where(s => s.NgayLamDon.ToString().Contains(NameSearch) ||
-                                               s.NgayBatDau.ToString().Contains(NameSearch) ||
-                                               s.NgayKetThuc.ToString().Contains(NameSearch) ||
-                                               s.NguoiThue.ThongTinND.HoTen.ToUpper().Contains(NameSearch.ToUpper()) ||
-                                               s.TieuDe.ToUpper().Contains(NameSearch.ToUpper()) ||
-                                               s.TinhTrang.TenTT.ToUpper().Contains(NameSearch.ToUpper())).ToList();
-                    }
+                    List<SuKienUuDai> data = Shared.listSKUD(db, NameSearch, "UD");
+                    
                     //Dùng để xử lý về lại trang trước đó
                     Session["Page"] = "SaleMain";
+                    Session["EventLocal"] = "SaleMain";
+                    Session.Remove("EventTemp");
                     return View(data);
                 }
 
@@ -78,54 +59,56 @@ namespace QLMB.Controllers.Manager
             }
 
             //Lỗi xử lý --> Skill Issue :))
-            catch
-            {
-                return RedirectToAction("Index", "SkillIssue");
-            }
+            catch { return RedirectToAction("Index", "SkillIssue"); }
         }
 
-        public ActionResult Detail(DateTime NgayLamDon, string NguoiLamDon, string tieuDe)
+        public ActionResult Detail(string MaDon)
         {
             try
             {
                 //Kiểm tra hợp lệ
-                if (checkRole())
+                if (checkRole() || Session["Page"] != null)
                 {
-                    if (Session["Page"] == null)
-                        return RedirectToAction("EventMain");
+                    SuKienUuDai info = new SuKienUuDai();
 
-                    SuKienUuDai info;
-
-                    if (NgayLamDon == null && NgayLamDon == null && tieuDe == null && Session["EventTemp"] != null)
-                    {
+                    if ((MaDon == null || MaDon == "") && Session["EventTemp"] != null)
                         info = (SuKienUuDai)Session["EventTemp"];
-                    }
+
                     else
                     {
-                        //EntityFunctions.TruncateTime([DateTime]) để lấy DateTime vì LingQ không hỗ trợ
-                        info = db.SuKienUuDais.Where(
-                                     s => EntityFunctions.TruncateTime(s.NgayLamDon) == EntityFunctions.TruncateTime(NgayLamDon)
-                                  && s.NguoiThue.ThongTinND.HoTen == NguoiLamDon
-                                  && s.TieuDe == tieuDe
-                                  ).FirstOrDefault();
-
+                        info = db.SuKienUuDais.Where(s => s.MaDon == MaDon).FirstOrDefault();
                         Session["EventTemp"] = info;
                     }
+
                     //Dùng để xử lý về lại trang trước đó
                     Session["Page"] = "EventDetail";
                     return View(info);
                 }
-
                 //Không thoả --> Về trang xử lý chuyển trang
                 return RedirectToAction("Manager", "Account");
             }
 
             //Lỗi xử lý --> Skill Issue :))
-            catch
-            {
-                return RedirectToAction("Index", "SkillIssue");
-            }
+            catch { return RedirectToAction("Index", "SkillIssue"); }
         }
+
+        [HttpPost]
+        public ActionResult Detail(SuKienUuDai info, string btn)
+        {
+            string MaNV = ((NhanVien)Session["EmployeeInfo"]).MaNV;
+            (bool, string, SuKienUuDai) saveVerified = Edit.EventVerified(db, info.MaDon, MaNV, btn);
+            if (saveVerified.Item1)
+            {
+                TempData["msg"] = $"<script>alert('{saveVerified.Item2}');</script>";
+                return RedirectToAction("Detail", "Event", new { MaDon = info.MaDon });
+            }
+                
+            ModelState.AddModelError("VerifiedFaield", saveVerified.Item2);
+            return View(saveVerified.Item3);
+
+            
+        }
+
 
         //Kiểm tra hợp lệ
         private bool checkRole()
@@ -140,5 +123,21 @@ namespace QLMB.Controllers.Manager
 
             return false;
         }
+        public ActionResult returnLocal()
+        {
+            if(Session["EventLocal"] != null)
+            {
+                if (Session["EventLocal"].ToString().Trim() == "SaleMain")
+                    return Redirect("SaleMain");
+            }
+            return Redirect("EventMain");
+        }
     }
 }
+
+//EntityFunctions.TruncateTime([DateTime]) để lấy DateTime vì LingQ không hỗ trợ
+//info = db.SuKienUuDais.Where(s => 
+//             s.MaDM.Trim() == DanhMuc.Trim() &&
+//             EntityFunctions.TruncateTime(s.NgayLamDon) == EntityFunctions.TruncateTime(NgayLamDon) &&
+//             s.TenDangNhap.Trim() == NguoiLamDon.Trim() &&
+//             s.TieuDe.Trim() == TieuDe.Trim()).FirstOrDefault();

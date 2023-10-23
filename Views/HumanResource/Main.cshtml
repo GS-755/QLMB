@@ -8,29 +8,36 @@
 <h2>Quản lý nhân sự</h2>
 @using (Html.BeginForm("Main", "HumanResource", FormMethod.Get))
 {
-    <div class="row mb-2">
-        <div class="input-group">
-            <div class="form-outline" style="margin-right: 5px">
-                <input type="text" class="form-control border border-secondary" placeholder="Tìm kiếm" name="NameSearch" />
-            </div>
-            <div>
-                <button class="btn btn-primary" type="submit">
-                    <i class='bx bx-search'></i>
-                </button>
+    <div class="d-flex justify-content-between mb-3">
+        <div class="row">
+            <div class="input-group">
+                <div class="form-outline" style="margin-right: 5px">
+                    <input type="text" class="form-control border border-secondary" placeholder="Tìm kiếm" name="NameSearch" />
+                </div>
+                <div>
+                    <button class="btn btn-primary" type="submit">
+                        <i class='bx bx-search'></i>
+                    </button>
+                </div>
             </div>
         </div>
+
+        <div class="d-flex justify-content-end">
+            @Html.ActionLink("Thêm nhân viên", "Register", "HumanResource", null, new { @class = "btn btn-success"})
+        </div>
+
     </div>
+
     <div>
-        @Html.ActionLink("Thêm nhân viên", "Register", "HumanResource", null, new { @class = "btn btn-success mt-3 mb-3" })
         <div id="table-scroll" class="table-scroll">
-            <table id="main-table" class="main-table">
+            <table id="main-table" class="main-table" style="width: 100%">
                 <thead>
-                    <tr>
-                        <th scope="col">Mã nhân viên</th>
-                        <th scope="col">Chức vụ</th>
-                        <th scope="col">Họ tên</th>
-                        <th scope="col">Tình trạng</th>
-                        <th scope="col"></th>
+                    <tr style="text-align: center">
+                        <th>Mã nhân viên</th>
+                        <th>Chức vụ</th>
+                        <th>Họ tên</th>
+                        <th>Tình trạng</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -39,13 +46,11 @@
                         foreach (var item in Model)
                         {
                             <tr>
-                                <td style="width:90px">
-                                    @Html.DisplayFor(modelItem => item.MaNV)
-                                </td>
-                                <td style="width:90px">@Html.DisplayFor(modelItem => item.ChucVu.TenCV)</td>
-                                <td style="width:100px">@Html.DisplayFor(modelItem => item.ThongTinND.HoTen)</td>
-                                <td style="width:80px">@Html.DisplayFor(modelItem => item.TinhTrang.TenTT)</td>
-                                <td style="width:100px">
+                                <td style="width: 2.5%">@Html.DisplayFor(modelItem => item.MaNV)</td>
+                                <td style="width: 4%">@Html.DisplayFor(modelItem => item.ChucVu.TenCV)</td>
+                                <td style="width: 10%">@Html.DisplayFor(modelItem => item.ThongTinND.HoTen)</td>
+                                <td style="width: 3%">@Html.DisplayFor(modelItem => item.TinhTrang.TenTT)</td>
+                                <td style="width: 10%">
                                     @*@Html.ActionLink("Chỉnh sửa", "ProductEdit", new { id = item.IDProduct }) |*@
                                     @Html.ActionLink("Chi tiết", "Detail", new { CMND = item.CMND }, new { @class = "btn btn-outline-primary" })
                                 </td>
