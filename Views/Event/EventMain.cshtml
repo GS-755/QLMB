@@ -12,69 +12,66 @@
 @using (Html.BeginForm("EventMain", "Event", FormMethod.Get))
 {
 
-        <div class="row mb-3">
-            <div class="input-group">
-                <div class="form-outline" style="margin-right: 5px" >
-                    <input type="text" class="form-control border border-secondary" placeholder="Tìm kiếm" name="NameSearch" />
-
-                </div>
-                <div>
-                    <button class="btn btn-primary" type="submit">
-                        <i class='bx bx-search'></i>
-                    </button>
-
-                </div>
+    <div class="row mb-3">
+        <div class="input-group">
+            <div class="form-outline" style="margin-right: 5px">
+                <input type="text" class="form-control border border-secondary" placeholder="Tìm kiếm" name="NameSearch" />
 
             </div>
+            <div>
+                <button class="btn btn-primary" type="submit">
+                    <i class='bx bx-search'></i>
+                </button>
+
+            </div>
+
         </div>
+    </div>
 
-        <div>
 
-            <div id="table-scroll" class="table-scroll">
-                <table id="main-table" class="main-table" style="width: 100%">
-                    <thead>
+    <div id="table-scroll" class="table-scroll">
+        <table id="main-table" class="main-table" style="width: 100%">
+            <thead>
+                <tr style="text-align: center">
+                    <th>Mã đơn</th>
+                    <th>Hình bìa</th>
+                    <th>Người tạo</th>
+                    <th>Tên ưu đãi</th>
+                    <th>Ngày tạo</th>
+                    <th>Tình trạng duyệt</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null)
+                {
+                    foreach (var item in Model)
+                    {
                         <tr style="text-align: center">
-                            <th>Mã đơn</th>
-                            <th>Hình bìa</th>
-                            <th>Người tạo</th>
-                            <th>Tên ưu đãi</th>
-                            <th>Ngày tạo</th>
-                            <th>Tình trạng duyệt</th>
-                            <th></th>
+                            <td align="center" style="width:5%"> @Html.DisplayFor(modelItem => item.MaDon) </td>
+
+                            <td align="center" style="vertical-align:middle; width:5%"><img src="@Url.Content(item.HinhBia)" class="img" /></td>
+
+                            <td style="width:10%">@Html.DisplayFor(modelItem => item.NguoiThue.ThongTinND.HoTen)</td>
+
+
+
+                            <td style="width:25%; text-align: left">@Html.DisplayFor(modelItem => item.TieuDe)</td>
+
+                            <td style="width:5%">@Convert.ToDateTime(item.NgayLamDon).ToString("dd/MM/yyyy") </td>
+
+                            <td style="width:10%">@Html.DisplayFor(modelItem => item.TinhTrang.TenTT)</td>
+
+                            <td style="width:8%; text-align: left">
+                                @*@Html.ActionLink("Chỉnh sửa", "ProductEdit", new { id = item.IDProduct }) |*@
+                                @Html.ActionLink("Chi tiết", "Detail", new { MaDon = item.MaDon })
+                            </td>
                         </tr>
-                    </thead>
-                    <tbody >
-                        @if (Model != null)
-                        {
-                            foreach (var item in Model)
-                            {
-                                <tr style="text-align: center">
-                                    <td align="center" style="width:5%"> @Html.DisplayFor(modelItem => item.MaDon) </td>
+                    }
+                }
 
-                                    <td align="center" style="vertical-align:middle; width:5%"><img src="@Url.Content(item.HinhBia)" class="img" /></td>
+            </tbody>
 
-                                    <td style="width:10%">@Html.DisplayFor(modelItem => item.NguoiThue.ThongTinND.HoTen)</td>
-
-
-
-                                    <td style="width:25%; text-align: left">@Html.DisplayFor(modelItem => item.TieuDe)</td>
-
-                                    <td style="width:5%">@Convert.ToDateTime(item.NgayLamDon).ToString("dd/MM/yyyy") </td>
-
-                                    <td style="width:10%">@Html.DisplayFor(modelItem => item.TinhTrang.TenTT)</td>
-
-                                    <td style="width:8%; text-align: left">
-                                        @*@Html.ActionLink("Chỉnh sửa", "ProductEdit", new { id = item.IDProduct }) |*@
-                                        @Html.ActionLink("Chi tiết", "Detail", new { MaDon = item.MaDon })
-                                    </td>
-                                </tr>
-                            }
-                        }
-
-                    </tbody>
-
-                </table>
-            </div>
-        </div>
-
+        </table>
+    </div>
 }

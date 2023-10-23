@@ -41,19 +41,19 @@
             <ul class="nav-links">
 
                 @* Trang điều khiển *@
-                <!--<li>-->
-                <!-- Link -->
-                <!--<a href="#">-->
-                <!-- Icon -->
-                <!--<i class='bx bx-grid-alt'></i>-->
-                <!-- Tên -->
-                <!--<span class="link_name">Thanh điều khiển</span>
-                </a>-->
-                <!-- Lúc thu lại -->
-                <!--<ul class="sub-menu blank">
+                @*<li>
+                 Link 
+                <a href="#">
+                 Icon 
+                <i class='bx bx-grid-alt'></i>
+                 Tên 
+                <span class="link_name">Thanh điều khiển</span>
+                </a>
+                 Lúc thu lại 
+                <ul class="sub-menu blank">
                         <li><a class="link_name" href="#">Thanh điều khiển</a></li>
                     </ul>
-                </li>-->
+                </li>*@
                 @* Role Sự kiện - Ưu đãi *@
                 
                 @if ( ((QLMB.Models.NhanVien)Session["EmployeeInfo"]).MaChucVu.Trim() == "SKUD")
@@ -69,15 +69,15 @@
                                     <span class="link_name">Sự kiện</span>
                                 </a>
                             </div>
-                            <i class='bx bxs-chevron-down arrow'></i>
+                            @*<i class='bx bxs-chevron-down arrow'></i>*@
                         </div>
 
 
                         <!-- Các mục con -->
                         <ul class="sub-menu">
                             <li><a class="link_name" href="@Url.Action("EventMain","Event")">Sự kiện</a></li>
-                            <li><a href="#">Chưa duyệt</a></li>
-                            <li><a href="#">Đã duyệt</a></li>
+                            @*<li><a href="#">Chưa duyệt</a></li>
+                            <li><a href="#">Đã duyệt</a></li>*@
                         </ul>
                     </li>
 
@@ -88,19 +88,19 @@
                             <div class="link">
                                 <a href="@Url.Action("SaleMain","Event")">
                                     <!-- Icon -->
-                                    <i class='bx bx-paper-plane'></i>
+                                    <i class='bx bx-purchase-tag-alt'></i>
                                     <!-- Tên -->
                                     <span class="link_name">Ưu đãi</span>
                                 </a>
                             </div>
-                            <i class='bx bxs-chevron-down arrow'></i>
+                            @*<i class='bx bxs-chevron-down arrow'></i>*@
                         </div>
 
                         <!-- Các mục con -->
                         <ul class="sub-menu">
                             <li><a class="link_name" href="@Url.Action("SaleMain","Event")">Ưu đãi</a></li>
-                            <li><a href="#">Chưa duyệt</a></li>
-                            <li><a href="#">Đã duyệt</a></li>
+                            @*<li><a href="#">Chưa duyệt</a></li>
+                            <li><a href="#">Đã duyệt</a></li>*@
                         </ul>
                     </li>
                 }

@@ -242,7 +242,6 @@
     <Content Include="Resources\CSS\MultipleItem_Carousel.css" />
     <Content Include="Resources\CSS\Profile.css" />
     <Content Include="Resources\CSS\tableInfo.css" />
-    <Content Include="Resources\CSS\tesst.css" />
     <Content Include="Resources\JavaScript\reload.js" />
     <Content Include="Resources\JavaScript\managerNavBar.js" />
     <Content Include="Resources\JavaScript\multipleItemCarousel.js" />
