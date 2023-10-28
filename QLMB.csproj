@@ -186,6 +186,7 @@
     <Compile Include="Models\Process\Create.cs" />
     <Compile Include="Models\ListChucVu.cs" />
     <Compile Include="Models\Process\Edit.cs" />
+    <Compile Include="Models\Process\RandomID.cs" />
     <Compile Include="Models\Process\Shared.cs" />
     <Compile Include="Models\Process\SHA256.cs" />
     <Compile Include="Models\Process\Validation.cs" />
@@ -331,6 +332,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Resources\Picture\Property\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />
