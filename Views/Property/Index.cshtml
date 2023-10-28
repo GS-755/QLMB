@@ -4,61 +4,93 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Manager.cshtml";
 }
+<link rel="stylesheet" href="~/Resources/CSS/tableInfo.css" />
 
-<h2>Index</h2>
+<h2 class="text-uppercase mt-3 mb-3">Danh sách mặt bằng</h2>
+<div class="d-flex justify-content-start">
+    <div class="d-flex justify-content-start">
+        @Html.ActionLink("Thêm mặt bằng", "Create", null, new { @class = "btn btn-primary mb-3" })
+    </div>
+    @using (Html.BeginForm("Index", "Property", FormMethod.Get))
+    {
+        <div class="d-flex justify-content-between mb-3">
+            <div class="input-group mx-3">
+                <div class="form-outline" style="margin-right: 5px">
+                    <input type="text" class="form-control border border-secondary" placeholder="Tìm kiếm" name="keyword" />
+                </div>
+                <div>
+                    <button class="btn btn-success" type="submit">
+                        <i class='bx bx-search px-1'></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<div class="container-fluid">
+    <div class="col">
+        <div class="row">
+            
+        </div>
+    </div>
+    <div id="table-scroll" class="table-scroll">
+        <table id="main-table" class="main-table" style="width: 100%">
+            <tr style="vertical-align: central;" class="text-center">
+                <th>
+                    Mã <br /> Mặt bằng
+                </th>
+                <th>
+                    Lầu
+                </th>
+                <th>
+                    Diện tích
+                </th>
+                <th>
+                    Khu
+                </th>
+                <th>
+                    Tiền thuê
+                </th>
+                <th>
+                    Hình <br /> mặt bằng
+                </th>
+                <th>
+                    Tên <br /> trạng thái
+                </th>
+                <th>Hành động</th>
+            </tr>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Lau)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DienTich)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Khu)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TienThue)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.HinhMB)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TinhTrang.TenTT)
-        </th>
-        <th>Hành động</th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Lau)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DienTich)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Khu)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TienThue)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.HinhMB)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TinhTrang.TenTT)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.MaMB }) |
-            @Html.ActionLink("Details", "Details", new { id=item.MaMB }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.MaMB })
-        </td>
-    </tr>
-}
-
-</table>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td style="width: 8%;">
+                        @Html.DisplayFor(modelItem => item.MaMB)
+                    </td>
+                    <td style="width: 4%;">
+                        @Html.DisplayFor(modelItem => item.Lau)
+                    </td>
+                    <td style="width: 8%;">
+                        @string.Format($"{item.DienTich} m")<sup>2</sup>
+                    </td>
+                    <td style="width: 4%;">
+                        @Html.DisplayFor(modelItem => item.Khu)
+                    </td>
+                    <td style="width: 10%;">
+                        @string.Format($"{item.TienThue:0,0} đ")
+                    </td>
+                    <td style="width: 4%;">
+                        <img src="~/Resources/Picture/Property/@item.HinhMB" class="img-wrapper" width="200" />
+                    </td>
+                    <td style="width: 9%;">
+                        @Html.DisplayFor(modelItem => item.TinhTrang.TenTT)
+                    </td>
+                    <td style="width: 20%;">
+                        @Html.ActionLink("Chi tiết", "Details", new { id = item.MaMB }, new { @class = "btn btn-outline-success" }) |
+                        @Html.ActionLink("Chỉnh sửa", "Edit", new { id = item.MaMB }, new { @class = "btn btn-outline-warning" }) |
+                        @Html.ActionLink("Xoá", "Delete", new { id = item.MaMB }, new { @class = "btn btn-outline-danger" })
+                    </td>
+                </tr>
+                }
+        </table>
+    </div>
+</div>

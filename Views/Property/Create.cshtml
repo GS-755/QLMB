@@ -11,37 +11,67 @@
     <div class="col">
         <div class="row">
             <div class="col-md-3"></div>
-            <div class="col-md-6" ng-app="">
+            <div class="col-md-6" ng-app="" ng-init="singlePrice=700000;">
                 @using (Html.BeginForm("Create", "Property", FormMethod.Post, new { @name = "property", enctype = "multipart/form-data" }))
                 {
                     @Html.AntiForgeryToken()
                     <h2 class="text-uppercase text-center pt-3">Thêm mặt bằng</h2>
                     <hr />
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                    <div class="mb-3">
-                        <label for="MaMB" class="mb-2">Mã mặt bằng: </label>
-                        <input type="text" class="form-control" name="MaMB" ng-model="MaMB" required />
-                        <p 
-                           class="text-danger pt-2" 
-                           ng-show="property.MaMB.$touched && property.MaMB.$invalid">
-                            Mã mặt bằng KHÔNG để trống!
-                        </p>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="Lau" class="mb-2">Lầu: <span class="text-danger"> (*)</span></label>
+                                <input type="number" class="form-control" name="Lau" min="1" max="7" ng-model="Lau" required />
+                                <p class="text-danger pt-2"
+                                   ng-show="property.Lau.$touched && property.Lau.$invalid">
+                                    Số lầu tối thiểu: 1
+                                    <br />
+                                    Số lầu tối đa: 7
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="Khu" class="mb-2">Khu: <span class="text-danger"> (*)</span></label>
+                                <input type="number" class="form-control" name="Khu" min="1" max="30" ng-model="Khu" required />
+                                <p class="text-danger pt-2"
+                                   ng-show="property.Khu.$touched && property.Khu.$invalid">
+                                    Khu tối thiểu: 1
+                                    <br />
+                                    Khu tối đa: 30
+                                </p>
+                            </div>
+                        </div>
                     </div>
-                    <div class="mb-3">
-                        <label for="Lau" class="mb-2">Lầu: </label>
-                        <input type="number" class="form-control" name="Lau" min="1" ng-model="Lau" />
-                    </div>
-                    <div class="mb-3">
-                        <label for="DienTich" class="mb-2">Diện tích: </label>
-                        <input type="number" class="form-control" name="DienTich" min="10" ng-model="DienTich" />
-                    </div>
-                    <div class="mb-3">
-                        <label for="Khu" class="mb-2">Khu: </label>
-                        <input type="number" class="form-control" name="Khu" min="1" ng-model="Khu" />
-                    </div>
-                    <div class="mb-3">
-                        <label for="TienThue" class="mb-2">Tiền thuê: </label>
-                        <input type="number" class="form-control" name="TienThue" min="100000" ng-model="TienThue" />
+                    <div class="row mb-3">
+                        <div class="col-md-5">
+                            <div class="mb-3">
+                                <label for="DienTich" class="mb-2">Diện tích (m<sup>2</sup>) <span class="text-danger"> (*)</span></label>
+                                <input type="number" class="form-control" name="DienTich" value="100" min="100" max="2000" ng-model="DienTich" required />
+                                <p class="text-danger pt-2"
+                                   ng-show="property.DienTich.$invalid">
+                                    Tối thiểu: 100m<sup>2</sup>
+                                    <br />
+                                    Tối đa: 2000m<sup>2</sup>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-7">
+                            <label for="TienThue" class="mb-2">Tiền thuê: <span class="text-danger"> (*)</span></label>
+                            <input type="number"
+                                   class="form-control"
+                                   name="TienThue"
+                                   ng-model="TienThue"
+                                   min="{{ DienTich * singlePrice }}" 
+                                   ng-hide="property.DienTich.$invalid" 
+                                   required />
+                            <p class="text-danger pt-2"
+                               ng-hide="property.DienTich.$invalid"
+                               ng-show="property.TienThue.$invalid">
+                                Số tiền thuê >= {{ DienTich * singlePrice }} đ
+                            </p>
+                        </div>
                     </div>
                     <div class="mb-3">
                         <label for="HinhMB" class="mb-2">Hình mặt bằng: </label>
@@ -52,7 +82,8 @@
                         @Html.DropDownList("MATT", null, htmlAttributes: new { @class = "form-control" })
                     </div>
                     <div class="mb-3">
-                        <div class="col-md-offset-2 text-center">
+                        <div class="text-center">
+                            <button class="btn btn-secondary" ng-show="property.$invalid" ng-hide="property.$valid" disabled>Tạo mới</button>
                             <input type="submit" value="Tạo mới" class="btn btn-success" ng-show="property.$valid" />
                         </div>
                     </div>

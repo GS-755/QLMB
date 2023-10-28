@@ -7,9 +7,9 @@ namespace QLMB.Models
 {
     public class RandomID
     {
-        private static Random random = new Random();
-        private static readonly string characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-        private static database db = new database();
+        private static readonly Random random = new Random();
+        private static readonly string characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        private static readonly database db = new database();
 
         public static string Get(int size = 6)
         {

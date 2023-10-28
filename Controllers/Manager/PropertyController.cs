@@ -33,15 +33,27 @@ namespace QLMB.Controllers.Test
         }
 
         // GET: Property
-        public ActionResult Index()
+        [HttpGet]
+        public ActionResult Index(string keyword)
         {
             try
             {
                 if (IsValidRole())
                 {
                     IQueryable<MatBang> matBangs = db.MatBangs.Include(m => m.TinhTrang);
+                    List<MatBang> dsmb = db.MatBangs.ToList();
+                    if (keyword == null)
+                    {
+                        return View(dsmb);
+                    }
+                    else
+                    {
+                        matBangs = db.MatBangs.Include(m => m.TinhTrang);
+                        dsmb = db.MatBangs.
+                            Where(k => k.MaMB.ToUpper().Contains(keyword.ToUpper())).ToList();
 
-                    return View(matBangs.ToList());
+                        return View(dsmb);
+                    }
                 }
                 Session["Page"] = "Property";
 
@@ -71,7 +83,7 @@ namespace QLMB.Controllers.Test
                 return RedirectToAction("Index", "SkillIssue");
             }
         }
-        public ActionResult Details(int? id)
+        public ActionResult Details(string id)
         {
             try
             {
@@ -97,7 +109,7 @@ namespace QLMB.Controllers.Test
                 return RedirectToAction("Index", "SkillIssue");
             }
         }
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(string id)
         {
             try
             {
@@ -125,7 +137,7 @@ namespace QLMB.Controllers.Test
                 return RedirectToAction("Index", "SkillIssue");
             }
         }
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(string id)
         {
             try
             {
@@ -159,16 +171,27 @@ namespace QLMB.Controllers.Test
         {
             try
             {
-                if (matBang.UploadImage != null)
+                // Try to assign 6-chars PropertyID
+                string idTmp = RandomID.Get();
+                while(RandomID.ExistPropertyID(idTmp))
                 {
-                    string fileName = Path.GetFileNameWithoutExtension(matBang.UploadImage.FileName);
-                    string extension = Path.GetExtension(matBang.UploadImage.FileName);
-                    fileName += extension;
-                    matBang.HinhMB = MatBang.SERVER_IMG_PATH + fileName;
-                    matBang.UploadImage.SaveAs(Path.Combine(Server.MapPath(MatBang.SERVER_IMG_PATH), fileName));
+                    idTmp = RandomID.Get();
                 }
-                db.MatBangs.Add(matBang);
-                db.SaveChanges();
+                matBang.MaMB = idTmp;
+
+                if(ModelState.IsValid)
+                {
+                    if (matBang.UploadImage != null)
+                    {
+                        string fileName = Path.GetFileNameWithoutExtension(matBang.UploadImage.FileName);
+                        string extension = Path.GetExtension(matBang.UploadImage.FileName);
+                        fileName += extension;
+                        matBang.HinhMB = fileName;
+                        matBang.UploadImage.SaveAs(Path.Combine(Server.MapPath(MatBang.SERVER_IMG_PATH), fileName));
+                    }
+                    db.MatBangs.Add(matBang);
+                    db.SaveChanges();
+                }
                 ViewBag.MATT = new SelectList(db.TinhTrangs, "MATT", "TenTT", matBang.MATT);
 
                 return RedirectToAction("Index");
