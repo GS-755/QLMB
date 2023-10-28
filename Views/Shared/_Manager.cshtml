@@ -42,21 +42,21 @@
 
                 @* Trang điều khiển *@
                 @*<li>
-                 Link 
-                <a href="#">
-                 Icon 
-                <i class='bx bx-grid-alt'></i>
-                 Tên 
-                <span class="link_name">Thanh điều khiển</span>
-                </a>
-                 Lúc thu lại 
-                <ul class="sub-menu blank">
-                        <li><a class="link_name" href="#">Thanh điều khiển</a></li>
-                    </ul>
-                </li>*@
+                     Link
+                    <a href="#">
+                     Icon
+                    <i class='bx bx-grid-alt'></i>
+                     Tên
+                    <span class="link_name">Thanh điều khiển</span>
+                    </a>
+                     Lúc thu lại
+                    <ul class="sub-menu blank">
+                            <li><a class="link_name" href="#">Thanh điều khiển</a></li>
+                        </ul>
+                    </li>*@
                 @* Role Sự kiện - Ưu đãi *@
-                
-                @if ( ((QLMB.Models.NhanVien)Session["EmployeeInfo"]).MaChucVu.Trim() == "SKUD")
+
+                @if (((QLMB.Models.NhanVien)Session["EmployeeInfo"]).MaChucVu.Trim() == "SKUD")
                 {
                     @* Trang Sự kiện *@
                     <li>
@@ -77,7 +77,7 @@
                         <ul class="sub-menu">
                             <li><a class="link_name" href="@Url.Action("EventMain","Event")">Sự kiện</a></li>
                             @*<li><a href="#">Chưa duyệt</a></li>
-                            <li><a href="#">Đã duyệt</a></li>*@
+                                <li><a href="#">Đã duyệt</a></li>*@
                         </ul>
                     </li>
 
@@ -100,7 +100,7 @@
                         <ul class="sub-menu">
                             <li><a class="link_name" href="@Url.Action("SaleMain","Event")">Ưu đãi</a></li>
                             @*<li><a href="#">Chưa duyệt</a></li>
-                            <li><a href="#">Đã duyệt</a></li>*@
+                                <li><a href="#">Đã duyệt</a></li>*@
                         </ul>
                     </li>
                 }
@@ -108,7 +108,7 @@
 
 
                 @* Role Nhân sự *@
-                @if ( ((QLMB.Models.NhanVien)Session["EmployeeInfo"]).MaChucVu.Trim() == "NS")
+                @if (((QLMB.Models.NhanVien)Session["EmployeeInfo"]).MaChucVu.Trim() == "NS")
                 {
                     @* Trang nhân sự *@
                     <li>
