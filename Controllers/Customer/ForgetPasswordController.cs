@@ -1,8 +1,5 @@
 ﻿using QLMB.Models;
-using System;
-using System.Linq;
 using System.Web.Mvc;
-using System.Data.Entity;
 using QLMB.Models.Process;
 
 namespace QLMB.Controllers.Customer

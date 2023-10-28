@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using static System.Collections.Specialized.BitVector32;
-
-namespace QLMB.Models.Process
+﻿namespace QLMB.Models.Process
 {
     public class Create
     {

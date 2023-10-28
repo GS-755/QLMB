@@ -1,10 +1,7 @@
 ﻿using QLMB.Models;
 using System.Linq;
 using System.Web.Mvc;
-using System.Data.Entity;
-using System.Collections.Generic;
 using QLMB.Models.Process;
-using static System.Data.Entity.Infrastructure.Design.Executor;
 
 namespace QLMB.Controllers.Manager
 {

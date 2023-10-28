@@ -1,11 +1,7 @@
 ﻿using QLMB.Models;
-using System;
-using System.Data.Entity.Core.Objects;
 using System.Linq;
 using System.Web.Mvc;
 using System.Collections.Generic;
-using System.Web.UI.WebControls;
-using System.Data.Entity;
 using QLMB.Models.Process;
 
 namespace QLMB.Controllers.Manager
