@@ -11,39 +11,37 @@
     <div class="col">
         <div class="row">
             <div class="col-md-3"></div>
-            <div class="col-md-6">
-                @using (Html.BeginForm())
+            <div class="col-md-6" ng-app="">
+                @using (Html.BeginForm("Create", "Property", FormMethod.Post, new { @name = "property", enctype = "multipart/form-data" }))
                 {
                     @Html.AntiForgeryToken()
-                <div ng-app="">
                     <h2 class="text-uppercase text-center pt-3">Thêm mặt bằng</h2>
                     <hr />
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     <div class="mb-3">
                         <label for="MaMB" class="mb-2">Mã mặt bằng: </label>
                         <input type="text" class="form-control" name="MaMB" ng-model="MaMB" required />
-                        <span class="text-danger" ng-show="MaMB.$touched && MaMB.$invalid">Mã mặt bằng KHÔNG để trống!</span>
-                        @Html.ValidationMessageFor(model => model.MaMB, "", new { @class = "text-danger" })
+                        <p 
+                           class="text-danger pt-2" 
+                           ng-show="property.MaMB.$touched && property.MaMB.$invalid">
+                            Mã mặt bằng KHÔNG để trống!
+                        </p>
                     </div>
                     <div class="mb-3">
                         <label for="Lau" class="mb-2">Lầu: </label>
-                        <input type="number" class="form-control" name="Lau" min="1" />
-                        @Html.ValidationMessageFor(model => model.Lau, "", new { @class = "text-danger" })
+                        <input type="number" class="form-control" name="Lau" min="1" ng-model="Lau" />
                     </div>
                     <div class="mb-3">
                         <label for="DienTich" class="mb-2">Diện tích: </label>
-                        <input type="number" class="form-control" name="DienTich" min="10" />
-                        @Html.ValidationMessageFor(model => model.DienTich, "", new { @class = "text-danger" })
+                        <input type="number" class="form-control" name="DienTich" min="10" ng-model="DienTich" />
                     </div>
                     <div class="mb-3">
                         <label for="Khu" class="mb-2">Khu: </label>
-                        <input type="number" class="form-control" name="Khu" min="1" />
-                        @Html.ValidationMessageFor(model => model.Khu, "", new { @class = "text-danger" })
+                        <input type="number" class="form-control" name="Khu" min="1" ng-model="Khu" />
                     </div>
                     <div class="mb-3">
                         <label for="TienThue" class="mb-2">Tiền thuê: </label>
-                        <input type="number" class="form-control" name="TienThue" min="1000000" />
-                        @Html.ValidationMessageFor(model => model.TienThue, "", new { @class = "text-danger" })
+                        <input type="number" class="form-control" name="TienThue" min="100000" ng-model="TienThue" />
                     </div>
                     <div class="mb-3">
                         <label for="HinhMB" class="mb-2">Hình mặt bằng: </label>
@@ -52,14 +50,12 @@
                     <div class="mb-3">
                         <label for="MATT" class="mb-2">Trạng thái: </label>
                         @Html.DropDownList("MATT", null, htmlAttributes: new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.MATT, "", new { @class = "text-danger" })
                     </div>
                     <div class="mb-3">
                         <div class="col-md-offset-2 text-center">
-                            <input type="submit" value="Tạo mới" class="btn btn-success" disabled />
+                            <input type="submit" value="Tạo mới" class="btn btn-success" ng-show="property.$valid" />
                         </div>
                     </div>
-                </div>
                 }
             </div>
             <div class="col-md-3"></div>

@@ -71,7 +71,7 @@ namespace QLMB.Controllers.Test
                 return RedirectToAction("Index", "SkillIssue");
             }
         }
-        public ActionResult Details(string id)
+        public ActionResult Details(int? id)
         {
             try
             {
@@ -97,7 +97,7 @@ namespace QLMB.Controllers.Test
                 return RedirectToAction("Index", "SkillIssue");
             }
         }
-        public ActionResult Edit(string id)
+        public ActionResult Edit(int? id)
         {
             try
             {
@@ -125,7 +125,7 @@ namespace QLMB.Controllers.Test
                 return RedirectToAction("Index", "SkillIssue");
             }
         }
-        public ActionResult Delete(string id)
+        public ActionResult Delete(int? id)
         {
             try
             {
