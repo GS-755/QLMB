@@ -16,7 +16,7 @@
     left: 0;
     height: 100%;
     width: 260px;
-    background: #11101d;
+    background: #C3B1E1;
     z-index: 100;
     transition: all 0.5s ease;
 }
@@ -131,7 +131,7 @@
 }
 
     .sidebar .nav-links li:hover {
-        background: #1d1b31;
+        background: #C3B1E1;
     }
 
     .sidebar .nav-links li .iocn-link {
@@ -174,7 +174,7 @@
     .sidebar .nav-links li a .link_name {
         font-size: 18px;
         font-weight: 400;
-        color: #ffffff;
+        color: #fff;
         transition: all 0.4s ease;
     }
 
@@ -208,11 +208,12 @@
 .sidebar .nav-links li .sub-menu {
     padding: 6px 6px 14px 80px;
     margin-top: -10px;
-    background: #1d1b31;
+    background: #C3B1E1;
     display: none;
 }
 
 .sidebar .nav-links li.showMenu .sub-menu {
+
     display: block;
 }
 
@@ -282,12 +283,12 @@
         width: 100%;
     }
 
-    .sidebar .profile-content .profile{
-        position: relative;
-        padding: 10px 6px;
-        height: 60px;
-        background: #1D1B31;
-    }
+        .sidebar .profile-content .profile {
+            position: relative;
+            padding: 10px 6px;
+            height: 60px;
+            background: #C3B1E1;
+        }
 
 
 .profile-content .profile .profile-details {
