@@ -61,6 +61,10 @@ namespace QLMB.Controllers
                 case "EmployeeDetail":
                     return RedirectToAction("Detail", "HumanResource");
 
+                //Trang Quản lý mặt bằng
+                case "Property":
+                    return RedirectToAction("Index", "Property");
+
                 //Bị ban
                 case "Banned":
                     return Redirect("Banned");

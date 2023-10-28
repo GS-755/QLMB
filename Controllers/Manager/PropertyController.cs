@@ -19,20 +19,31 @@ namespace QLMB.Controllers.Test
             1.  Users that have logged in
             2.  Users with a valid role
         */
-        public bool IsLoggedIn() => Session["RoleID"] != null;
-        public bool IsValidRole() => Session["RoleID"].ToString() == ROLE;
+        public bool IsValidRole()
+        {
+            if (Session["EmployeeInfo"] == null)
+            {
+                return false;
+            }
+            //Đúng Role --> Vào
+            if (((NhanVien)Session["EmployeeInfo"]).MaChucVu.Trim() == ROLE)
+                return true;
+
+            return false;
+        }
 
         // GET: Property
         public ActionResult Index()
         {
             try
             {
-                if (IsLoggedIn() && IsValidRole())
+                if (IsValidRole())
                 {
                     IQueryable<MatBang> matBangs = db.MatBangs.Include(m => m.TinhTrang);
 
                     return View(matBangs.ToList());
                 }
+                Session["Page"] = "Property";
 
                 return RedirectToAction("Login", "Login");
             }
@@ -45,7 +56,7 @@ namespace QLMB.Controllers.Test
         {
             try
             {
-                if (IsLoggedIn() && IsValidRole())
+                if (IsValidRole())
                 {
                     List<TinhTrang> dsTinhTrang = db.TinhTrangs.Where(k => k.MATT >= 7).ToList();
                     ViewBag.MATT = new SelectList(dsTinhTrang, "MaTT", "TenTT");
@@ -64,7 +75,7 @@ namespace QLMB.Controllers.Test
         {
             try
             {
-                if (IsLoggedIn() && IsValidRole())
+                if (IsValidRole())
                 {
                     if (id == null)
                     {
@@ -90,7 +101,7 @@ namespace QLMB.Controllers.Test
         {
             try
             {
-                if (IsLoggedIn() && IsValidRole())
+                if (IsValidRole())
                 {
                     if (id == null)
                     {
@@ -118,7 +129,7 @@ namespace QLMB.Controllers.Test
         {
             try
             {
-                if (IsLoggedIn() && IsValidRole())
+                if (IsValidRole())
                 {
                     if (id == null)
                     {

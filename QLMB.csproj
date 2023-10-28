@@ -322,10 +322,14 @@
     <Content Include="Views\Account\ChangePassword.cshtml" />
     <Content Include="Views\HumanResource\SelectRole.cshtml" />
     <Content Include="Views\Event\Test.cshtml" />
+    <Content Include="Views\Property\Index.cshtml" />
+    <Content Include="Views\Property\Create.cshtml" />
+    <Content Include="Views\Property\Details.cshtml" />
+    <Content Include="Views\Property\Edit.cshtml" />
+    <Content Include="Views\Property\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Property\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />

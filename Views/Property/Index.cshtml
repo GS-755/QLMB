@@ -1,0 +1,64 @@
+﻿@model IEnumerable<QLMB.Models.MatBang>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Manager.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Lau)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DienTich)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Khu)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TienThue)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HinhMB)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TinhTrang.TenTT)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Lau)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DienTich)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Khu)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TienThue)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HinhMB)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TinhTrang.TenTT)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.MaMB }) |
+            @Html.ActionLink("Details", "Details", new { id=item.MaMB }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.MaMB })
+        </td>
+    </tr>
+}
+
+</table>
