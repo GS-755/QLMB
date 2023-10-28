@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Text;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace QLMB.Models
 {
@@ -7,6 +9,7 @@ namespace QLMB.Models
     {
         private static Random random = new Random();
         private static readonly string characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        private static database db = new database();
 
         public static string Get(int size = 6)
         {
@@ -19,6 +22,26 @@ namespace QLMB.Models
             }
 
             return builder.ToString();
+        }
+        public static bool ExistPropertyID(string propertyId)
+        {
+            try
+            {
+                List<MatBang> checkProperty = db.MatBangs.
+                    Where(
+                        k => k.MaMB.Trim() == propertyId
+                    ).ToList();
+                if (checkProperty.Count > 0) 
+                {
+                    return true;
+                }
+
+                return false;
+            }
+            catch
+            {
+                return false;    
+            }
         }
     }
 }
