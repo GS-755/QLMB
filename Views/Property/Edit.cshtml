@@ -1,86 +1,71 @@
 ﻿@model QLMB.Models.MatBang
+
 @{
     ViewBag.Title = "Chỉnh sửa mặt bằng";
     Layout = "~/Views/Shared/_Manager.cshtml";
 }
-
 @Html.ActionLink(" < Quay lại", "Index", null, new { @class = "btn btn-outline-warning m-2" })
-<section class="mt-3 mb-3">
-    <div class="container">
-        <div class="col">
-            <div class="row">
-                <div class="col-md-3"></div>
-                <div class="col-md-6" ng-app="" ng-init="singlePrice=700000;">
-                    @using (Html.BeginForm("Edit", "Property", FormMethod.Post, new { @name = "property", enctype = "multipart/form-data" }))
-                    {
-                        @Html.AntiForgeryToken()
+
+<div class="container">
+    <div class="col">
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6" ng-app="" ng-init="singlePrice=700000;">
+                @using (Html.BeginForm("Edit", "Property", FormMethod.Post, new { @name = "property", enctype = "multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="#">
                         <h2 class="text-uppercase text-center pt-3">Chỉnh sửa mặt bằng</h2>
                         <hr />
                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label for="Lau" class="mb-2">Lầu: <span class="text-danger"> (*)</span></label>
-                                    <input type="number" value="@Model.Lau" class="form-control" name="Lau" min="1" max="7" ng-model="Lau" required />
-                                    <p class="text-danger pt-2"
-                                       ng-show="property.Lau.$touched && property.Lau.$invalid">
-                                        Số lầu tối thiểu: 1
-                                        <br />
-                                        Số lầu tối đa: 7
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label for="Khu" class="mb-2">Khu: <span class="text-danger"> (*)</span></label>
-                                    <input type="number"  value="@Model.Khu" class="form-control" name="Khu" min="1" max="30" ng-model="Khu" required />
-                                    <p class="text-danger pt-2"
-                                       ng-show="property.Khu.$touched && property.Khu.$invalid">
-                                        Khu tối thiểu: 1
-                                        <br />
-                                        Khu tối đa: 30
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <div class="col-md-5">
-                                <div class="mb-3">
-                                    <label for="DienTich" class="mb-2">Diện tích (m<sup>2</sup>) <span class="text-danger"> (*)</span></label>
-                                    <input type="number"  value="@Model.DienTich" class="form-control" name="DienTich" min="100" max="2000" ng-model="DienTich" required />
-                                    <p class="text-danger pt-2"
-                                       ng-show="property.DienTich.$invalid">
-                                        Tối thiểu: 100m<sup>2</sup>
-                                        <br />
-                                        Tối đa: 2000m<sup>2</sup>
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="col-md-7">
-                                <label for="TienThue" class="mb-2">Tiền thuê: <span class="text-danger"> (*)</span></label>
-                                <p class="text-danger fs-4" ng-hide="property.DienTich.$invalid">{{ DienTich * singlePrice }}đ</p>
-                            </div>
+                        @Html.HiddenFor(model => model.MaMB)
+                    <div class="mb-3">
+                        <label for="Lau">Lầu: <span class="text-danger fs-6 mb-2">(*)</span></label>
+                        @Html.EditorFor(model => model.Lau, new { htmlAttributes = new { @class = "form-control", ng_model="Lau" } })
+                        @Html.ValidationMessageFor(model => model.Lau, "", new { @class = "text-danger" })
+                        <p class="text-danger pt-2"
+                           ng-show="property.Lau.$touched && property.Lau.$invalid">
+                            Số lầu tối thiểu: 1
+                            <br />
+                            Số lầu tối đa: 7
+                        </p>
+                    </div>
+                        <div class="mb-3">
+                            <label for="Khu">Khu: <span class="text-danger fs-6 mb-2">(*)</span></label>
+                            <input type="number" name="Khu" class="form-control" ng-model="Khu" />
+                            @Html.ValidationMessageFor(model => model.Khu, "", new { @class = "text-danger" })
                         </div>
                         <div class="mb-3">
-                            <label for="HinhMB" class="mb-2">Hình mặt bằng: </label>
-                            <input type="file" class="form-control" name="UploadImage" />
+                            <label for="DienTich">Diện tích: <span class="text-danger fs-6 mb-2">(*)</span></label>
+                            <input type="number" class="form-control" ng-model="DienTich" name="DienTich" min="100" max="2000" required />
+                            @Html.ValidationMessageFor(model => model.DienTich, "", new { @class = "text-danger" })
                         </div>
                         <div class="mb-3">
-                            <label for="MATT" class="mb-2">Trạng thái: </label>
+                            <label for="TienThue">Tiền thuê: <span class="text-danger fs-6 mb-2">(*)</span></label>
+                            @Html.HiddenFor(modelItem => Model.TienThue)
+                            <p class="text-danger fs-4" ng-hide="property.DienTich.$invalid">{{ DienTich * singlePrice }}đ</p>
+                        </div>
+                        @Html.HiddenFor(modelItem => Model.HinhMB)
+                        <div class="mb-3">
+                            <label for="HinhMB">Hình mặt bằng: <span class="text-danger fs-6 mb-2">(*)</span></label>
+                            <input type="file" name="UploadImage" class="form-control" />
+                            @Html.ValidationMessageFor(model => model.HinhMB, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="mb-3">
+                            <label for="MATT">Trạng thái: <span class="text-danger fs-6 mb-2">(*)</span></label>
                             @Html.DropDownList("MATT", null, htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.MATT, "", new { @class = "text-danger" })
                         </div>
+
                         <div class="mb-3">
-                            <div class="text-center">
-                                <button class="btn btn-secondary" ng-show="property.$invalid" ng-hide="property.$valid" disabled>Tạo mới</button>
-                                <input type="submit" value="Lưu thay đổi" class="btn btn-success" ng-show="property.$valid" />
-                            </div>
+                            <input type="submit" value="Lưu thay đổi" class="btn btn-outline-success mt-2" />
                         </div>
-                    }
-                </div>
-                <div class="col-md-3"></div>
+                    </div>
+                }
             </div>
+            <div class="col-md-3"></div>
         </div>
     </div>
-</section>
+</div>
 
 <script src="~/Scripts/angular.min.js"></script>
