@@ -17,7 +17,7 @@ namespace QLMB.Models
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public static readonly string SERVER_IMG_PATH = "~/Resources/Picture/Property/";
-
+        public static readonly double SINGLE_PRICE = 700000;
         public MatBang()
         {
             this.DonXinThues = new HashSet<DonXinThue>();

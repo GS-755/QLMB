@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<QLMB.Models.MatBang>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Quản lý mặt bằng";
     Layout = "~/Views/Shared/_Manager.cshtml";
 }
 <link rel="stylesheet" href="~/Resources/CSS/tableInfo.css" />
@@ -34,6 +34,7 @@
         </div>
     </div>
     <div id="table-scroll" class="table-scroll">
+        <p class="text-center text-danger">@ViewBag.NullData</p>
         <table id="main-table" class="main-table" style="width: 100%">
             <tr style="vertical-align: central;" class="text-center">
                 <th>
@@ -59,38 +60,37 @@
                 </th>
                 <th>Hành động</th>
             </tr>
-
             @foreach (var item in Model)
             {
-                <tr>
-                    <td style="width: 8%;">
-                        @Html.DisplayFor(modelItem => item.MaMB)
-                    </td>
-                    <td style="width: 4%;">
-                        @Html.DisplayFor(modelItem => item.Lau)
-                    </td>
-                    <td style="width: 8%;">
-                        @string.Format($"{item.DienTich} m")<sup>2</sup>
-                    </td>
-                    <td style="width: 4%;">
-                        @Html.DisplayFor(modelItem => item.Khu)
-                    </td>
-                    <td style="width: 10%;">
-                        @string.Format($"{item.TienThue:0,0} đ")
-                    </td>
-                    <td style="width: 4%;">
-                        <img src="~/Resources/Picture/Property/@item.HinhMB" class="img-wrapper" width="200" />
-                    </td>
-                    <td style="width: 9%;">
-                        @Html.DisplayFor(modelItem => item.TinhTrang.TenTT)
-                    </td>
-                    <td style="width: 20%;">
-                        @Html.ActionLink("Chi tiết", "Details", new { id = item.MaMB }, new { @class = "btn btn-outline-success" }) |
-                        @Html.ActionLink("Chỉnh sửa", "Edit", new { id = item.MaMB }, new { @class = "btn btn-outline-warning" }) |
-                        @Html.ActionLink("Xoá", "Delete", new { id = item.MaMB }, new { @class = "btn btn-outline-danger" })
-                    </td>
-                </tr>
-                }
+            <tr>
+                <td style="width: 8%;">
+                    @Html.DisplayFor(modelItem => item.MaMB)
+                </td>
+                <td style="width: 4%;">
+                    @Html.DisplayFor(modelItem => item.Lau)
+                </td>
+                <td style="width: 8%;">
+                    @string.Format($"{item.DienTich} m")<sup>2</sup>
+                </td>
+                <td style="width: 4%;">
+                    @Html.DisplayFor(modelItem => item.Khu)
+                </td>
+                <td style="width: 10%;">
+                    @string.Format($"{item.TienThue:0,0} đ")
+                </td>
+                <td style="width: 4%;">
+                    <img src="~/Resources/Picture/Property/@item.HinhMB" class="img-wrapper" width="200" />
+                </td>
+                <td style="width: 9%;">
+                    @Html.DisplayFor(modelItem => item.TinhTrang.TenTT)
+                </td>
+                <td style="width: 20%;">
+                    @Html.ActionLink("Chi tiết", "Details", new { id = item.MaMB }, new { @class = "btn btn-outline-success" }) |
+                    @Html.ActionLink("Chỉnh sửa", "Edit", new { id = item.MaMB }, new { @class = "btn btn-outline-warning" }) |
+                    @Html.ActionLink("Xoá", "Delete", new { id = item.MaMB }, new { @class = "btn btn-outline-danger" })
+                </td>
+            </tr>
+            }
         </table>
     </div>
 </div>

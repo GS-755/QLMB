@@ -48,7 +48,7 @@
                         <div class="col-md-5">
                             <div class="mb-3">
                                 <label for="DienTich" class="mb-2">Diện tích (m<sup>2</sup>) <span class="text-danger"> (*)</span></label>
-                                <input type="number" class="form-control" name="DienTich" value="100" min="100" max="2000" ng-model="DienTich" required />
+                                <input type="number" class="form-control" name="DienTich" min="100" max="2000" ng-model="DienTich" required />
                                 <p class="text-danger pt-2"
                                    ng-show="property.DienTich.$invalid">
                                     Tối thiểu: 100m<sup>2</sup>
@@ -59,18 +59,7 @@
                         </div>
                         <div class="col-md-7">
                             <label for="TienThue" class="mb-2">Tiền thuê: <span class="text-danger"> (*)</span></label>
-                            <input type="number"
-                                   class="form-control"
-                                   name="TienThue"
-                                   ng-model="TienThue"
-                                   min="{{ DienTich * singlePrice }}" 
-                                   ng-hide="property.DienTich.$invalid" 
-                                   required />
-                            <p class="text-danger pt-2"
-                               ng-hide="property.DienTich.$invalid"
-                               ng-show="property.TienThue.$invalid">
-                                Số tiền thuê >= {{ DienTich * singlePrice }} đ
-                            </p>
+                            <p class="text-danger fs-4" ng-hide="property.DienTich.$invalid">{{ DienTich * singlePrice }}đ</p>
                         </div>
                     </div>
                     <div class="mb-3">

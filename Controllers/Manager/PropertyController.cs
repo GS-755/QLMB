@@ -42,8 +42,13 @@ namespace QLMB.Controllers.Test
                 {
                     IQueryable<MatBang> matBangs = db.MatBangs.Include(m => m.TinhTrang);
                     List<MatBang> dsmb = db.MatBangs.ToList();
-                    if (keyword == null)
+                    if (keyword == null || keyword == "")
                     {
+                        if (dsmb.Count == 0)
+                        {
+                            ViewBag.NullData = "Không có dữ liệu nào!";
+                        }
+
                         return View(dsmb);
                     }
                     else
@@ -51,6 +56,10 @@ namespace QLMB.Controllers.Test
                         matBangs = db.MatBangs.Include(m => m.TinhTrang);
                         dsmb = db.MatBangs.
                             Where(k => k.MaMB.ToUpper().Contains(keyword.ToUpper())).ToList();
+                        if(dsmb.Count == 0)
+                        {
+                            ViewBag.NullData = "Không có dữ liệu nào!";
+                        }
 
                         return View(dsmb);
                     }
@@ -178,6 +187,11 @@ namespace QLMB.Controllers.Test
                     idTmp = RandomID.Get();
                 }
                 matBang.MaMB = idTmp;
+                // Assign value for property
+                if(matBang.TienThue == 0)
+                {
+                    matBang.TienThue = MatBang.SINGLE_PRICE * matBang.DienTich;
+                }
 
                 if(ModelState.IsValid)
                 {
@@ -212,7 +226,7 @@ namespace QLMB.Controllers.Test
                     string fileName = Path.GetFileNameWithoutExtension(matBang.UploadImage.FileName);
                     string extension = Path.GetExtension(matBang.UploadImage.FileName);
                     fileName += extension;
-                    matBang.HinhMB = MatBang.SERVER_IMG_PATH + fileName;
+                    matBang.HinhMB = fileName;
                     matBang.UploadImage.SaveAs(Path.Combine(Server.MapPath(MatBang.SERVER_IMG_PATH), fileName));
                 }
                 db.Entry(matBang).State = EntityState.Modified;
