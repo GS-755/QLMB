@@ -1,7 +1,6 @@
 ﻿namespace QLMB.Models
 {
     using System.Collections.Generic;
-    using System.Deployment.Internal;
     using System.Linq;
 
     public partial class ListChucVu
