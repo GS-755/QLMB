@@ -308,7 +308,6 @@
     <Content Include="Views\Event\SaleMain.cshtml" />
     <Content Include="Views\ForgetPassword\ForgetPassword.cshtml" />
     <Content Include="Views\ForgetPassword\rePasswordNguoiThue.cshtml" />
-    <Content Include="Views\Home\ClearSession.cshtml" />
     <Content Include="Views\HumanResource\Detail.cshtml" />
     <Content Include="Views\HumanResource\Main.cshtml" />
     <Content Include="Views\Login\Login.cshtml" />

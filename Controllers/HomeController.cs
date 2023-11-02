@@ -15,11 +15,5 @@ namespace QLMB.Controllers
             
             return View(suKienList);
         }
-        public ActionResult ClearSession()
-        {
-            Session.Abandon();
-
-            return RedirectToAction("Index");
-        }
     }
 }
