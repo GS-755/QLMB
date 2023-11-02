@@ -11,9 +11,9 @@
     box-sizing: border-box;
 }
 .section {
-    padding-top: 100px;
-    padding-bottom: 100px;
-    position: relative;
+    padding-top: 75px;
+    padding-bottom: 75px;
+    position: inherit;
 }
 /* Color pallete */
 :root {
