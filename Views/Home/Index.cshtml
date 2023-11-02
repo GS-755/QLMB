@@ -1,10 +1,10 @@
-﻿@model  IEnumerable<QLMB.Models.SuKienUuDai>
-
+﻿@model  QLMB.Controllers.ViewModel
 @{
     ViewBag.Title = "Trang chủ";
     Layout = "~/Views/Shared/_HomePage.cshtml";
     int sukien = 0;
     int uudai = 0;
+    int matbang = 0;
 }
 
 <!-- Link Boostrap-->
@@ -16,7 +16,8 @@
 <link rel="stylesheet" href="~/Resources/CSS/MainMenu_User.css" />
 <link rel="stylesheet" href="~/Resources/CSS/MultipleItem_Carousel.css" />
 
-<div>
+<!--Carousel trang chủ-->
+<div id="carousel">
     @*Banner*@
     <div id="Banner" class="carousel slide carousel-fade text-lg-center" data-bs-ride="carousel">
         @*Indicator*@
@@ -45,14 +46,68 @@
         </button>
     </div>
 </div>
+<!--Carousel trang chủ-->
 
-<link rel="stylesheet" href="~/Resources/CSS/MultipleItem_Carousel.css" />
 <div class="container-fluid Item">
-    <h2 class="mt-4">SỰ KIỆN</h2>
+    <!--Carousel Mặt bằng-->
+    <h2 class="mt-4">MẶT BẰNG</h2>
+    <div id="matBang" class="carousel" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            @foreach (QLMB.Models.MatBang matBang in Model.IE_MBList)
+            {
+                if (sukien == 0)
+                {
+                    <div class="carousel-item active">
+                        <div class="card" style="width: 25rem; height: 570px;">
+                            <div class="img-wrapper">
+                                <img class="card-img-top" src="~/Resources/Picture/Property/@matBang.HinhMB">
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-text">Lầu: @matBang.Lau</h5>
+                                <h5 class="card-text">Khu: @matBang.Khu</h5>
+                                <h5 class="card-text">Diện tích: @matBang.DienTich m<sup>2</sup></h5>
+                                <h5 class="card-text">Trạng thái: @matBang.TinhTrang.TenTT</h5>
+                                <h3 class="card-title text-danger fw-bold">@string.Format($"{matBang.TienThue:0,0} đ")</h3>
+                            </div>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="carousel-item">
+                        <div class="card" style="width: 25rem; height: 570px;">
+                            <div class="img-wrapper">
+                                <img class="card-img-top" src="~/Resources/Picture/Property/@matBang.HinhMB">
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-text">Lầu: @matBang.Lau</h5>
+                                <h5 class="card-text">Khu: @matBang.Khu</h5>
+                                <h5 class="card-text">Diện tích: @matBang.DienTich m<sup>2</sup></h5>
+                                <h5 class="card-text">Trạng thái: @matBang.TinhTrang.TenTT</h5>
+                                <h3 class="card-title text-danger fw-bold">@string.Format($"{matBang.TienThue:0,0} đ")</h3>
+                            </div>
+                        </div>
+                    </div>
+                }
+                matbang++;
+            }
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#matBang" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#matBang" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+    <!--Carousel Mặt bằng-->
 
+    <!--Carousel Sự kiện-->
+    <h2 class="mt-4">SỰ KIỆN</h2>
     <div id="SuKien" class="carousel" data-bs-ride="carousel">
         <div class="carousel-inner">
-            @foreach (var pro in Model.Where(s => s.MaDM.ToString().Trim() == "SK"))
+            @foreach (QLMB.Models.SuKienUuDai pro in Model.IE_SKUDList.Where(s => s.MaDM.ToString().Trim() == "SK"))
             {
                 if (sukien == 0)
                 {
@@ -96,11 +151,13 @@
             <span class="visually-hidden">Next</span>
         </button>
     </div>
-    
+    <!--Carousel Sự kiện-->
+
+    <!--Carousel Ưu đãi-->
     <h2 class="mt-4">ƯU  ĐÃI</h2>
     <div id="carouselExampleControls" class="carousel" data-bs-ride="carousel">
         <div class="carousel-inner">
-            @foreach (var pro in Model.Where(s => s.MaDM.ToString().Trim() == "UD"))
+            @foreach (QLMB.Models.SuKienUuDai pro in Model.IE_SKUDList.Where(s => s.MaDM.ToString().Trim() == "UD"))
             {
                 if (uudai == 0)
                 {
@@ -144,8 +201,9 @@
             <span class="visually-hidden">Next</span>
         </button>
     </div>
-
-    <script src="~/Scripts/bootstrap.bundle.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
-    <script src="~/Resources/JavaScript/multipleItemCarousel.js"></script>
+    <!--Carousel Ưu đãi-->
 </div>
+
+<script src="~/Scripts/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+<script src="~/Resources/JavaScript/multipleItemCarousel.js"></script>
