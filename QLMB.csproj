@@ -319,12 +319,9 @@
     <Content Include="Views\Account\Banned.cshtml" />
     <Content Include="Views\Account\Profile.cshtml" />
     <Content Include="Views\Login\StaffLogin.cshtml" />
-    <Content Include="Views\Account\GeneralPage.cshtml" />
-    <Content Include="Views\Account\ChangePasswordPage.cshtml" />
     <Content Include="Views\Account\General.cshtml" />
     <Content Include="Views\Account\ChangePassword.cshtml" />
     <Content Include="Views\HumanResource\SelectRole.cshtml" />
-    <Content Include="Views\Event\Test.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
