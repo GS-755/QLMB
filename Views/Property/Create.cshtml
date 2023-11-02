@@ -48,12 +48,12 @@
                         <div class="col-md-5">
                             <div class="mb-3">
                                 <label for="DienTich" class="mb-2">Diện tích (m<sup>2</sup>) <span class="text-danger"> (*)</span></label>
-                                <input type="number" class="form-control" name="DienTich" min="100" max="2000" ng-model="DienTich" required />
+                                <input type="number" class="form-control" name="DienTich" min="25" max="400" ng-model="DienTich" required />
                                 <p class="text-danger pt-2"
                                    ng-show="property.DienTich.$invalid">
-                                    Tối thiểu: 100m<sup>2</sup>
+                                    Tối thiểu: 25m<sup>2</sup>
                                     <br />
-                                    Tối đa: 2000m<sup>2</sup>
+                                    Tối đa: 400m<sup>2</sup>
                                 </p>
                             </div>
                         </div>
