@@ -188,7 +188,7 @@
     <Compile Include="Models\Process\Edit.cs" />
     <Compile Include="Models\Process\RandomID.cs" />
     <Compile Include="Models\Process\Shared.cs" />
-    <Compile Include="Models\Process\SHA256.cs" />
+    <Compile Include="Models\SHA256.cs" />
     <Compile Include="Models\Process\Validation.cs" />
     <Compile Include="Models\SuKienUuDai.cs">
       <DependentUpon>database.tt</DependentUpon>
@@ -205,6 +205,9 @@
     <Compile Include="Models\TinhTrang.cs">
       <DependentUpon>database.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\VNPay\Utils.cs" />
+    <Compile Include="Models\VNPay\VnPayCompare.cs" />
+    <Compile Include="Models\VNPay\VnPayLibrary.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
