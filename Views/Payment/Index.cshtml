@@ -1,0 +1,64 @@
+﻿@model QLMB.Models.MatBang
+@{
+    ViewBag.Title = "Thanh toán mặt bằng";
+    Layout = "~/Views/Shared/_HomePage.cshtml";
+}
+<link rel='stylesheet' type='text/css' media='screen' href='~/Resources/CSS/FormDetail.css'>
+
+<div class="m-2">
+    @Html.ActionLink(" < Quay lại", "Index", null, new { @class = "btn btn-outline-warning mt-2 mb-2" })
+</div>
+<h2 class="text-uppercase text-center">Bạn phải thanh toán <br />trước khi viết hợp đồng</h2>
+<hr />
+<section class="m-2">
+    <div class="container">
+        <div class="col">
+            <div class="row">
+                <div class="col-md-5">
+                    <img src="~/Resources/Picture/Property/@Model.HinhMB" class="img-wrapper" />
+                </div>
+                <div class="col-md-7 mt-4">
+                    <div class="Sold">
+                        <table class="w-100">
+                            <tr>
+                                <th>Mã mặt bằng</th>
+                                <td>@Html.DisplayFor(k => k.MaMB)</td>
+                            </tr>
+                            <tr>
+                                <th>Lầu</th>
+                                <td>@Html.DisplayFor(k => k.Lau)</td>
+                            </tr>
+                            <tr>
+                                <th>Khu</th>
+                                <td>@Html.DisplayFor(k => k.Khu)</td>
+                            </tr>
+                            <tr>
+                                <th>Diện tích</th>
+                                <td>@Html.DisplayFor(k => k.DienTich) m<sup>2</sup></td>
+                            </tr>
+                            <tr>
+                                <th>Tiền thuê</th>
+                                <td>@string.Format($"{Model.TienThue:0,0} đ")</td>
+                            </tr>
+                            <tr>
+                                <th>Trạng thái</th>
+                                <td>@Html.DisplayFor(k => k.TinhTrang.TenTT)</td>
+                            </tr>
+                            <tr>
+                                <th>Thanh toán</th>
+                                <td>
+                                    @using (Html.BeginForm("Payment", "Payment"))
+                                    {
+                                        @Html.HiddenFor(k => k.MaMB)
+                                        <input type="submit" value="Thanh toán right meow" class="btn btn-outline-success" />
+                                    }
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

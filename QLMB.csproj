@@ -137,6 +137,7 @@
     <Compile Include="Controllers\Manager\HumanResourceController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\Manager\PropertyController.cs" />
+    <Compile Include="Controllers\Payment\PaymentController.cs" />
     <Compile Include="Controllers\SkillIssueController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -208,6 +209,7 @@
     <Compile Include="Models\VNPay\Utils.cs" />
     <Compile Include="Models\VNPay\VnPayCompare.cs" />
     <Compile Include="Models\VNPay\VnPayLibrary.cs" />
+    <Compile Include="Models\VNPay\VNPayReturn.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -330,6 +332,9 @@
     <Content Include="Views\Property\Details.cshtml" />
     <Content Include="Views\Property\Edit.cshtml" />
     <Content Include="Views\Property\Delete.cshtml" />
+    <Content Include="Views\Payment\Index.cshtml" />
+    <Content Include="Views\Payment\PaymentSuccess.cshtml" />
+    <Content Include="Views\Payment\PaymentFailure.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
