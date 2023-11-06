@@ -1,0 +1,64 @@
+﻿@model QLMB.Models.SuKienUuDai
+
+@{
+    ViewBag.Title = "EventDetail";
+    Layout = "~/Views/Shared/_HomePage.cshtml";
+}
+
+
+
+<div class="container-fluid mt-5 event">
+    <div class="row">
+        <div class="col-sm-12 col-md-4 event_box-image col-lg-4 d-flex justify-content-center">
+            <img class="w-80 event-img" src="@Model.HinhBia" />
+        </div>
+        <div class="col-sm-12 ol-md-8 col-lg-8 my-4">
+            <div class="row">
+                <div class="col-sm-12 col-md-4 col-lg-12 text-center">
+                    <h1 class="event-title"> Thông tin sự kiện</h1>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <div class="row mt-4">
+                        <div class="col-sm-2">
+                            <p class="event-item">Tên sự kiện:</p>
+                        </div>
+                        <div class="col-sm-10">
+                            <p>@Model.TieuDe</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <p class="event-item">Ngày bắt đầu:</p>
+                        </div>
+                        <div class="col-sm-10">
+                            <div class="row">
+                                <div class="col-sm-5">
+                                    <p>@Model.NgayBatDau</p>
+                                </div>
+                                <div class="col-3">
+                                    <p class="event-item">Ngày kết thúc:</p>
+                                </div>
+                                <div class="col-sm-4">
+                                    <p>@Model.NgayKetThuc</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <p class="event-item">Mô tả:</p>
+                        </div>
+                        <div class="col-sm-10">
+                            <p>@Model.MoTa</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+

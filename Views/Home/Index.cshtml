@@ -63,7 +63,7 @@
                             </div>
 
                             <div class="card-body">
-                                <h5 class="card-title">@Html.DisplayFor(model => pro.TieuDe)</h5>
+                                <h5 class="card-title"><a href="@Url.Action("EventDetail", "Home", new { id=pro.MaDon })" class="text-black text-decoration-none">@Html.DisplayFor(model => pro.TieuDe)</a></h5>
                                 <p class="card-text">@Html.DisplayFor(model => pro.MoTa)</p>
                             </div>
                         </div>
