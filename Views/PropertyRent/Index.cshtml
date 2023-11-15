@@ -1,37 +1,37 @@
 ﻿@model IEnumerable<QLMB.Models.DonXinThue>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Quản lí đơn xin thuê mặt bằng";
     Layout = "~/Views/Shared/_HomePage.cshtml";
 }
 
-<h2>Index</h2>
+<h2 class="text-center mt-3 mb-3">Quản lí đơn xin thuê mặt bằng</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Tạo mới", "Create", null, new { @class="btn btn-primary mx-3" })
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.ThoiGianXin)
+            Thời gian xin
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.MucDich)
+            Mục đích
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ThoiHan)
+            Thời hạn
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.NguoiThue.TenDangNhap)
+            Tên đăng nhập
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.HopDong.MaHD)
+            Mã hợp đồng
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.NhanVien.MaNV)
+            Mạ nhân viên
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.TinhTrang.TenTT)
+            Tình trạng
         </th>
         <th>
             Hành động
@@ -62,9 +62,9 @@
             @Html.DisplayFor(modelItem => item.TinhTrang.TenTT)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.MaDon }) |
-            @Html.ActionLink("Details", "Details", new { id=item.MaDon }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.MaDon })
+            @Html.ActionLink("Sửa", "Edit", new { id=item.MaDon }) |
+            @Html.ActionLink("Chi tiết", "Details", new { id=item.MaDon }) |
+            @Html.ActionLink("Xoá", "Delete", new { id=item.MaDon })
         </td>
     </tr>
 }
