@@ -6,12 +6,12 @@
 <link rel='stylesheet' type='text/css' media='screen' href='~/Resources/CSS/FormDetail.css'>
 
 <div class="m-2">
-    @Html.ActionLink(" < Quay lại", "Index", null, new { @class = "btn btn-outline-warning mt-2 mb-2" })
+    @Html.ActionLink(" < Quay lại", "Index", null, new { @class = "btn btn-outline-warning mx-3 mt-2 mb-2" })
 </div>
-<h2 class="text-uppercase text-center">Bạn phải thanh toán <br />trước khi viết hợp đồng</h2>
 <hr />
 <section class="m-2">
     <div class="container">
+        <h2 class="text-center mt-2 mb-2">Bạn phải thanh toán trước khi viết hợp đồng</h2>
         <div class="col">
             <div class="row">
                 <div class="col-md-5">
@@ -50,7 +50,17 @@
                                     @using (Html.BeginForm("Payment", "Payment"))
                                     {
                                         @Html.HiddenFor(k => k.MaMB)
-                                        <input type="submit" value="Thanh toán right meow" class="btn btn-outline-success" />
+                                        <div>
+                                            <input type="radio" name="vnp_bankCode" value="VNBANK" class="form-check-input" checked />
+                                            <label for="vnp_bankCode">Thẻ ngân hàng nội địa</label>
+                                        </div>
+                                        <div>
+                                            <input type="radio" name="vnp_bankCode" value="INTCARD" class="form-check-input" />
+                                            <label for="vnp_bankCode">Thẻ tín dụng quốc tế</label>
+                                        </div>
+                                        <div>
+                                            <input type="submit" value="Thanh toán right meow" class="btn btn-outline-success mt-3 mb-3" />
+                                        </div>
                                     }
                                 </td>
                             </tr>

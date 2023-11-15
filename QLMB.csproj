@@ -129,6 +129,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\Customer\RentProperty\PropertyRentController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\Customer\ForgetPasswordController.cs" />
     <Compile Include="Controllers\Customer\LoginController.cs" />
@@ -335,6 +336,11 @@
     <Content Include="Views\Payment\Index.cshtml" />
     <Content Include="Views\Payment\PaymentSuccess.cshtml" />
     <Content Include="Views\Payment\PaymentFailure.cshtml" />
+    <Content Include="Views\PropertyRent\Create.cshtml" />
+    <Content Include="Views\PropertyRent\Delete.cshtml" />
+    <Content Include="Views\PropertyRent\Details.cshtml" />
+    <Content Include="Views\PropertyRent\Edit.cshtml" />
+    <Content Include="Views\PropertyRent\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

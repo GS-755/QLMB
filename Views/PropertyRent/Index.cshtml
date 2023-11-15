@@ -1,0 +1,72 @@
+﻿@model IEnumerable<QLMB.Models.DonXinThue>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_HomePage.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ThoiGianXin)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MucDich)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ThoiHan)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NguoiThue.TenDangNhap)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HopDong.MaHD)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NhanVien.MaNV)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TinhTrang.TenTT)
+        </th>
+        <th>
+            Hành động
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ThoiGianXin)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MucDich)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ThoiHan)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NguoiThue.TenDangNhap)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HopDong.MaHD)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NhanVien.MaNV)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TinhTrang.TenTT)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.MaDon }) |
+            @Html.ActionLink("Details", "Details", new { id=item.MaDon }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.MaDon })
+        </td>
+    </tr>
+}
+
+</table>

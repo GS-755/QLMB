@@ -50,7 +50,7 @@ namespace QLMB.Controllers.Payment
             return View();  
         }
         [HttpPost]
-        public ActionResult Payment(MatBang matBang)
+        public ActionResult Payment(MatBang matBang, string vnp_bankCode)
         {
             //Get Config Info
             string vnp_Returnurl = ConfigurationManager.AppSettings["vnp_Returnurl"]; //URL nhan ket qua tra ve 
@@ -67,7 +67,7 @@ namespace QLMB.Controllers.Payment
             vnpay.AddRequestData("vnp_Command", "pay");
             vnpay.AddRequestData("vnp_TmnCode", vnp_TmnCode);
             vnpay.AddRequestData("vnp_Amount", (matBang.TienThue * 100).ToString()); // Nhân cho 100 để thêm 2 số 0 :) 
-            vnpay.AddRequestData("vnp_BankCode", "VNBANK");
+            vnpay.AddRequestData("vnp_BankCode", vnp_bankCode.Trim());
             vnpay.AddRequestData("vnp_CreateDate", DateTime.Now.ToString("yyyyMMddHHmmss"));
             vnpay.AddRequestData("vnp_CurrCode", "VND");
             vnpay.AddRequestData("vnp_IpAddr", Utils.GetIpAddress());

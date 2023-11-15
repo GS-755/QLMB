@@ -1,0 +1,89 @@
+﻿@model QLMB.Models.DonXinThue
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_HomePage.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>DonXinThue</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ThoiGianXin)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ThoiGianXin)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MucDich)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MucDich)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ThoiHan)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ThoiHan)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NguoiThue.MatKhau)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NguoiThue.MatKhau)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HopDong.MaHD)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HopDong.MaHD)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MatBang.HinhMB)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MatBang.HinhMB)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NhanVien.MatKhau)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NhanVien.MatKhau)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TinhTrang.TenTT)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TinhTrang.TenTT)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>
