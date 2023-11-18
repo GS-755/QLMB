@@ -59,11 +59,11 @@
                     <div class="carousel-item active">
                         <div class="card" style="width: 25rem; height: 570px;">
                             <div class="img-wrapper">
-                                <img class="card-img-top" src="@Url.Content(pro.HinhBia)">
+                                <a href="@Url.Action("EventDetail/"+ pro.MaDon,"Home")"><img class="card-img-top" src="@Url.Content(pro.HinhBia)"></a>
                             </div>
 
                             <div class="card-body">
-                                <h5 class="card-title"><a href="@Url.Action("EventDetail", "Home", new { id=pro.MaDon })" class="text-black text-decoration-none">@Html.DisplayFor(model => pro.TieuDe)</a></h5>
+                                <h5 class="card-title"><a href="@Url.Action("EventDetail/"+ pro.MaDon,"Home")" class="text-black text-decoration-none">@Html.DisplayFor(model => pro.TieuDe)</a></h5>
                                 <p class="card-text">@Html.DisplayFor(model => pro.MoTa)</p>
                             </div>
                         </div>
@@ -74,11 +74,11 @@
                     <div class="carousel-item">
                         <div class="card" style="width: 25rem; height: 570px;">
                             <div class="img-wrapper">
-                                <img class="card-img-top" src="@Url.Content(pro.HinhBia)">
+                                <a href="@Url.Action("EventDetail/"+ pro.MaDon,"Home")"><img class="card-img-top" src="@Url.Content(pro.HinhBia)"></a>
                             </div>
 
                             <div class="card-body">
-                                <h5 class="card-title">@Html.DisplayFor(model => pro.TieuDe)</h5>
+                                <h5 class="card-title"><a href="@Url.Action("EventDetail/"+ pro.MaDon,"Home")" class="text-black text-decoration-none">@Html.DisplayFor(model => pro.TieuDe)</a></h5>
                                 <p class="card-text">@Html.DisplayFor(model => pro.MoTa)</p>
                             </div>
                         </div>
