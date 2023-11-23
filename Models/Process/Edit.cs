@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Data.Entity;
 using System.Linq;
-using static System.Data.Entity.Infrastructure.Design.Executor;
 
 namespace QLMB.Models.Process
 {
