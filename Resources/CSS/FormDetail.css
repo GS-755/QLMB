@@ -1,5 +1,5 @@
 ﻿.body {
-    width: 1200px;
+    /*width: 1200px;*/
     margin: 0 auto;
 }
 
@@ -10,9 +10,9 @@
 
 
 
-.Sold {
+/*.Sold {
     width: 392px;
-}
+}*/
 
 
 
@@ -21,8 +21,8 @@
 }
 
 .Form {
-    width:auto;
-    float:right
+    width: auto;
+    float: right
 }
 
 

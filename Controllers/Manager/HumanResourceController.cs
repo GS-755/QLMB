@@ -1,11 +1,9 @@
 ﻿using QLMB.Models;
 using System.Linq;
 using System.Web.Mvc;
-using System.Data.Entity;
-using System.Collections.Generic;
 using QLMB.Models.Process;
 
-namespace QLMB.Controllers.Manager
+namespace QLMB.Controllers
 {
     public class HumanResourceController : Controller
     {

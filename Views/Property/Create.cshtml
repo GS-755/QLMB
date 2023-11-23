@@ -1,0 +1,95 @@
+﻿@using QLMB.Models;
+@model MatBang
+
+@{
+    ViewBag.Title = "Thêm mặt bằng";
+    Layout = "~/Views/Shared/_Manager.cshtml";
+}
+<div class="mt-2 mb-2">
+    @Html.ActionLink(" < Quay lại", "Index", "Property", null, new { @class = "btn btn-primary" })
+</div>
+<div class="container-fluid">
+    <div class="col">
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6" ng-app="myApp" ng-init="singlePrice=@MatBang.SINGLE_PRICE">
+                @using (Html.BeginForm("Create", "Property", FormMethod.Post, new { @name = "property", enctype = "multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <h2 class="text-uppercase text-center pt-3">Thêm mặt bằng</h2>
+                    <hr />
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="row mb-3">
+                        <div class="col-md-12">
+                            <label for="TenMB" class="mb-2">Tên mặt bằng: <span class="text-danger"> (*)</span></label>
+                            <input type="text" class="form-control" maxlength="40" name="TenMB" ng-model="TenMB" required />
+                            <p class="text-danger pt-2" ng-show="property.TenMB.$invalid" ng-hide="property.TenMB.$valid">Tên mặt bằng từ 1 đến 40 ký tự</p>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="Lau" class="mb-2">Lầu: <span class="text-danger"> (*)</span></label>
+                                <input type="number" class="form-control" name="Lau" min="1" max="7" ng-model="Lau" required />
+                                <p class="text-danger pt-2"
+                                   ng-show="property.Lau.$invalid">
+                                    Số lầu tối thiểu: 1
+                                    <br />
+                                    Số lầu tối đa: 7
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="Khu" class="mb-2">Khu: <span class="text-danger"> (*)</span></label>
+                                <input type="number" class="form-control" name="Khu" min="1" max="30" ng-model="Khu" required />
+                                <p class="text-danger pt-2"
+                                   ng-show="property.Khu.$invalid">
+                                    Khu tối thiểu: 1
+                                    <br />
+                                    Khu tối đa: 30
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-5">
+                            <div class="mb-3">
+                                <label for="DienTich" class="mb-2">Diện tích (m<sup>2</sup>) <span class="text-danger"> (*)</span></label>
+                                <input type="number" class="form-control" name="DienTich" min="25" max="400" ng-model="DienTich" required />
+                                <p class="text-danger pt-2"
+                                   ng-show="property.DienTich.$invalid">
+                                    Tối thiểu: 25m<sup>2</sup>
+                                    <br />
+                                    Tối đa: 400m<sup>2</sup>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-7">
+                            <label for="TienThue" class="mb-2">Tiền thuê: <span class="text-danger"> (*)</span></label>
+                            <p class="text-danger fs-4" ng-hide="property.DienTich.$invalid">{{ DienTich * singlePrice | numberFormatter }}đ</p>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="HinhMB" class="mb-2">Hình mặt bằng: </label>
+                        <input type="file" class="form-control" name="UploadImage" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="MATT" class="mb-2">Trạng thái: </label>
+                        @Html.DropDownList("MATT", null, htmlAttributes: new { @class = "form-control" })
+                    </div>
+                    <div class="mb-3">
+                        <div class="text-center">
+                            <button class="btn btn-secondary" ng-show="property.$invalid" ng-hide="property.$valid" disabled>Tạo mới</button>
+                            <input type="submit" value="Tạo mới" class="btn btn-success" ng-show="property.$valid" />
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="col-md-3"></div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/angular.min.js"></script>
+<script src="~/Resources/JavaScript/number-formatter.js"></script>

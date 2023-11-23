@@ -1,10 +1,7 @@
 ﻿using QLMB.Models;
 using QLMB.Models.Process;
-using System.Data.Entity;
 using System.Linq;
-using System.Runtime.Remoting.Messaging;
 using System.Web.Mvc;
-using System.Xml.Linq;
 
 namespace QLMB.Controllers
 {
@@ -26,6 +23,8 @@ namespace QLMB.Controllers
                     return RedirectToAction("Main", "HumanResource");
                 case "SKUD":
                     return RedirectToAction("EventMain", "Event");
+                case "MB":
+                    return RedirectToAction("Index", "Property");
                 default:
                     return RedirectToAction("Index", "Home");
             }
@@ -61,6 +60,10 @@ namespace QLMB.Controllers
                 //Trang xem chi tiết (Nhân viên)
                 case "EmployeeDetail":
                     return RedirectToAction("Detail", "HumanResource");
+
+                //Trang Quản lý mặt bằng
+                case "Property":
+                    return RedirectToAction("Index", "Property");
 
                 //Bị ban
                 case "Banned":

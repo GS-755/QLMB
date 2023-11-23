@@ -1,0 +1,79 @@
+﻿@model QLMB.Models.DonXinThue
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_HomePage.cshtml";
+}
+
+<h2>Details</h2>
+@Html.ActionLink(" < Quay lại", "Index", "PropertyRent", null, new { @class="btn btn-primary" })
+<div>
+    <h4>DonXinThue</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Thời gian xin
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ThoiGianXin)
+        </dd>
+
+        <dt>
+            Mục đích
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MucDich)
+        </dd>
+
+        <dt>
+            Thời hạn
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ThoiHan)
+        </dd>
+
+        <dt>
+            Tên đăng nhập
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NguoiThue.TenDangNhap)
+        </dd>
+
+        <dt>
+            Mã hợp đồng
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HopDong.MaHD)
+        </dd>
+
+        <dt>
+            Hình mặt bằng
+        </dt>
+
+        <dt>
+            Mã nhân viên
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NhanVien.MaNV)
+        </dd>
+
+        <dt>
+            Tình trạng
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TinhTrang.TenTT)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.MaDon }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -15,6 +15,11 @@
     padding-bottom: 75px;
     position: inherit;
 }
+.img-wrapper {
+   width: 100%;
+   height: auto;
+   position: relative;
+}
 /* Color pallete */
 :root {
     --pallete-1: #000a19;

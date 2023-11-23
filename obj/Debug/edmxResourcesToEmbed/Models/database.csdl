@@ -82,6 +82,7 @@
     <Property Name="MATT" Type="Int16" Nullable="false" />
     <NavigationProperty Name="DonXinThues" Relationship="Self.FK__DonXinThue__MaMB__4F7CD00D" FromRole="MatBang" ToRole="DonXinThue" />
     <NavigationProperty Name="TinhTrang" Relationship="Self.FK__MatBang__MATT__3D5E1FD2" FromRole="MatBang" ToRole="TinhTrang" />
+    <Property Name="TenMB" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="NguoiThue">
     <Key>

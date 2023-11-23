@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="DoanHK5Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="DoanHK5Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="ChucVu">
           <Key>
             <PropertyRef Name="MaChucVu" />
@@ -70,6 +70,7 @@
           <Property Name="TienThue" Type="float" Nullable="false" />
           <Property Name="HinhMB" Type="nvarchar(max)" />
           <Property Name="MATT" Type="smallint" Nullable="false" />
+          <Property Name="TenMB" Type="nvarchar" MaxLength="40" />
         </EntityType>
         <EntityType Name="NguoiThue">
           <Key>
@@ -106,6 +107,21 @@
           <Property Name="NgayDuyet" Type="date" />
           <Property Name="MATT" Type="smallint" Nullable="false" />
         </EntityType>
+        <EntityType Name="TienThue">
+          <Key>
+            <PropertyRef Name="MaTienThue" />
+          </Key>
+          <Property Name="MaTienThue" Type="char" MaxLength="40" Nullable="false" />
+          <Property Name="SoTienNo" Type="char" MaxLength="20" Nullable="false" />
+          <Property Name="MaHD" Type="char" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TinhTrang">
+          <Key>
+            <PropertyRef Name="MATT" />
+          </Key>
+          <Property Name="MATT" Type="smallint" Nullable="false" />
+          <Property Name="TenTT" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
         <EntityType Name="ThongTinND">
           <Key>
             <PropertyRef Name="CMND" />
@@ -130,21 +146,6 @@
           <Property Name="MaLuong" Type="int" Nullable="false" />
           <Property Name="MaNV" Type="char" MaxLength="6" Nullable="false" />
           <Property Name="MATT" Type="smallint" Nullable="false" />
-        </EntityType>
-        <EntityType Name="TienThue">
-          <Key>
-            <PropertyRef Name="MaTienThue" />
-          </Key>
-          <Property Name="MaTienThue" Type="char" MaxLength="40" Nullable="false" />
-          <Property Name="SoTienNo" Type="char" MaxLength="20" Nullable="false" />
-          <Property Name="MaHD" Type="char" MaxLength="20" Nullable="false" />
-        </EntityType>
-        <EntityType Name="TinhTrang">
-          <Key>
-            <PropertyRef Name="MATT" />
-          </Key>
-          <Property Name="MATT" Type="smallint" Nullable="false" />
-          <Property Name="TenTT" Type="nvarchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <Association Name="FK__DonXinThu__TenDa__4E88ABD4">
           <End Role="NguoiThue" Type="Self.NguoiThue" Multiplicity="1" />
@@ -376,6 +377,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__TienThue__MaHD__440B1D61">
+          <End Role="HopDong" Type="Self.HopDong" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TienThue" Type="Self.TienThue" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HopDong">
+              <PropertyRef Name="MaHD" />
+            </Principal>
+            <Dependent Role="TienThue">
+              <PropertyRef Name="MaHD" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__ThuChi__MaLuong__628FA481">
           <End Role="Luong" Type="Self.Luong" Multiplicity="1" />
           <End Role="ThuChi" Type="Self.ThuChi" Multiplicity="*" />
@@ -414,20 +429,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__TienThue__MaHD__440B1D61">
-          <End Role="HopDong" Type="Self.HopDong" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="TienThue" Type="Self.TienThue" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="HopDong">
-              <PropertyRef Name="MaHD" />
-            </Principal>
-            <Dependent Role="TienThue">
-              <PropertyRef Name="MaHD" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="DoanHK5ModelStoreContainer">
           <EntitySet Name="ChucVu" EntityType="Self.ChucVu" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DanhMuc" EntityType="Self.DanhMuc" Schema="dbo" store:Type="Tables" />
@@ -439,10 +440,10 @@
           <EntitySet Name="NguoiThue" EntityType="Self.NguoiThue" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="NhanVien" EntityType="Self.NhanVien" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SuKienUuDai" EntityType="Self.SuKienUuDai" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="ThongTinND" EntityType="Self.ThongTinND" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="ThuChi" EntityType="Self.ThuChi" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TienThue" EntityType="Self.TienThue" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TinhTrang" EntityType="Self.TinhTrang" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ThongTinND" EntityType="Self.ThongTinND" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ThuChi" EntityType="Self.ThuChi" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK__DonXinThu__TenDa__4E88ABD4" Association="Self.FK__DonXinThu__TenDa__4E88ABD4">
             <End Role="NguoiThue" EntitySet="NguoiThue" />
             <End Role="DonXinThue" EntitySet="DonXinThue" />
@@ -515,6 +516,10 @@
             <End Role="TinhTrang" EntitySet="TinhTrang" />
             <End Role="SuKienUuDai" EntitySet="SuKienUuDai" />
           </AssociationSet>
+          <AssociationSet Name="FK__TienThue__MaHD__440B1D61" Association="Self.FK__TienThue__MaHD__440B1D61">
+            <End Role="HopDong" EntitySet="HopDong" />
+            <End Role="TienThue" EntitySet="TienThue" />
+          </AssociationSet>
           <AssociationSet Name="FK__ThuChi__MaLuong__628FA481" Association="Self.FK__ThuChi__MaLuong__628FA481">
             <End Role="Luong" EntitySet="Luong" />
             <End Role="ThuChi" EntitySet="ThuChi" />
@@ -527,13 +532,8 @@
             <End Role="TinhTrang" EntitySet="TinhTrang" />
             <End Role="ThuChi" EntitySet="ThuChi" />
           </AssociationSet>
-          <AssociationSet Name="FK__TienThue__MaHD__440B1D61" Association="Self.FK__TienThue__MaHD__440B1D61">
-            <End Role="HopDong" EntitySet="HopDong" />
-            <End Role="TienThue" EntitySet="TienThue" />
-          </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="DoanHK5Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -619,6 +619,7 @@
           <Property Name="MATT" Type="Int16" Nullable="false" />
           <NavigationProperty Name="DonXinThues" Relationship="Self.FK__DonXinThue__MaMB__4F7CD00D" FromRole="MatBang" ToRole="DonXinThue" />
           <NavigationProperty Name="TinhTrang" Relationship="Self.FK__MatBang__MATT__3D5E1FD2" FromRole="MatBang" ToRole="TinhTrang" />
+          <Property Name="TenMB" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="NguoiThue">
           <Key>
@@ -1177,6 +1178,7 @@
           <EntitySetMapping Name="MatBangs">
             <EntityTypeMapping TypeName="DoanHK5Model.MatBang">
               <MappingFragment StoreEntitySet="MatBang">
+                <ScalarProperty Name="TenMB" ColumnName="TenMB" />
                 <ScalarProperty Name="MaMB" ColumnName="MaMB" />
                 <ScalarProperty Name="Lau" ColumnName="Lau" />
                 <ScalarProperty Name="DienTich" ColumnName="DienTich" />

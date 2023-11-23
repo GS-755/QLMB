@@ -1,0 +1,85 @@
+﻿@model QLMB.Models.MatBang
+@{
+    ViewBag.Title = "Thanh toán mặt bằng";
+    Layout = "~/Views/Shared/_HomePage.cshtml";
+}
+<link rel='stylesheet' type='text/css' media='screen' href='~/Resources/CSS/FormDetail.css'>
+
+<div class="m-2">
+    @Html.ActionLink(" < Quay lại", "Index", "Home", null, new { @class = "btn btn-outline-warning mx-3 mt-2 mb-2" })
+</div>
+<hr />
+<section class="m-2">
+    <div class="container">
+        <div class="col">
+            <div class="row">
+                <div class="col-md-5">
+                    <img src="~/Resources/Picture/Property/@Model.HinhMB" class="img-wrapper mt-4" alt="@Model.TenMB" />
+                </div>
+                <div class="col-md-7 pb-3">
+                    <h2 class="text-center mt-3">@Model.TenMB</h2>
+                    <div class="Sold">
+                        <table class="w-100">
+                            <tr>
+                                <th>Mã mặt bằng</th>
+                                <td>@Html.DisplayFor(k => k.MaMB)</td>
+                            </tr>
+                            <tr>
+                                <th>Lầu</th>
+                                <td>@Html.DisplayFor(k => k.Lau)</td>
+                            </tr>
+                            <tr>
+                                <th>Khu</th>
+                                <td>@Html.DisplayFor(k => k.Khu)</td>
+                            </tr>
+                            <tr>
+                                <th>Diện tích</th>
+                                <td>@Html.DisplayFor(k => k.DienTich) m<sup>2</sup></td>
+                            </tr>
+                            <tr>
+                                <th>Trạng thái</th>
+                                <td>@Html.DisplayFor(k => k.TinhTrang.TenTT)</td>
+                            </tr>
+                            <tr>
+                                <th>Tiền thuê</th>
+                                <td class="text-danger fw-bold fs-3">@string.Format($"{Model.TienThue:0,0} đ")</td>
+                            </tr>
+                            <tr>
+                                <th>Thanh toán</th>
+                                <td>
+                                    @if (Session["DX_TenDangNhap"] != null)
+                                    {
+                                        using (Html.BeginForm("Payment", "Payment"))
+                                        {
+                                            @Html.HiddenFor(k => k.MaMB)
+                                            <div>
+                                                <input type="radio" name="vnp_bankCode" value="VNBANK" class="form-check-input" checked />
+                                                <label for="vnp_bankCode">Thẻ ngân hàng nội địa</label>
+                                            </div>
+                                            <div>
+                                                <input type="radio" name="vnp_bankCode" value="INTCARD" class="form-check-input" />
+                                                <label for="vnp_bankCode">Thẻ tín dụng quốc tế</label>
+                                            </div>
+                                            <div>
+                                                <input type="radio" name="vnp_bankCode" value="VNPAY" class="form-check-input" />
+                                                <label for="vnp_bankCode">Tôi sẽ tự chọn chức năng</label>
+                                            </div>
+                                            <div class="m-2 text-center row">
+                                                <input type="submit" value="Thanh toán" class="btn btn-outline-success mt-3 mb-3" />
+                                            </div>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <p class="fs-4 text-center text-danger fw-bold">Bạn phải đăng nhập để thuê mặt bằng</p>
+                                    }
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

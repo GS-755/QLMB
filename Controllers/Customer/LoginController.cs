@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Web.Mvc;
 
-namespace QLMB.Controllers.Customer
+namespace QLMB.Controllers
 {
     public class LoginController : Controller
     {
@@ -107,6 +107,8 @@ namespace QLMB.Controllers.Customer
                 {
                     ThongTinND data = db.ThongTinNDs.Where(a => a.CMND == checkLogin.Item3.CMND).First();
                     Session["AccountName"] = data.HoTen;
+                    Session["DX_TenDangNhap"] = TenDangNhap;
+
                     return true;
                 }
                 ModelState.AddModelError("Error", checkLogin.Item2);

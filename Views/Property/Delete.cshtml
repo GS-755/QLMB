@@ -1,0 +1,60 @@
+﻿@model QLMB.Models.MatBang
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Manager.cshtml";
+}
+<link rel='stylesheet' type='text/css' media='screen' href='~/Resources/CSS/FormDetail.css'>
+
+<h2>Xoá mặt bằng</h2>
+<hr />
+<section class="m-2">
+    <div class="container">
+        <div class="col">
+            <div class="row">
+                <h3>Bạn có chắc là muốn xoá mặt bằng này?</h3>
+                <div class="col-md-6">
+                    <div class="Sold">
+                        <table>
+                            <tr>
+                                <th>Mã mặt bằng</th>
+                                <td>@Html.DisplayFor(k => k.MaMB)</td>
+                            </tr>
+                            <tr>
+                                <th>Lầu</th>
+                                <td>@Html.DisplayFor(k => k.Lau)</td>
+                            </tr>
+                            <tr>
+                                <th>Diện tích</th>
+                                <td>@Html.DisplayFor(k => k.DienTich)</td>
+                            </tr>
+                            <tr>
+                                <th>Khu</th>
+                                <td>@Html.DisplayFor(k => k.Khu)</td>
+                            </tr>
+                            <tr>
+                                <th>Tiền thuê</th>
+                                <td>@Html.DisplayFor(k => k.TienThue)</td>
+                            </tr>
+                            <tr>
+                                <th>Trạng thái</th>
+                                <td>@Html.DisplayFor(k => k.TinhTrang.TenTT)</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <div class="form-actions no-color">
+                            <input type="submit" value="Xoá" class="btn btn-outline-danger" /> |
+                            @Html.ActionLink("Quay lại", "Index", null, new { @class = "btn btn-outline-warning" })
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

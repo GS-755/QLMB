@@ -9,15 +9,19 @@
 
 namespace QLMB.Models
 {
-    using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Web;
+
     public partial class MatBang
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public static double SINGLE_PRICE = 550000;
+        public static string SERVER_IMG_PATH = "~/Resources/Picture/Property/";
         public MatBang()
         {
             this.DonXinThues = new HashSet<DonXinThue>();
+            this.HinhMB = SERVER_IMG_PATH;
         }
     
         public string MaMB { get; set; }
@@ -26,7 +30,10 @@ namespace QLMB.Models
         public short Khu { get; set; }
         public double TienThue { get; set; }
         public string HinhMB { get; set; }
+        [NotMapped]
+        public HttpPostedFileBase UploadImage { get; set; }
         public short MATT { get; set; }
+        public string TenMB { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DonXinThue> DonXinThues { get; set; }
