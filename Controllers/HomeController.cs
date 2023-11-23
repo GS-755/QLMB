@@ -22,5 +22,24 @@ namespace QLMB.Controllers
 
             return View(viewModel);
         }
+        public ActionResult EventDetail(string id)
+        {
+            try
+            {
+                //Kiểm tra hợp lệ
+                SuKienUuDai info = new SuKienUuDai();
+                if (id == null || id == "")
+                    return RedirectToAction("Index", "SkillIssue");
+                else
+                {
+                    info = db.SuKienUuDais.Where(s => s.MaDon == id).FirstOrDefault();
+                }
+
+                return View(info);
+            }
+
+            //Lỗi xử lý --> Skill Issue :))
+            catch { return RedirectToAction("Index", "SkillIssue"); }
+        }
     }
 }

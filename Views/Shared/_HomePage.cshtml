@@ -13,63 +13,62 @@
 </head>
 <body>
     <!--Navbar start-->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light p-0 m-0 text-uppercase" style="font-size: 17.5px;">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="@Url.Action("Index", "Home")">
-                <img 
-                     src="~/Resources/Picture/Logo/Logo_LightMode.png"
-                     alt="Gà Tây Ninh"
-                     class="nav-item"
-                     height="60"
-                />
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Sự kiện</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Ưu đãi</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Báo giá</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Giới thiệu</a>
-                    </li>
-                </ul>
-                @if (Session["AccountName"] == null)
-                {
-                    @Html.ActionLink("Đăng nhập", "Login", "Login", null, new { @class = "nav-link mt-2 mb-2" })
-                }
-                else
-                {
-                    <ul class="navbar-nav">
-                        <li class="nav-item dropdown">
-                            <a 
-                               class="nav-link dropdown-toggle" 
-                               href="#" id="navbarDropDown" 
-                               role="button" data-bs-toggle="dropdown" 
-                               aria-expanded="false">
-                                Xin chào, @Session["AccountName"].ToString()
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropDown">
-                                <li><a class="dropdown-item" href="#">Thông tin</a></li>
-                                <li><a class="dropdown-item" href="#">Quản lý thuê</a></li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li>
-                                    @Html.ActionLink("Đăng xuất", "Logout", "Login", null, new { @class="dropdown-item" })
-                                </li>
-                            </ul>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light p-0 m-0 text-uppercase" style="font-size: 17.5px;">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="@Url.Action("Index", "Home")">
+                    <img src="~/Resources/Picture/Logo/Logo_LightMode.png"
+                         alt="Gà Tây Ninh"
+                         class="nav-item"
+                         height="60" />
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Sự kiện</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Ưu đãi</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Báo giá</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Giới thiệu</a>
                         </li>
                     </ul>
-                }
+                    @if (Session["AccountName"] == null)
+                    {
+                        @Html.ActionLink("Đăng nhập", "Login", "Login", null, new { @class = "nav-link mt-2 mb-2" })
+                    }
+                    else
+                    {
+                        <ul class="navbar-nav">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle"
+                                   href="#" id="navbarDropDown"
+                                   role="button" data-bs-toggle="dropdown"
+                                   aria-expanded="false">
+                                    Xin chào, @Session["AccountName"].ToString()
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropDown">
+                                    <li><a class="dropdown-item" href="#">Thông tin</a></li>
+                                    <li><a class="dropdown-item" href="#">Quản lý thuê</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li>
+                                        @Html.ActionLink("Đăng xuất", "Logout", "Login", null, new { @class = "dropdown-item" })
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    }
+                </div>
             </div>
-        </div>
-    </nav>
+        </nav>
+    </header>
     <!--Navbar end-->
     @RenderBody()
     <hr class="mt-5 mb-5" />
