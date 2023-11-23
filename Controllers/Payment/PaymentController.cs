@@ -5,6 +5,7 @@ using System.Web.Mvc;
 using System.Configuration;
 using QLMB.Models;
 using QLMB.Models.VNPay;
+using System.Data.Entity;
 
 namespace QLMB.Controllers.Payment
 {
@@ -22,10 +23,11 @@ namespace QLMB.Controllers.Payment
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
                 MatBang matBang = db.MatBangs.Find(id);
-                if (matBang == null)
                 {
+                if (matBang == null)
                     return HttpNotFound();
                 }
+                Session["MaMB"] = id;
 
                 return View(matBang);
             }
@@ -34,21 +36,51 @@ namespace QLMB.Controllers.Payment
                 return RedirectToAction("Index", "SkillIssue");
             }
         }
-        public ActionResult PaymentSuccess() 
+        public ActionResult PaymentStatus() 
         {
             VNPayReturn vNPayReturn = new VNPayReturn();
             vNPayReturn.ProcessResponses();
-
             if(vNPayReturn != null)
             {
+                if (vNPayReturn.TransacStatus == Convert.ToInt32(VNPayReturn.TRANSAC_CODE))
+                {
+                    ViewBag.TransStatus = "Giao dịch thành công";
+                    // Generate new contract
+                    HopDong hd = new HopDong();
+                    hd.MaHD = RandomID.Get(10); 
+                    hd.ThoiGianDuyet = 60;
+                    db.HopDongs.Add(hd);
+                    db.SaveChanges();
+                    // Generate new form
+                    DonXinThue dxt = new DonXinThue();
+                    dxt.MaDon = RandomID.Get();
+                    dxt.MaMB = Session["MaMB"].ToString();
+                    dxt.ThoiHan = 60;
+                    dxt.MucDich = "";
+                    dxt.MaNV = "MB0";
+                    dxt.ThoiGianXin = DateTime.Now;
+                    dxt.TenDangNhap = Session["DX_TenDangNhap"].ToString();
+                    dxt.MATT = 1;
+                    dxt.MaHD = hd.MaHD;
+                    db.DonXinThues.Add(dxt);
+                    db.SaveChanges();
+                    // Assign property state
+                    MatBang mb = db.MatBangs.FirstOrDefault(k => k.MaMB == dxt.MaMB);
+                    mb.MATT = 8;
+                    db.Entry(mb).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
+                else
+                {
+                    ViewBag.TransStatus = "Giao dịch thất bại";
+                }
+
                 return View(vNPayReturn);
             }
+
             return RedirectToAction("Index", "SkillIssue");
         }
-        public ActionResult PaymentFailure() 
-        {
-            return View();  
-        }
+
         [HttpPost]
         public ActionResult Payment(MatBang matBang, string vnp_bankCode)
         {

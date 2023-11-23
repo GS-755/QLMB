@@ -6,13 +6,13 @@
 }
 
 <h2>Details</h2>
-
+@Html.ActionLink(" < Quay lại", "Index", "PropertyRent", null, new { @class="btn btn-primary" })
 <div>
     <h4>DonXinThue</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.ThoiGianXin)
+            Thời gian xin
         </dt>
 
         <dd>
@@ -20,7 +20,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.MucDich)
+            Mục đích
         </dt>
 
         <dd>
@@ -28,7 +28,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.ThoiHan)
+            Thời hạn
         </dt>
 
         <dd>
@@ -36,15 +36,15 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.NguoiThue.MatKhau)
+            Tên đăng nhập
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.NguoiThue.MatKhau)
+            @Html.DisplayFor(model => model.NguoiThue.TenDangNhap)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.HopDong.MaHD)
+            Mã hợp đồng
         </dt>
 
         <dd>
@@ -52,23 +52,19 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.MatBang.HinhMB)
+            Hình mặt bằng
+        </dt>
+
+        <dt>
+            Mã nhân viên
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.MatBang.HinhMB)
+            @Html.DisplayFor(model => model.NhanVien.MaNV)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.NhanVien.MatKhau)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.NhanVien.MatKhau)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.TinhTrang.TenTT)
+            Tình trạng
         </dt>
 
         <dd>

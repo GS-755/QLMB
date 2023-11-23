@@ -61,22 +61,22 @@ namespace QLMB.Models.VNPay
                     this.ServerTransacID = vnpayTranId.ToString();
                     this.PaymentAmount = vnp_Amount;
                     this.BankCode = bankCode;
-                    if (vnp_ResponseCode == TRANSAC_CODE && vnp_TransactionStatus == RESPONSE_CODE)
+                    if (vnp_ResponseCode == RESPONSE_CODE && vnp_TransactionStatus == TRANSAC_CODE)
                     {
                         //Thanh toan thanh cong
-                        this.ReturnText = "Cảm ơn quý khách đã nạp VIP :D";
+                        this.ReturnText = "Cảm ơn quý khách đã giao dịch";
 
                         return true;
                     }
                     else
                     {
                         //Thanh toan khong thanh cong. Ma loi: vnp_ResponseCode
-                        this.ReturnText = "Có lỗi xảy ra trong quá trình xử lý.<br/>Mã lỗi: " + vnp_ResponseCode;
+                        this.ReturnText = "Có lỗi xảy ra trong quá trình xử lý.\n(Mã lỗi: " + vnp_ResponseCode + ")";
                     }
                 }
                 else
                 {
-                    this.ReturnText = "Có lỗi xảy ra trong quá trình xử lý.<br/>Mã lỗi: " + vnp_ResponseCode;
+                    this.ReturnText = "Có lỗi xảy ra trong quá trình xử lý.\n(Mã lỗi: " + vnp_ResponseCode + ")";
                 }
             }
 

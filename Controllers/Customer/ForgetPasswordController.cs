@@ -2,7 +2,7 @@
 using System.Web.Mvc;
 using QLMB.Models.Process;
 
-namespace QLMB.Controllers.Customer
+namespace QLMB.Controllers
 {
     public class ForgetPasswordController : Controller
     {

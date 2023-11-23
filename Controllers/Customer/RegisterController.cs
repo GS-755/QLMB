@@ -2,7 +2,7 @@
 using QLMB.Models.Process;
 using System.Web.Mvc;
 
-namespace QLMB.Controllers.Customer
+namespace QLMB.Controllers
 {
     public class RegisterController : Controller
     {

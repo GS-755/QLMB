@@ -63,14 +63,17 @@
                             <div class="img-wrapper">
                                 <img class="card-img-top" src="~/Resources/Picture/Property/@matBang.HinhMB">
                             </div>
+                            <div class="text-center">
+                                <h5 class="card-title mt-3">@matBang.TenMB</h5>
+                            </div>
                             <div class="card-body">
                                 <h6 class="card-text">Lầu: @matBang.Lau</h6>
                                 <h6 class="card-text">Khu: @matBang.Khu</h6>
                                 <h6 class="card-text">Diện tích: @matBang.DienTich m<sup>2</sup></h6>
                                 <h6 class="card-text">Trạng thái: @matBang.TinhTrang.TenTT</h6>
                                 <h5 class="card-title text-danger fw-bold">@string.Format($"{matBang.TienThue:0,0} đ")</h5>
-                                <div class="mt-2 mb-2 text-center">
-                                    <a href="@Url.Action("Index", "Payment", new { id=matBang.MaMB })" class="btn btn-success text-center">Thanh toán right meow</a>
+                                <div class="m-2 text-center row">
+                                    <a href="@Url.Action("Index", "Payment", new { id=matBang.MaMB })" class="btn btn-success text-center">Chi tiết</a>
                                 </div>
                             </div>
                         </div>
@@ -89,8 +92,8 @@
                                 <h6 class="card-text">Diện tích: @matBang.DienTich m<sup>2</sup></h6>
                                 <h6 class="card-text">Trạng thái: @matBang.TinhTrang.TenTT</h6>
                                 <h5 class="card-title text-danger fw-bold">@string.Format($"{matBang.TienThue:0,0} đ")</h5>
-                                <div class="mt-2 mb-2 text-center">
-                                    <a href="@Url.Action("Index", "Payment", new { id=matBang.MaMB })" class="btn btn-success text-center">Thanh toán right meow</a>
+                                <div class="m-2 text-center row">
+                                    <a href="@Url.Action("Index", "Payment", new { id=matBang.MaMB })" class="btn btn-success text-center">Chi tiết</a>
                                 </div>
                             </div>
                         </div>

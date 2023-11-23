@@ -41,18 +41,18 @@
 
                 @* Trang điều khiển *@
                 @*<li>
-                     Link
-                    <a href="#">
-                     Icon
-                    <i class='bx bx-grid-alt'></i>
-                     Tên
-                    <span class="link_name">Thanh điều khiển</span>
-                    </a>
-                     Lúc thu lại
-                    <ul class="sub-menu blank">
-                            <li><a class="link_name" href="#">Thanh điều khiển</a></li>
-                        </ul>
-                    </li>*@
+         Link
+        <a href="#">
+         Icon
+        <i class='bx bx-grid-alt'></i>
+         Tên
+        <span class="link_name">Thanh điều khiển</span>
+        </a>
+         Lúc thu lại
+        <ul class="sub-menu blank">
+                <li><a class="link_name" href="#">Thanh điều khiển</a></li>
+            </ul>
+        </li>*@
                 @* Role Sự kiện - Ưu đãi *@
 
                 @if (((QLMB.Models.NhanVien)Session["EmployeeInfo"]).MaChucVu.Trim() == "SKUD")
@@ -76,7 +76,7 @@
                         <ul class="sub-menu">
                             <li><a class="link_name" href="@Url.Action("EventMain","Event")">Sự kiện</a></li>
                             @*<li><a href="#">Chưa duyệt</a></li>
-                                <li><a href="#">Đã duyệt</a></li>*@
+                    <li><a href="#">Đã duyệt</a></li>*@
                         </ul>
                     </li>
 
@@ -99,7 +99,7 @@
                         <ul class="sub-menu">
                             <li><a class="link_name" href="@Url.Action("SaleMain","Event")">Ưu đãi</a></li>
                             @*<li><a href="#">Chưa duyệt</a></li>
-                                <li><a href="#">Đã duyệt</a></li>*@
+                    <li><a href="#">Đã duyệt</a></li>*@
                         </ul>
                     </li>
                 }
@@ -128,6 +128,30 @@
                             <li><a class="link_name" href="@Url.Action("Main","HumanResource")">Nhân sự</a></li>
                             <li><a href="@Url.Action("Main","HumanResource")">Trang chủ</a></li>
                             <li><a href="@Url.Action("Register", "HumanResource")">Thêm nhân viên</a></li>
+                        </ul>
+                    </li>
+                }
+                @* Role Mặt bằng*@
+                @if (((QLMB.Models.NhanVien)Session["EmployeeInfo"]).MaChucVu.Trim() == "MB")
+                {
+                    @* Trang Mặt bằng *@
+                    <li>
+                        <div class="iocn-link">
+                            <div class="link">
+                                <a href="@Url.Action("Index","Property")">
+                                    <!-- Icon -->
+                                    <i class='bx bxs-calendar-event'></i>
+                                    <!-- Tên -->
+                                    <span class="link_name">Mặt bằng</span>
+                                </a>
+                            </div>
+                            <i class='bx bxs-chevron-down arrow'></i>
+                        </div>
+
+                        @*Các mục con*@
+                        <ul class="sub-menu">
+                            <li><a href="@Url.Action("Create", "Property")">Thêm mặt bằng</a></li>
+                            <li><a href="@Url.Action("Index", "PropertyRent")">Danh sách thuê</a></li>
                         </ul>
                     </li>
                 }

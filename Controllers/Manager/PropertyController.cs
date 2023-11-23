@@ -6,7 +6,7 @@ using System.Data.Entity;
 using System.IO;
 using System.Linq;
 
-namespace QLMB.Controllers.Test
+namespace QLMB.Controllers
 {
     public class PropertyController : Controller
     {

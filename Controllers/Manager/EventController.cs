@@ -4,7 +4,7 @@ using System.Web.Mvc;
 using System.Collections.Generic;
 using QLMB.Models.Process;
 
-namespace QLMB.Controllers.Manager
+namespace QLMB.Controllers
 {
     public class EventController : Controller
     {

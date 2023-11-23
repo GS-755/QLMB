@@ -11,13 +11,13 @@
 <hr />
 <section class="m-2">
     <div class="container">
-        <h2 class="text-center mt-2 mb-2">Bạn phải thanh toán trước khi viết hợp đồng</h2>
         <div class="col">
             <div class="row">
                 <div class="col-md-5">
-                    <img src="~/Resources/Picture/Property/@Model.HinhMB" class="img-wrapper" />
+                    <img src="~/Resources/Picture/Property/@Model.HinhMB" class="img-wrapper mt-4" alt="@Model.TenMB" />
                 </div>
-                <div class="col-md-7 mt-4">
+                <div class="col-md-7 pb-3">
+                    <h2 class="text-center mt-3">@Model.TenMB</h2>
                     <div class="Sold">
                         <table class="w-100">
                             <tr>
@@ -37,30 +37,41 @@
                                 <td>@Html.DisplayFor(k => k.DienTich) m<sup>2</sup></td>
                             </tr>
                             <tr>
-                                <th>Tiền thuê</th>
-                                <td>@string.Format($"{Model.TienThue:0,0} đ")</td>
-                            </tr>
-                            <tr>
                                 <th>Trạng thái</th>
                                 <td>@Html.DisplayFor(k => k.TinhTrang.TenTT)</td>
                             </tr>
                             <tr>
+                                <th>Tiền thuê</th>
+                                <td class="text-danger fw-bold fs-3">@string.Format($"{Model.TienThue:0,0} đ")</td>
+                            </tr>
+                            <tr>
                                 <th>Thanh toán</th>
                                 <td>
-                                    @using (Html.BeginForm("Payment", "Payment"))
+                                    @if (Session["DX_TenDangNhap"] != null)
                                     {
-                                        @Html.HiddenFor(k => k.MaMB)
-                                        <div>
-                                            <input type="radio" name="vnp_bankCode" value="VNBANK" class="form-check-input" checked />
-                                            <label for="vnp_bankCode">Thẻ ngân hàng nội địa</label>
-                                        </div>
-                                        <div>
-                                            <input type="radio" name="vnp_bankCode" value="INTCARD" class="form-check-input" />
-                                            <label for="vnp_bankCode">Thẻ tín dụng quốc tế</label>
-                                        </div>
-                                        <div>
-                                            <input type="submit" value="Thanh toán right meow" class="btn btn-outline-success mt-3 mb-3" />
-                                        </div>
+                                        using (Html.BeginForm("Payment", "Payment"))
+                                        {
+                                            @Html.HiddenFor(k => k.MaMB)
+                                            <div>
+                                                <input type="radio" name="vnp_bankCode" value="VNBANK" class="form-check-input" checked />
+                                                <label for="vnp_bankCode">Thẻ ngân hàng nội địa</label>
+                                            </div>
+                                            <div>
+                                                <input type="radio" name="vnp_bankCode" value="INTCARD" class="form-check-input" />
+                                                <label for="vnp_bankCode">Thẻ tín dụng quốc tế</label>
+                                            </div>
+                                            <div>
+                                                <input type="radio" name="vnp_bankCode" value="VNPAY" class="form-check-input" />
+                                                <label for="vnp_bankCode">Tôi sẽ tự chọn chức năng</label>
+                                            </div>
+                                            <div class="m-2 text-center row">
+                                                <input type="submit" value="Thanh toán" class="btn btn-outline-success mt-3 mb-3" />
+                                            </div>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <p class="fs-4 text-center text-danger fw-bold">Bạn phải đăng nhập để thuê mặt bằng</p>
                                     }
                                 </td>
                             </tr>

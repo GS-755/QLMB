@@ -2,71 +2,90 @@
 
 @{
     ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_HomePage.cshtml";
+    Layout = "~/Views/Shared/_Manager.cshtml";
 }
-
-<h2>Index</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.ThoiGianXin)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.MucDich)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ThoiHan)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.NguoiThue.TenDangNhap)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.HopDong.MaHD)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.NhanVien.MaNV)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TinhTrang.TenTT)
-        </th>
-        <th>
-            Hành động
-        </th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.ThoiGianXin)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.MucDich)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ThoiHan)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.NguoiThue.TenDangNhap)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.HopDong.MaHD)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.NhanVien.MaNV)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TinhTrang.TenTT)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.MaDon }) |
-            @Html.ActionLink("Details", "Details", new { id=item.MaDon }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.MaDon })
-        </td>
-    </tr>
+<link href="~/Resources/CSS/FormDetail.css" rel="stylesheet" />
+<h2 class="mt-3 mb-3">DANH SÁCH THUÊ MẶT BẰNG</h2>
+@using (Html.BeginForm("Index", "PropertyRent", FormMethod.Get))
+{
+    <div class="d-flex justify-content-between mb-3">
+        <div class="input-group mx-3">
+            <div class="form-outline" style="margin-right: 5px">
+                <input type="text" class="form-control border border-secondary" placeholder="Tìm kiếm" name="keyword" />
+            </div>
+            <div>
+                <button class="btn btn-success" type="submit">
+                    <i class='bx bx-search px-1'></i>
+                </button>
+            </div>
+        </div>
+    </div>
 }
+<div class="container-fluid">
+    <div class="col">
+        <div class="row">
 
-</table>
+        </div>
+    </div>
+    <div id="table-scroll" class="table-scroll">
+        <p class="text-center text-danger">@ViewBag.NullData</p>
+        <table id="main-table" class="main-table" style="width: 100%">
+            <tr style="vertical-align: central;" class="text-center">
+                <th>
+                    Mã hợp đồng
+                </th>
+                <th>
+                    Thời gian xin
+                </th>
+                <th>
+                    Mục đích
+                </th>
+                <th>
+                    Thời hạn
+                </th>
+                <th>
+                    Tên đăng nhập
+                </th>
+                <th>
+                    Mã nhân viên
+                </th>
+                <th>
+                    Tình trạng
+                </th>
+                <th>
+                    Hành động
+                </th>
+            </tr>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.HopDong.MaHD)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ThoiGianXin)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MucDich)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ThoiHan)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NguoiThue.TenDangNhap)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NhanVien.MaNV)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TinhTrang.TenTT)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Chi tiết", "Details", new { id = item.MaDon }, new { @class = "btn btn-outline-success" }) |
+                        @Html.ActionLink("Duyệt", "Qualify", new { id = item.MaDon }, new { @class = "btn btn-outline-primary" })
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>

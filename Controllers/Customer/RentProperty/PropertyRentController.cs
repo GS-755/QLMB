@@ -4,141 +4,104 @@ using System.Net;
 using System.Web.Mvc;
 using QLMB.Models;
 
-namespace QLMB.Controllers.Customer.RentProperty
+namespace QLMB.Controllers
 {
     public class PropertyRentController : Controller
     {
         private database db = new database();
+        private readonly string ROLE = "MB";
 
-        // GET: PropertyRent
-        public ActionResult Index()
+        /*
+            Boolean condition(s)
+            1.  Users that have logged in
+            2.  Users with a valid role
+        */
+        public bool IsValidRole()
         {
-            var donXinThues = db.DonXinThues.
-                Include(d => d.NguoiThue).
-                Include(d => d.HopDong).
-                Include(d => d.MatBang).
-                Include(d => d.NhanVien).
-                Include(d => d.TinhTrang);
+            if (Session["EmployeeInfo"] == null)
+            {
+                return false;
+            }
+            //Đúng Role --> Vào
+            if (((NhanVien)Session["EmployeeInfo"]).MaChucVu.Trim() == ROLE)
+                return true;
 
-            return View(donXinThues.ToList());
+            return false;
         }
+        // GET: PropertyRent
+        public ActionResult Index(string keyword)
+        {
+            if (IsValidRole())
+            {
+                if (keyword != null)
+                {
+                    var donXinThues = db.DonXinThues.
+                        Include(d => d.NguoiThue).
+                        Include(d => d.HopDong).
+                        Include(d => d.MatBang).
+                        Include(d => d.NhanVien).
+                        Include(d => d.TinhTrang);
 
+                    return View(donXinThues.Where(k => k.MaHD.Contains(keyword)).ToList());
+                }
+                else
+                {
+                    var donXinThues = db.DonXinThues.
+                        Include(d => d.NguoiThue).
+                        Include(d => d.HopDong).
+                        Include(d => d.MatBang).
+                        Include(d => d.NhanVien).
+                        Include(d => d.TinhTrang);
+
+                    return View(donXinThues.ToList());
+                }
+            }
+
+            return RedirectToAction("Login", "Login");
+
+        }
         // GET: PropertyRent/Details/5
         public ActionResult Details(string id)
         {
-            if (id == null)
+            if (IsValidRole())
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                DonXinThue donXinThue = db.DonXinThues.Find(id);
+                if (donXinThue == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(donXinThue);
             }
-            DonXinThue donXinThue = db.DonXinThues.Find(id);
-            if (donXinThue == null)
-            {
-                return HttpNotFound();
-            }
-            return View(donXinThue);
+
+            return RedirectToAction("Login", "Login");
         }
-
-        // GET: PropertyRent/Create
-        public ActionResult Create()
+        public ActionResult Qualify(string id)
         {
-            ViewBag.TenDangNhap = new SelectList(db.NguoiThues, "TenDangNhap", "TenDangNhap");
-            ViewBag.MaHD = new SelectList(db.HopDongs, "MaHD", "MaHD");
-            ViewBag.MaMB = new SelectList(db.MatBangs, "MaMB", "MaMB");
-            ViewBag.MaNV = new SelectList(db.NhanViens, "MaNV", "MaNV");
-            ViewBag.MATT = new SelectList(db.TinhTrangs, "MATT", "TenTT");
-
-            return View();
-        }
-
-        // POST: PropertyRent/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(DonXinThue donXinThue)
-        {
-            if (ModelState.IsValid)
+            if (IsValidRole())
             {
-                db.DonXinThues.Add(donXinThue);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                DonXinThue donXinThue = db.DonXinThues.Find(id);
+                if (donXinThue == null)
+                {
+                    ViewBag.ServerError = "Lỗi tham số!";
+                }
 
-            ViewBag.TenDangNhap = new SelectList(db.NguoiThues, "TenDangNhap", "TenDangNhap", donXinThue.TenDangNhap);
-            ViewBag.MaHD = new SelectList(db.HopDongs, "MaHD", "MaHD", donXinThue.MaHD);
-            ViewBag.MaMB = new SelectList(db.MatBangs, "MaMB", "MaMB", donXinThue.MaMB);
-            ViewBag.MaNV = new SelectList(db.NhanViens, "MaNV", "MaNV", donXinThue.MaNV);
-            ViewBag.MATT = new SelectList(db.TinhTrangs, "MATT", "TenTT", donXinThue.MATT);
-            return View(donXinThue);
-        }
-
-        // GET: PropertyRent/Edit/5
-        public ActionResult Edit(string id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            DonXinThue donXinThue = db.DonXinThues.Find(id);
-            if (donXinThue == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.TenDangNhap = new SelectList(db.NguoiThues, "TenDangNhap", "TenDangNhap", donXinThue.TenDangNhap);
-            ViewBag.MaHD = new SelectList(db.HopDongs, "MaHD", "MaHD", donXinThue.MaHD);
-            ViewBag.MaMB = new SelectList(db.MatBangs, "MaMB", "MaMB", donXinThue.MaMB);
-            ViewBag.MaNV = new SelectList(db.NhanViens, "MaNV", "MaNV", donXinThue.MaNV);
-            ViewBag.MATT = new SelectList(db.TinhTrangs, "MATT", "TenTT", donXinThue.MATT);
-            return View(donXinThue);
-        }
-
-        // POST: PropertyRent/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(DonXinThue donXinThue)
-        {
-            if (ModelState.IsValid)
-            {
+                donXinThue.MATT = 2;
                 db.Entry(donXinThue).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            ViewBag.TenDangNhap = new SelectList(db.NguoiThues, "TenDangNhap", "TenDangNhap", donXinThue.TenDangNhap);
-            ViewBag.MaHD = new SelectList(db.HopDongs, "MaHD", "MaHD", donXinThue.MaHD);
-            ViewBag.MaMB = new SelectList(db.MatBangs, "MaMB", "MaMB", donXinThue.MaMB);
-            ViewBag.MaNV = new SelectList(db.NhanViens, "MaNV", "MaNV", donXinThue.MaNV);
-            ViewBag.MATT = new SelectList(db.TinhTrangs, "MATT", "TenTT", donXinThue.MATT);
-            return View(donXinThue);
-        }
 
-        // GET: PropertyRent/Delete/5
-        public ActionResult Delete(string id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return RedirectToAction("Index", "PropertyRent");
             }
-            DonXinThue donXinThue = db.DonXinThues.Find(id);
-            if (donXinThue == null)
-            {
-                return HttpNotFound();
-            }
-            return View(donXinThue);
-        }
 
-        // POST: PropertyRent/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string id)
-        {
-            DonXinThue donXinThue = db.DonXinThues.Find(id);
-            db.DonXinThues.Remove(donXinThue);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Login", "Login");
         }
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)
