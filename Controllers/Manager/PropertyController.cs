@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System.Net;
+using System.Web.Mvc;
+using QLMB.Models;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.IO;
 using System.Linq;
-using System.Net;
-using System.Web.Mvc;
-using QLMB.Models;
 
 namespace QLMB.Controllers.Test
 {
@@ -118,34 +118,6 @@ namespace QLMB.Controllers.Test
                 return RedirectToAction("Index", "SkillIssue");
             }
         }
-        //public ActionResult Edit(string id)
-        //{
-        //    try
-        //    {
-        //        if (IsValidRole())
-        //        {
-        //            if (id == null)
-        //            {
-        //                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //            }
-        //            MatBang matBang = db.MatBangs.Find(id);
-        //            if (matBang == null)
-        //            {
-        //                return HttpNotFound();
-        //            }
-        //            List<TinhTrang> dsTinhTrang = db.TinhTrangs.Where(k => k.MATT >= 7).ToList();
-        //            ViewBag.MATT = new SelectList(dsTinhTrang, "MaTT", "TenTT", matBang.MATT);
-
-        //            return View(matBang);
-        //        }
-
-        //        return RedirectToAction("Login", "Login");
-        //    }
-        //    catch
-        //    {
-        //        return RedirectToAction("Index", "SkillIssue");
-        //    }
-        //}
         public ActionResult Delete(string id)
         {
             try
@@ -171,6 +143,10 @@ namespace QLMB.Controllers.Test
             {
                 return RedirectToAction("Index", "SkillIssue");
             }
+        }
+        public string GetImagePath(string fileName)
+        {
+            return Path.Combine(Server.MapPath(MatBang.SERVER_IMG_PATH), fileName);
         }
 
         // POST: Property
@@ -201,7 +177,7 @@ namespace QLMB.Controllers.Test
                         string extension = Path.GetExtension(matBang.UploadImage.FileName);
                         fileName += extension;
                         matBang.HinhMB = fileName;
-                        matBang.UploadImage.SaveAs(Path.Combine(Server.MapPath(MatBang.SERVER_IMG_PATH), fileName));
+                        matBang.UploadImage.SaveAs(GetImagePath(fileName));
                     }
                     db.MatBangs.Add(matBang);
                     db.SaveChanges();
@@ -215,34 +191,6 @@ namespace QLMB.Controllers.Test
                 return RedirectToAction("Index", "SkillIssue");
             }
         }
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Edit(MatBang matBang)
-        //{
-        //    try
-        //    {
-        //        if (matBang.TienThue == 0)
-        //        {
-        //            matBang.TienThue = MatBang.SINGLE_PRICE * matBang.DienTich;
-        //        }
-        //        if (matBang.UploadImage != null)
-        //        {
-        //            string fileName = Path.GetFileNameWithoutExtension(matBang.UploadImage.FileName);
-        //            string extension = Path.GetExtension(matBang.UploadImage.FileName);
-        //            fileName += extension;
-        //            matBang.HinhMB = fileName;
-        //            matBang.UploadImage.SaveAs(Path.Combine(Server.MapPath(MatBang.SERVER_IMG_PATH), fileName));
-        //        }
-        //        db.Entry(matBang).State = EntityState.Modified;
-        //        db.SaveChanges();
-
-        //        return RedirectToAction("Index");
-        //    }
-        //    catch
-        //    {
-        //        return RedirectToAction("Index", "SkillIssue");
-        //    }
-        //}
         // POST: Property/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]

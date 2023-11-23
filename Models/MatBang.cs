@@ -16,8 +16,8 @@ namespace QLMB.Models
     public partial class MatBang
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public static readonly string SERVER_IMG_PATH = "~/Resources/Picture/Property/";
-        public static readonly double SINGLE_PRICE = 700000;
+        public static double SINGLE_PRICE = 550000;
+        public static string SERVER_IMG_PATH = "~/Resources/Picture/Property/";
         public MatBang()
         {
             this.DonXinThues = new HashSet<DonXinThue>();
@@ -33,6 +33,7 @@ namespace QLMB.Models
         [NotMapped]
         public HttpPostedFileBase UploadImage { get; set; }
         public short MATT { get; set; }
+        public string TenMB { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DonXinThue> DonXinThues { get; set; }

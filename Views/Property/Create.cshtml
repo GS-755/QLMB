@@ -1,4 +1,5 @@
-﻿@model QLMB.Models.MatBang
+﻿@using QLMB.Models;
+@model MatBang
 
 @{
     ViewBag.Title = "Thêm mặt bằng";
@@ -11,13 +12,20 @@
     <div class="col">
         <div class="row">
             <div class="col-md-3"></div>
-            <div class="col-md-6" ng-app="myApp" ng-init="singlePrice=700000;">
+            <div class="col-md-6" ng-app="myApp" ng-init="singlePrice=@MatBang.SINGLE_PRICE">
                 @using (Html.BeginForm("Create", "Property", FormMethod.Post, new { @name = "property", enctype = "multipart/form-data" }))
                 {
                     @Html.AntiForgeryToken()
                     <h2 class="text-uppercase text-center pt-3">Thêm mặt bằng</h2>
                     <hr />
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="row mb-3">
+                        <div class="col-md-12">
+                            <label for="TenMB" class="mb-2">Tên mặt bằng: <span class="text-danger"> (*)</span></label>
+                            <input type="text" class="form-control" maxlength="40" name="TenMB" ng-model="TenMB" required />
+                            <p class="text-danger pt-2" ng-show="property.TenMB.$invalid" ng-hide="property.TenMB.$valid">Tên mặt bằng từ 1 đến 40 ký tự</p>
+                        </div>
+                    </div>
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <div class="mb-3">
